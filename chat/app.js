@@ -4,11 +4,33 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 
 var index = require('./routes/index');
 var login = require('./routes/login');
 
 var app = express();
+
+
+// Authentication strategy configuration
+passport.use(new Strategy({
+        usernameField: 'login',
+        passwordField: 'password',
+    },
+
+    function(username, password, cb) {
+        return cb(null, "User");
+    }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(id, done) {
+    done(null, id);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +43,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/login', login);
