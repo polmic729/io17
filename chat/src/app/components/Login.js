@@ -1,6 +1,17 @@
 import React from "react";
 import Radium from "radium";
 
+class InputBox extends React.Component {
+    render() {
+        return (
+            <input name={this.props.name}
+                   placeholder={this.props.name}
+                   style={styles.input}
+                   type={this.props.type ? this.props.type : "input"}/>
+        );
+    }
+}
+
 class Login extends React.Component {
     constructor() {
         super();
@@ -10,17 +21,10 @@ class Login extends React.Component {
         return (
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
-                    <h1 style={styles.header}>Skål</h1>
-                    <form method="post">
-                        <input name="login"
-                               placeholder="login"
-                               style={styles.input} />
-
-                        <input name="password"
-                               placeholder="password"
-                               type="password"
-                               style={styles.input}/>
-
+                    <h1 style={styles.header}>skål</h1>
+                    <form>
+                        <InputBox name="login" />
+                        <InputBox name="password" type="password" />
                         <button style={styles.button}
                                 type="submit">
                             login
