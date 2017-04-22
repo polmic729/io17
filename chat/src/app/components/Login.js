@@ -19,6 +19,7 @@ class Login extends React.Component {
 
                         <input name="password"
                                placeholder="password"
+                               type="password"
                                style={styles.input}/>
 
                         <button style={styles.button}
