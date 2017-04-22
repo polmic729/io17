@@ -10,6 +10,7 @@
     "test": "echo 'Implement testing framework.'"
   },
   "dependencies": {
+    "babel-eslint": "^7.2.3",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
@@ -19,6 +20,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "~2.0.0-beta11",
+    "radium": "^0.18.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
