@@ -1,5 +1,8 @@
-## Uruchamianie aplikacji
-1. cd chat
-2. npm install
-3. npm run webpack
-4. DEBUG=chat:* npm start
+## Installation
+`cd chat` and `npm install`
+
+## Running
+Firstly, run webpack watcher to create `bundle.js` file via `npm run webpack`. Then run our `express.js` server - `npm start`.
+
+## Coding
+Check out `npm run linter` as we won't accept code that produces any linter errors.

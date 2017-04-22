@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "webpack": "webpack --watch --colors",
+    "linter": "eslint ./",
     "test": "echo 'Implement testing framework.'"
   },
   "dependencies": {
