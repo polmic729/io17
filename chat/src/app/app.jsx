@@ -1,6 +1,6 @@
 let React = require("react");
 let ReactDOM = require("react-dom");
-import Hello from "./components/Hello";
+import MainApp from "./components/MainApp";
 
 
 class App {
@@ -10,14 +10,14 @@ class App {
     }
 
     render(element) {
-        let HelloElement = React.createElement(Hello);
+        let mainElement = React.createElement(MainApp);
 
         if (element) {
-            ReactDOM.render(HelloElement, element);
+            ReactDOM.render(mainElement, element);
             return;
         }
 
-        return HelloElement.render();
+        return mainElement.render();
     }
 
     renderToDOM (element) {
