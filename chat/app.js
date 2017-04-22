@@ -1,70 +1,77 @@
-let express = require('express');
-let path = require('path');
-let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
-let passport = require('passport');
-let Strategy = require('passport-local').Strategy;
+const express = require("express");
+const path = require("path");
+const favicon = require("serve-favicon");
+const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const Strategy = require("passport-local").Strategy;
 
-let index = require('./routes/index');
-let login = require('./routes/login');
+const index = require("./routes/index");
+const login = require("./routes/login");
 
-let app = express();
+const app = express();
 
 
 // Authentication strategy configuration
 passport.use(new Strategy({
-        usernameField: 'login',
-        passwordField: 'password',
-    },
+    "usernameField": "login",
+    "passwordField": "password"
+},
 
-    function(username, password, cb) {
-        return cb(null, "User");
-    }
+    (username, password, cb) => cb(null, "User")
 ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
+passport.serializeUser((user, done) => {
+
+    done(null, user);
+
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser((id, done) => {
+
     done(null, id);
+
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// View engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// Uncomment after placing your favicon in /public
+// App.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({"extended": false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', index);
-app.use('/login', login);
+app.use("/", index);
+app.use("/login", login);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+
+    const err = new Error("Not Found");
+
+    err.status = 404;
+    next(err);
+
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// Error handler
+app.use((err, req, res, next) => {
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // Set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // Render the error page
+    res.status(err.status || 500);
+    res.render("error");
+
 });
 
 module.exports = app;
