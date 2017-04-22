@@ -1,5 +1,8 @@
-body {
-    background-color: #312248;
-    color: #EDF2F4;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+* { margin: 0; padding:0; box-sizing:border-box;}
+
+html, body, #main {
+  min-height: 100%;
+  height: 100%;
 }
