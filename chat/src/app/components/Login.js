@@ -1,7 +1,6 @@
 import React from "react";
 import Radium from "radium";
 
-@Radium
 class Login extends React.Component {
     constructor() {
         super();
@@ -86,4 +85,4 @@ const styles = {
     },
 };
 
-export default Login;
+export default Radium(Login);
