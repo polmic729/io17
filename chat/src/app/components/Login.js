@@ -10,8 +10,8 @@ class Login extends React.Component {
         return (
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
-                    <h1 style={styles.header}>skål</h1>
-                    <form>
+                    <h1 style={styles.header}>Skål</h1>
+                    <form method="post">
                         <input name="login"
                                placeholder="login"
                                style={styles.input} />
@@ -22,7 +22,7 @@ class Login extends React.Component {
                                style={styles.input}/>
 
                         <button style={styles.button}
-                                type="button">
+                                type="submit">
                             login
                         </button>
                     </form>
