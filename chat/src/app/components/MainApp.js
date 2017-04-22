@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setWebsocket } from "../actions/websocket";
-import Chat from "./chat/Chat";
+import Login from "./Login";
 
 class MainApp extends React.Component {
     constructor(props) {
@@ -15,17 +15,13 @@ class MainApp extends React.Component {
     }
 
     createWebsocket() {
+        // TODO: it should be created only if user has successfully logged in
         let socket = io("http://localhost:3001");
         this.props.actions.setWebsocket(socket);
     }
 
     render() {
-        return (
-            <section>
-                <h1> Skål </h1>
-                <Chat />
-            </section>
-        );
+        return (<Login />);
     }
 }
 
