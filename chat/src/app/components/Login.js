@@ -1,5 +1,8 @@
+/* eslint no-class-assign: "off" */
+// Disable no-class-assign since decorators aren't working
+
 import React from "react";
-import Radium from "radium";
+import { StyleRoot } from "radium";
 
 class InputBox extends React.Component {
     render() {
@@ -26,6 +29,7 @@ class LoginForm extends React.Component {
 
     render() {
         return (
+            <StyleRoot>
             <form onSubmit={this.handleSubmit}>
                     <InputBox name="login" />
                     <InputBox name="password" type="password" />
@@ -33,7 +37,8 @@ class LoginForm extends React.Component {
                             type="submit">
                         login
                     </button>
-                </form>
+             </form>
+             </StyleRoot>
         );
     }
 }
@@ -41,12 +46,14 @@ class LoginForm extends React.Component {
 class Login extends React.Component {
     render () {
         return (
+            <StyleRoot>
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
                     <h1 style={styles.header}>skål</h1>
                     <LoginForm />
                 </div>
             </div>
+            </StyleRoot>
         );
     }
 }
@@ -63,9 +70,15 @@ const styles = {
 
     box: {
         padding: "30px",
-        width: "40%",
+        margin: "15px",
+        width: "100%",
         background: "#EDF2F4",
         boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        maxWidth: "600px",
+
+        "@media screen and (min-width: 600px)": {
+            width: "50%",
+        },
     },
 
     header: {
@@ -97,6 +110,10 @@ const styles = {
         boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
         transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
 
+        "@media screen and (max-width: 600px)": {
+            width: "100%",
+        },
+
         ":hover": {
             boxShadow: "0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22)",
             background: "#EF233C",
@@ -104,4 +121,4 @@ const styles = {
     },
 };
 
-export default Radium(Login);
+export default Login;
