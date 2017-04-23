@@ -9,9 +9,6 @@ let app = express();
 
 // initialize web sockets
 let ws = new websockets(app);
-ws.addAction("message", function(message) {
-    console.log("message: " + message);
-});
 
 app.use("/styles", express.static(PATH_STYLES));
 app.use(express.static(PATH_DIST));

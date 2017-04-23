@@ -19,14 +19,13 @@ class Send extends React.Component {
     }
 
     handleSubmit() {
-        socket.emit("message", this.state.message);
+        socket.emit("chat-message", this.state.message);
         event.preventDefault();
     }
 
     render() {
         return (
             <section>
-
                 <input type="text" name="message" placeholder="message" onChange={this.handleChange}/>
                 <button onClick={this.handleSubmit}>Send</button>
             </section>

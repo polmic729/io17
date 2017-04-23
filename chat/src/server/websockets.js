@@ -1,4 +1,4 @@
-let io = require("socket.io");
+let socketio = require("socket.io");
 let http = require("http");
 
 const PORT = 3001;
@@ -9,14 +9,16 @@ class WebSockets {
 
     constructor(app) {
         let httpServer = http.Server(app);
-        this.io = io(httpServer);
+        let io = socketio(httpServer);
         httpServer.listen(PORT, HOST);
+
+        this.initializeMessages(io);
     }
 
-    addAction(action, callback) {
-        this.io.on("connection", function(socket) {
-            socket.on(action, function(message) {
-                callback(message);
+    initializeMessages(io) {
+        io.on("connection", function(socket) {
+            socket.on("chat-message", function(message) {
+                io.emit("chat-message", message);
             });
         });
     }
