@@ -1,5 +1,6 @@
-let React = require("react");
+import React from "react";
 import io from "socket.io-client";
+
 let socket = io("http://localhost:3001");
 
 

@@ -1,6 +1,6 @@
-let React = require("react");
-let Messages = require("./Messages");
-let Send = require("./Send");
+import React from "react";
+import Messages from "./Messages";
+import Send from "./Send";
 
 
 class Chat extends React.Component {
