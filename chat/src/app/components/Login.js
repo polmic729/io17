@@ -7,7 +7,8 @@ class InputBox extends React.Component {
             <input name={this.props.name}
                    placeholder={this.props.name}
                    style={styles.input}
-                   type={this.props.type ? this.props.type : "input"}/>
+                   type={this.props.type ? this.props.type : "input"}
+                   required />
         );
     }
 }
@@ -15,6 +16,13 @@ class InputBox extends React.Component {
 class Login extends React.Component {
     constructor() {
         super();
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        alert("Caught submit event");
+        event.preventDefault();
     }
 
     render () {
@@ -22,7 +30,7 @@ class Login extends React.Component {
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
                     <h1 style={styles.header}>skål</h1>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <InputBox name="login" />
                         <InputBox name="password" type="password" />
                         <button style={styles.button}
