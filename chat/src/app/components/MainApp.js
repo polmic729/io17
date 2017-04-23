@@ -1,10 +1,13 @@
 import React from "react";
-import Counter from "./Counter";
+import Chat from "./chat/Chat";
 
 class MainApp extends React.Component {
     render() {
         return (
-            <Counter />
+            <section>
+                <h1> Skål </h1>
+                <Chat />
+            </section>
         );
     }
 }
