@@ -17,6 +17,7 @@
     "debug": "~2.6.3",
     "eslint-plugin-react": "^6.10.3",
     "express": "~4.15.2",
+    "mongodb": "^2.2.26",
     "morgan": "~1.8.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
