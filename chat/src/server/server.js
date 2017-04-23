@@ -1,6 +1,11 @@
 let path = require("path");
 let express = require("express");
 let websockets = require("./websockets");
+let mongoose = require("mongoose");
+
+let auth = require("./auth");
+
+global.db = mongoose.createConnection("mongodb://localhost/skal", { promiseLibrary: require("bluebird") });
 
 const PATH_STYLES = path.resolve(__dirname, "../client/styles");
 const PATH_DIST = path.resolve(__dirname, "../../dist");
@@ -16,6 +21,9 @@ app.use(express.static(PATH_DIST));
 app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/index.html"));
 });
+
+app.use("/auth", auth);
+
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

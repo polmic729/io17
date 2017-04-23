@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleRoot } from "radium";
 
+
 class InputBox extends React.Component {
     render() {
         return (
@@ -13,6 +14,7 @@ class InputBox extends React.Component {
     }
 }
 
+
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +24,8 @@ class LoginForm extends React.Component {
     handleSubmit(event) {
         // server request for authorization
         let success = false;
+
+        // do POST request to auth/login with login and password in BODY
 
         if (success) {
             this.props.onSuccess();
