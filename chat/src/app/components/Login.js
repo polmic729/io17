@@ -1,6 +1,3 @@
-/* eslint no-class-assign: "off" */
-// Disable no-class-assign since decorators aren't working
-
 import React from "react";
 import { StyleRoot } from "radium";
 
