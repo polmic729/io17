@@ -1,10 +1,17 @@
 let path = require("path");
 let express = require("express");
+let websockets = require("./websockets");
 
 const PATH_STYLES = path.resolve(__dirname, "../client/styles");
 const PATH_DIST = path.resolve(__dirname, "../../dist");
 
 let app = express();
+
+// initialize web sockets
+let ws = new websockets(app);
+ws.addAction("message", function(message) {
+    console.log("message: " + message);
+});
 
 app.use("/styles", express.static(PATH_STYLES));
 app.use(express.static(PATH_DIST));
