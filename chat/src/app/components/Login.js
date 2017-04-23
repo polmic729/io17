@@ -14,13 +14,21 @@ class InputBox extends React.Component {
 }
 
 class LoginForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
-        alert("Caught submit event");
+        // server request for authorization
+        let success = false;
+
+        if (success) {
+            this.props.onSuccess();
+        } else {
+            this.props.onFail();
+        }
+
         event.preventDefault();
     }
 
@@ -41,13 +49,28 @@ class LoginForm extends React.Component {
 }
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.authSuccess = this.authSuccess.bind(this);
+        this.authFail = this.authFail.bind(this);
+    }
+
+    authSuccess() {
+        alert("Login successful");
+    }
+
+    authFail() {
+        alert("Login failed");
+    }
+
     render () {
         return (
             <StyleRoot>
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
                     <h1 style={styles.header}>skål</h1>
-                    <LoginForm />
+                    <LoginForm onSuccess={this.authSuccess}
+                               onFail={this.authFail} />
                 </div>
             </div>
             </StyleRoot>

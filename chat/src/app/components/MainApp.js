@@ -8,6 +8,7 @@ import Login from "./Login";
 class MainApp extends React.Component {
     constructor(props) {
         super(props);
+        document.title = "skål";
 
         this.createWebsocket = this.createWebsocket.bind(this);
 
