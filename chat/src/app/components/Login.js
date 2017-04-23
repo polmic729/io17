@@ -13,10 +13,9 @@ class InputBox extends React.Component {
     }
 }
 
-class Login extends React.Component {
+class LoginForm extends React.Component {
     constructor() {
         super();
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -25,19 +24,27 @@ class Login extends React.Component {
         event.preventDefault();
     }
 
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                    <InputBox name="login" />
+                    <InputBox name="password" type="password" />
+                    <button style={styles.button}
+                            type="submit">
+                        login
+                    </button>
+                </form>
+        );
+    }
+}
+
+class Login extends React.Component {
     render () {
         return (
             <div id="wrapper" style={styles.wrapper}>
                 <div id="box" style={styles.box}>
                     <h1 style={styles.header}>skål</h1>
-                    <form onSubmit={this.handleSubmit}>
-                        <InputBox name="login" />
-                        <InputBox name="password" type="password" />
-                        <button style={styles.button}
-                                type="submit">
-                            login
-                        </button>
-                    </form>
+                    <LoginForm />
                 </div>
             </div>
         );
