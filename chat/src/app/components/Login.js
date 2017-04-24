@@ -1,16 +1,27 @@
 import React from "react";
-import {StyleRoot} from "radium";
+import { StyleRoot } from "radium";
 
 
 class InputBox extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.handleOnChange = this.handleOnChange.bind(this);
+    }
+
+    handleOnChange(event) {
+        this.props.onChange(event.target.name, event.target.value);
+    }
+
     render() {
         return (
             <input name={this.props.name}
                    placeholder={this.props.name}
+                   type={this.props.type}
                    style={styles.input}
-                   type={this.props.type ? this.props.type : "input"}
-                   onChange={this.props.valChange}
-                   required/>
+                   onChange={this.handleOnChange}
+                   required />
         );
     }
 }
@@ -20,90 +31,47 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "uname",
-            password: "pwd"
+            username: "",
+            password: ""
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // usernameChange(event) {
-    //     this.setState({
-    //         username: event.target.value
-    //     });
-    // }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === "checkbox" ? target.checked : target.value;
-        const name = target.name;
-
+    handleInputChange(key, value) {
         this.setState({
-            [name]: value
+            [key]: value
         });
     }
 
     async handleSubmit(event) {
-        event.preventDefault();
         let body = JSON.stringify({
             username: this.state.username,
             password: this.state.password
         });
 
-
-        fetch("/auth/register", {
+        fetch("/auth/login", {
             method: "POST",
             body: body,
-            // headers: {
-            //     "Content-Type": "multipart/form-data"
-            // }
-        }).then(function (response) {
-            return response.json();
-        }).then(function (body) {
-            console.log(body);
+        }).then(function () {
+            this.props.onSuccess();
+        }).then(function () {
+            this.props.onFail();
         });
 
-
-        // do POST request to auth/login with login and password in BODY
-        // let success = false;
-        // if (success) {
-        //     this.props.onSuccess();
-        // } else {
-        //     this.props.onFail();
-        // }
-
+        event.preventDefault();
     }
 
     render() {
         return (
             <StyleRoot>
-                {/*<form onSubmit={this.handleSubmit}>*/}
-                {/*<InputBox name="username"*/}
-                {/*valChange={this.handleInputChange}*/}
-                {/*/>*/}
-                {/*<InputBox name="password"*/}
-                {/*type="password"*/}
-                {/*valChange={this.handleInputChange}*/}
-                {/*/>*/}
-                {/*<button style={styles.button}*/}
-                {/*type="submit">*/}
-                {/*login*/}
-                {/*</button>*/}
-                {/*</form>*/}
-                <form id="local-sign-in" action="/auth/login" method="post">
-                    <div>
-                        <p></p>
-                        <label>Username:</label>
-                        <input type="text" name="username"/>
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input type="password" name="password"/>
-                    </div>
-                    <div>
-                        <input type="submit" class="btn btn-primary btn-sm" value="Log In"/>
-                    </div>
+                <form onSubmit={this.handleSubmit}>
+                    <InputBox name="username" onChange={this.handleInputChange} />
+                    <InputBox name="password" type="password" onChange={this.handleInputChange} />
+                    <button style={styles.button} type="submit">
+                        login
+                    </button>
                 </form>
             </StyleRoot>
         );
