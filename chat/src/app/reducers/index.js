@@ -34,6 +34,8 @@ function websocket(state = {}, action) {
     case SET_WEBSOCKET:
         return { ...state, websocket: action.ws };
     }
+
+    return state;
 }
 
 export default combineReducers({

@@ -2,7 +2,6 @@ import React from "react";
 import Messages from "./Messages";
 import Send from "./Send";
 
-
 class Chat extends React.Component {
 
     constructor(props) {

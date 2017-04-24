@@ -1,8 +1,5 @@
 import React from "react";
-import io from "socket.io-client";
-
-let socket = io("http://localhost:3001");
-
+import { connect } from "react-redux";
 
 class Send extends React.Component {
 
@@ -19,18 +16,27 @@ class Send extends React.Component {
     }
 
     handleSubmit() {
-        socket.emit("chat-message", this.state.message);
-        event.preventDefault();
+        this.props.websocket.emit("chat-message", this.state.message);
+
+        this.refs.textBox.value = "";
+        this.setState({
+            message: ""
+        });
     }
 
     render() {
         return (
             <section>
-                <input type="text" name="message" placeholder="message" onChange={this.handleChange}/>
+                <input ref="textBox" type="text" name="message" placeholder="message" onChange={this.handleChange}/>
                 <button onClick={this.handleSubmit}>Send</button>
             </section>
         );
     }
 }
 
-export default Send;
+let mapStateToProps = (state) => ({
+    //FIXME wtf
+    websocket: state.websocket.websocket
+});
+
+export default connect(mapStateToProps, null)(Send);

@@ -1,27 +1,50 @@
 import React from "react";
-import io from "socket.io-client";
-
-let socket = io("http://localhost:3001");
+import { connect } from "react-redux";
 
 class Messages extends React.Component {
 
     constructor(props) {
         super(props);
 
-        socket.on("chat-message", function(message){
-            // TODO: Implement updating this component when message is received.
+        this.state = {
+            messages: []
+        };
+
+        this.newMessage = this.newMessage.bind(this);
+    }
+
+    newMessage(message) {
+        let messages = this.state.messages;
+        messages.push(message);
+
+        this.setState({
+            messages: messages
         });
     }
 
+    componentDidMount() {
+        this.props.websocket.on("chat-message", this.newMessage);
+    }
+
     render() {
+        const messageList = this.state.messages.map((msg) =>
+                <li> {msg} </li>
+        );
+
         return (
             <section>
+                <h2>skål - the best chat ever.</h2>
                 <ul>
-                    <li>skål - the best chat ever.</li>
+                    { messageList }
                 </ul>
             </section>
         );
     }
 }
 
-export default Messages;
+let mapStateToProps = (state) => ({
+    //FIXME wtf
+    websocket: state.websocket.websocket
+});
+
+export default connect(mapStateToProps, null)(Messages);
