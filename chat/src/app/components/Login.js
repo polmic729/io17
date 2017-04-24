@@ -46,14 +46,14 @@ class LoginForm extends React.Component {
     }
 
     async handleSubmit(event) {
-        let body = JSON.stringify({
-            username: this.state.username,
-            password: this.state.password
-        });
+        let body = "username=" + this.state.username + "&password=" + this.state.password;
 
         fetch("/auth/login", {
             method: "POST",
             body: body,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         }).then(function () {
             this.props.onSuccess();
         }).then(function () {

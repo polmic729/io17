@@ -4,6 +4,11 @@ let websockets = require("./websockets");
 
 let auth = require("./auth");
 
+let cookieParser = require("cookie-parser");
+let bodyParser = require("body-parser");
+let session = require("express-session");
+let method_override = require("express-method-override");
+
 const PATH_STYLES = path.resolve(__dirname, "../client/styles");
 const PATH_DIST = path.resolve(__dirname, "../../dist");
 
@@ -27,6 +32,10 @@ app.get("/success", (req, res) => {
     res.send("Success!");
 });
 
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(method_override());
+app.use(session({ secret: "supernova" }));
 app.use("/auth", auth);
 
 
