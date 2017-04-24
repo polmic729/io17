@@ -22,6 +22,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/index.html"));
 });
 
+app.get("/failure", (req, res) => {
+    res.send("Failure!");
+});
+
+app.get("/success", (req, res) => {
+    res.send("Success!");
+});
+
 app.use("/auth", auth);
 
 

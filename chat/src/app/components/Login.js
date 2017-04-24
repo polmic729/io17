@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleRoot } from "radium";
+import {StyleRoot} from "radium";
 
 
 class InputBox extends React.Component {
@@ -9,7 +9,8 @@ class InputBox extends React.Component {
                    placeholder={this.props.name}
                    style={styles.input}
                    type={this.props.type ? this.props.type : "input"}
-                   required />
+                   onChange={this.props.valChange}
+                   required/>
         );
     }
 }
@@ -18,36 +19,79 @@ class InputBox extends React.Component {
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: "uname",
+            password: "pwd"
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
-        // server request for authorization
-        let success = false;
+    // usernameChange(event) {
+    //     this.setState({
+    //         username: event.target.value
+    //     });
+    // }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === "checkbox" ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        let body = JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
+        });
+
+
+        fetch("/auth/register", {
+            method: "POST",
+            body: body,
+            // headers: {
+            //     "Content-Type": "multipart/form-data"
+            // }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (body) {
+            console.log(body);
+        });
+
 
         // do POST request to auth/login with login and password in BODY
+        // let success = false;
+        // if (success) {
+        //     this.props.onSuccess();
+        // } else {
+        //     this.props.onFail();
+        // }
 
-        if (success) {
-            this.props.onSuccess();
-        } else {
-            this.props.onFail();
-        }
-
-        event.preventDefault();
     }
 
     render() {
         return (
             <StyleRoot>
-            <form onSubmit={this.handleSubmit}>
-                    <InputBox name="login" />
-                    <InputBox name="password" type="password" />
+                <form onSubmit={this.handleSubmit}>
+                    <InputBox name="username"
+                              valChange={this.handleInputChange}
+                              />
+                    <InputBox name="password"
+                              type="password"
+                              valChange={this.handleInputChange}
+                              />
                     <button style={styles.button}
                             type="submit">
                         login
                     </button>
-             </form>
-             </StyleRoot>
+                </form>
+            </StyleRoot>
         );
     }
 }
@@ -67,16 +111,16 @@ class Login extends React.Component {
         alert("Login failed");
     }
 
-    render () {
+    render() {
         return (
             <StyleRoot>
-            <div id="wrapper" style={styles.wrapper}>
-                <div id="box" style={styles.box}>
-                    <h1 style={styles.header}>skål</h1>
-                    <LoginForm onSuccess={this.authSuccess}
-                               onFail={this.authFail} />
+                <div id="wrapper" style={styles.wrapper}>
+                    <div id="box" style={styles.box}>
+                        <h1 style={styles.header}>skål</h1>
+                        <LoginForm onSuccess={this.authSuccess}
+                                   onFail={this.authFail}/>
+                    </div>
                 </div>
-            </div>
             </StyleRoot>
         );
     }

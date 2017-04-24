@@ -3,6 +3,7 @@ let router = express.Router();
 let passport = require("passport");
 let localStrategy = require("passport-local");
 let funct = require("./database/functions.js");
+let flash = require("connect-flash");
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -48,6 +49,7 @@ passport.use("local-signup", new localStrategy(
 
 router.use(passport.initialize());
 router.use(passport.session());
+router.use(flash());
 
 router.get("/logout", (req, res) => {
     let name = "dddd";
@@ -58,16 +60,16 @@ router.get("/logout", (req, res) => {
 
 //sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 router.post("/register", passport.authenticate("local-signup", {
-    successRedirect: "/success",
-    failureRedirect: "/"
-})
+        successRedirect: "/success",
+        failureRedirect: "/failure"
+    })
 );
 
 //sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
 router.post("/login", passport.authenticate("local-signin", {
-    successRedirect: "/success",
-    failureRedirect: "/"
-})
+        successRedirect: "/success",
+        failureRedirect: "/failure"
+    })
 );
 
 
