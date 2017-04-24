@@ -78,18 +78,32 @@ class LoginForm extends React.Component {
     render() {
         return (
             <StyleRoot>
-                <form onSubmit={this.handleSubmit}>
-                    <InputBox name="username"
-                              valChange={this.handleInputChange}
-                              />
-                    <InputBox name="password"
-                              type="password"
-                              valChange={this.handleInputChange}
-                              />
-                    <button style={styles.button}
-                            type="submit">
-                        login
-                    </button>
+                {/*<form onSubmit={this.handleSubmit}>*/}
+                {/*<InputBox name="username"*/}
+                {/*valChange={this.handleInputChange}*/}
+                {/*/>*/}
+                {/*<InputBox name="password"*/}
+                {/*type="password"*/}
+                {/*valChange={this.handleInputChange}*/}
+                {/*/>*/}
+                {/*<button style={styles.button}*/}
+                {/*type="submit">*/}
+                {/*login*/}
+                {/*</button>*/}
+                {/*</form>*/}
+                <form id="local-sign-in" action="/auth/login" method="post">
+                    <div>
+                        <p></p>
+                        <label>Username:</label>
+                        <input type="text" name="username"/>
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-primary btn-sm" value="Log In"/>
+                    </div>
                 </form>
             </StyleRoot>
         );

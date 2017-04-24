@@ -13,7 +13,7 @@ passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
-passport.use("local-signin", new localStrategy(
+passport.use("login", new localStrategy(
     {passReqToCallback: true}, //allows us to pass back the request to the callback
     function (req, username, password, done) {
         funct.localAuth(username, password)
@@ -30,7 +30,7 @@ passport.use("local-signin", new localStrategy(
     }
 ));
 
-passport.use("local-signup", new localStrategy(
+passport.use("register", new localStrategy(
     {passReqToCallback: true}, //allows us to pass back the request to the callback
     function (req, username, password, done) {
         funct.localReg(username, password)
@@ -52,24 +52,24 @@ router.use(passport.session());
 router.use(flash());
 
 router.get("/logout", (req, res) => {
-    let name = "dddd";
+    // let name = "dddd";
     req.logout();
     res.redirect("/");
-    req.session.notice = "You have successfully been logged out " + name + "!";
+    // req.session.notice = "You have successfully been logged out " + name + "!";
 });
 
 //sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-router.post("/register", passport.authenticate("local-signup", {
-        successRedirect: "/success",
-        failureRedirect: "/failure"
-    })
+router.post("/register", passport.authenticate("register", {
+    successRedirect: "/success",
+    failureRedirect: "/failure"
+})
 );
 
 //sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-router.post("/login", passport.authenticate("local-signin", {
-        successRedirect: "/success",
-        failureRedirect: "/failure"
-    })
+router.post("/login", passport.authenticate("login", {
+    successRedirect: "/success",
+    failureRedirect: "/failure"
+})
 );
 
 
