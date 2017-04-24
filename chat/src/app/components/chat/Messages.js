@@ -27,8 +27,11 @@ class Messages extends React.Component {
     }
 
     render() {
+        // TODO: fix li key with message ID (React requires it)
         const messageList = this.state.messages.map((msg) =>
-                <li> {msg} </li>
+                <li key={msg}>
+                    {msg}
+                </li>
         );
 
         return (
