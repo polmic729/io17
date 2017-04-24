@@ -35,7 +35,6 @@ class Send extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    //FIXME wtf
     websocket: state.websocket.websocket
 });
 

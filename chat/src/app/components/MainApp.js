@@ -2,7 +2,7 @@ import io from "socket.io-client";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../actions";
+import { setWebsocket } from "../actions/websocket";
 import Chat from "./chat/Chat";
 
 class MainApp extends React.Component {
@@ -30,7 +30,7 @@ class MainApp extends React.Component {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators({setWebsocket}, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(MainApp);

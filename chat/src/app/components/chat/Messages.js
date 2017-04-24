@@ -33,7 +33,6 @@ class Messages extends React.Component {
 
         return (
             <section>
-                <h2>skål - the best chat ever.</h2>
                 <ul>
                     { messageList }
                 </ul>
@@ -43,7 +42,6 @@ class Messages extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    //FIXME wtf
     websocket: state.websocket.websocket
 });
 

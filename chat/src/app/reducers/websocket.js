@@ -1,4 +1,4 @@
-import { SET_WEBSOCKET } from "../actions";
+import { SET_WEBSOCKET } from "../actions/websocket";
 
 export function websocket(state = {}, action) {
     switch (action.type) {

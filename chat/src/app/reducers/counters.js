@@ -1,4 +1,4 @@
-import { COUNTER } from "../actions";
+import { COUNTER } from "../actions/counter";
 
 const initialCounters = {
     counter: 0

@@ -1,4 +1,4 @@
-import { Screens, SET_SCREEN } from "../actions";
+import { Screens, SET_SCREEN } from "../actions/screens";
 
 const initialScreens = {
     screen: Screens.LOGIN,
