@@ -22,9 +22,9 @@ function counters(state = initialCounters, action) {
     switch (action.type) {
     case COUNTER.INCREMENT:
         // TODO: Figure out how to change state object nicely. This Object.assign() thing is bad.
-        return Object.assign({}, state, {counter: state.counter + 1});
+        return { ...state, counter: state.counter + 1};
     case COUNTER.DECREMENT:
-        return Object.assign({}, state, {counter: state.counter - 1});
+        return { ...state, counter: state.counter - 1};
     }
     return state;
 }
