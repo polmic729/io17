@@ -8,7 +8,7 @@ const PATH_DIST = path.resolve(__dirname, "../../dist");
 let app = express();
 
 // initialize web sockets
-let ws = new websockets(app);
+new websockets(app);
 
 app.use("/styles", express.static(PATH_STYLES));
 app.use(express.static(PATH_DIST));
