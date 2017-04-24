@@ -24,18 +24,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/index.html"));
 });
 
-app.get("/signup", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/index.html"));
-});
-
-app.get("/failure", (req, res) => {
-    res.send("Failure!");
-});
-
-app.get("/success", (req, res) => {
-    res.send("Success!");
-});
-
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(method_override());
