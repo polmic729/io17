@@ -1,6 +1,6 @@
 import React from "react";
 import {StyleRoot} from "radium";
-import FormComponents from "./FormComponents";
+import FormComponents from "./Form";
 
 class Signup extends React.Component {
     constructor(props) {

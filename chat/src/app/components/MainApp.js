@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setWebsocket } from "../actions/websocket";
 import Login from "./Login";
-import Singup from "./Signup";
 
 class MainApp extends React.Component {
     constructor(props) {
         super(props);
+
         document.title = "skål";
 
         this.createWebsocket = this.createWebsocket.bind(this);

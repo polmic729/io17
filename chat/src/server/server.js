@@ -24,6 +24,10 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/index.html"));
 });
 
+app.get("/signup", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/index.html"));
+});
+
 app.get("/failure", (req, res) => {
     res.send("Failure!");
 });
