@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { Screens, SET_SCREEN } from "../actions";
+import { Screens, SET_SCREEN, SET_WEBSOCKET } from "../actions";
 import { COUNTER } from "../actions";
 
 const initialScreens = {
@@ -28,7 +28,16 @@ function counters(state = initialCounters, action) {
     return state;
 }
 
+
+function websocket(state = {}, action) {
+    switch (action.type) {
+    case SET_WEBSOCKET:
+        return { ...state, websocket: action.ws };
+    }
+}
+
 export default combineReducers({
     screen,
+    websocket,
     counters
 });
