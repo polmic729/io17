@@ -36,10 +36,12 @@ passport.use("register", new LocalStrategy(
         db.register(username, password)
             .then(function (user) {
                 if (user) {
+                    req.status(204);
                     req.session.success = "You are successfully registered and logged in " + user.username + "!";
                     done(null, user);
                 }
                 if (!user) {
+                    req.status(401);
                     req.session.error = "That username is already in use, please try a different one.";
                     done(null, user);
                 }
@@ -56,17 +58,40 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-router.post("/register", passport.authenticate("register", {
-    successRedirect: "/success",
-    failureRedirect: "/failure"
-})
-);
+router.post("/register", function (req, res, next) {
+    passport.authenticate("register", function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            res.status(401).send("Registration failed");
+            return;
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.status(204).send("Registration successful");
+        });
+    })(req, res, next);
+});
 
-//sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-router.post("/login", passport.authenticate("login", {
-    successRedirect: "/success",
-    failureRedirect: "/failure"
-})
-);
+router.post("/login", function (req, res, next) {
+    passport.authenticate("login", function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            res.status(401).send("Unauthorised");
+            return;
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.status(204).send("Authorised");
+        });
+    })(req, res, next);
+});
 
 module.exports = router;
