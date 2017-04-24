@@ -1,8 +1,8 @@
 let express = require("express");
 let router = express.Router();
 let passport = require("passport");
-let localStrategy = require("passport-local");
-let funct = require("./database/functions.js");
+let LocalStrategy = require("passport-local");
+let db = require("./database/functions.js");
 let flash = require("connect-flash");
 
 passport.serializeUser(function (user, done) {
@@ -13,10 +13,10 @@ passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
-passport.use("login", new localStrategy(
+passport.use("login", new LocalStrategy(
     {passReqToCallback: true}, //allows us to pass back the request to the callback
     function (req, username, password, done) {
-        funct.localAuth(username, password)
+        db.auth(username, password)
             .then(function (user) {
                 if (user) {
                     req.session.success = "You are successfully logged in " + user.username + "!";
@@ -30,17 +30,17 @@ passport.use("login", new localStrategy(
     }
 ));
 
-passport.use("register", new localStrategy(
-    {passReqToCallback: true}, //allows us to pass back the request to the callback
+passport.use("register", new LocalStrategy(
+    {passReqToCallback: true},
     function (req, username, password, done) {
-        funct.localReg(username, password)
+        db.register(username, password)
             .then(function (user) {
                 if (user) {
                     req.session.success = "You are successfully registered and logged in " + user.username + "!";
                     done(null, user);
                 }
                 if (!user) {
-                    req.session.error = "That username is already in use, please try a different one."; //inform user could not log them in
+                    req.session.error = "That username is already in use, please try a different one.";
                     done(null, user);
                 }
             });
@@ -52,13 +52,10 @@ router.use(passport.session());
 router.use(flash());
 
 router.get("/logout", (req, res) => {
-    // let name = "dddd";
     req.logout();
     res.redirect("/");
-    // req.session.notice = "You have successfully been logged out " + name + "!";
 });
 
-//sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 router.post("/register", passport.authenticate("register", {
     successRedirect: "/success",
     failureRedirect: "/failure"
@@ -71,6 +68,5 @@ router.post("/login", passport.authenticate("login", {
     failureRedirect: "/failure"
 })
 );
-
 
 module.exports = router;

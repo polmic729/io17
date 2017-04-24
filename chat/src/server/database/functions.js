@@ -1,62 +1,52 @@
-const bcrypt = require("bcryptjs");
-const Q = require("q");
+// Don't name files with such a generic names.
+// TODO: rename this file
+let bcrypt = require("bcryptjs");
+let Q = require("q");
+let client = require("mongodb").MongoClient;
 
-const address = "localhost"; //config.mongodbHost
-const mongodbUrl = "mongodb://" + address + ":27017/users";
-const MongoClient = require("mongodb").MongoClient;
+const MONGO_URL = "mongodb://localhost:27017/users";
 
-exports.localReg = function (username, password) {
+exports.register = function (username, password) {
     const deferred = Q.defer();
 
-    MongoClient.connect(mongodbUrl, function (err, db) {
-        const collection = db.collection("localUsers");
-
-        //check if username is already assigned in our database
+    client.connect(MONGO_URL, function (err, db) {
+        const collection = db.collection("users");
         collection.findOne({"username": username})
             .then(function (result) {
                 if (result !== null) {
-                    deferred.resolve(false); // username exists
+                    deferred.resolve(false);
+                    return;
                 }
-                else {
-                    const hash = bcrypt.hashSync(password, 8);
-                    const user = {
-                        "username": username,
-                        "password": hash
-                    };
 
-                    collection.insert(user)
-                        .then(function () {
-                            db.close();
-                            deferred.resolve(user);
-                        });
-                }
+                let user = {
+                    "username": username,
+                    "password": bcrypt.hashSync(password, 8)
+                };
+                collection.insert(user)
+                    .then(function () {
+                        db.close();
+                        deferred.resolve(user);
+                    });
+
+                // TODO: why don't we close database here? look at line 50.
             });
     });
 
     return deferred.promise;
 };
 
-exports.localAuth = function (username, password) {
+exports.auth = function (username, password) {
     const deferred = Q.defer();
 
-    MongoClient.connect(mongodbUrl, function (err, db) {
-        const collection = db.collection("localUsers");
-
+    client.connect(MONGO_URL, function (err, db) {
+        const collection = db.collection("users");
         collection.findOne({"username": username})
             .then(function (result) {
-                if (result === null) {
+                if (result !== null && bcrypt.compareSync(password, result.password)) {
+                    deferred.resolve(result);
+                } else {
                     deferred.resolve(false);
                 }
-                else {
-                    const hash = result.password;
-
-                    if (bcrypt.compareSync(password, hash)) {
-                        deferred.resolve(result);
-                    } else {
-                        deferred.resolve(false);
-                    }
-                }
-
                 db.close();
             });
     });
