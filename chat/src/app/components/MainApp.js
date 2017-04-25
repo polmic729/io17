@@ -2,8 +2,9 @@ import io from "socket.io-client";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWebsocket } from "../actions/websocket";
 import Login from "./Login";
+import {Screens} from "../actions/screens";
+import { setWebsocket } from "../actions/websocket";
 
 class MainApp extends React.Component {
     constructor(props) {
@@ -20,12 +21,21 @@ class MainApp extends React.Component {
     }
 
     render() {
-        return (<Login />);
+        switch (this.props.screen) {
+        case Screens.CHAT:
+            return (<Chat />);
+        default:
+            return (<Login />);
+        }
     }
 }
+
+let mapStateToProps = (state) => ({
+    screen: state.screen
+});
 
 let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({setWebsocket}, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(MainApp);
+export default connect(mapStateToProps, mapDispatchToProps)(MainApp);

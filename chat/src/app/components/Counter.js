@@ -6,7 +6,6 @@ import { increment, decrement } from "../actions/counter";
 class Counter extends React.Component {
     constructor(props) {
         super(props);
-        this.props = props;
     }
 
     render() {

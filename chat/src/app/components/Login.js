@@ -1,16 +1,20 @@
 import React from "react";
 import {StyleRoot} from "radium";
 import FormComponents from "./Form";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setScreen, Screens} from "../actions/screens";
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {};
         this.authSuccess = this.authSuccess.bind(this);
         this.authFail = this.authFail.bind(this);
     }
 
     authSuccess() {
-        alert("Login successful");
+        this.props.actions.setScreen(Screens.CHAT);
     }
 
     authFail() {
@@ -34,4 +38,9 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+
+let mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({ setScreen }, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Login);

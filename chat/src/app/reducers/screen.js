@@ -7,7 +7,7 @@ const initialScreens = {
 export function screen(state = initialScreens, action) {
     switch (action.type) {
     case SET_SCREEN:
-        return Object.assign({}, state, {screen: action.screen});
+        return {...state, screen: action.screen};
     }
     return state;
 }
