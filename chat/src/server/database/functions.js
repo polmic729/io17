@@ -17,7 +17,6 @@ exports.register = function (username, password) {
                     deferred.resolve(false);
                     return;
                 }
-
                 let user = {
                     "username": username,
                     "password": bcrypt.hashSync(password, 8)
@@ -27,8 +26,7 @@ exports.register = function (username, password) {
                         db.close();
                         deferred.resolve(user);
                     });
-
-                // TODO: why don't we close database here? look at line 50.
+                db.close();
             });
     });
 

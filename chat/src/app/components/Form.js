@@ -6,7 +6,6 @@ class InputBox extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.handleOnChange = this.handleOnChange.bind(this);
     }
 
@@ -30,6 +29,7 @@ class InputBox extends React.Component {
 class Form extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             username: "",
             password: ""

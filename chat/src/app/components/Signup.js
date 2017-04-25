@@ -26,7 +26,7 @@ class Signup extends React.Component {
                         <FormComponents.Form onSuccess={this.authSuccess}
                                              onFail={this.authFail}
                                              requestUrl="/auth/register"
-                                             buttonLabel="Signup"/>
+                                             buttonLabel="Sign up"/>
                     </div>
                 </div>
             </StyleRoot>
