@@ -18,14 +18,7 @@ passport.use("login", new LocalStrategy(
     function (req, username, password, done) {
         db.auth(username, password)
             .then(function (user) {
-                if (user) {
-                    req.session.success = "You are successfully logged in " + user.username + "!";
-                    done(null, user);
-                }
-                if (!user) {
-                    req.session.error = "Could not log user in. Please try again."; //inform user could not log them in
-                    done(null, user);
-                }
+                done(null, user);
             });
     }
 ));
@@ -37,12 +30,10 @@ passport.use("register", new LocalStrategy(
             .then(function (user) {
                 if (user) {
                     req.status(204);
-                    req.session.success = "You are successfully registered and logged in " + user.username + "!";
                     done(null, user);
                 }
                 if (!user) {
                     req.status(401);
-                    req.session.error = "That username is already in use, please try a different one.";
                     done(null, user);
                 }
             });

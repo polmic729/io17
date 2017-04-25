@@ -45,8 +45,11 @@ class Form extends React.Component {
         });
     }
 
-    async handleSubmit(event) {
+    handleSubmit(event) {
         let body = "username=" + this.state.username + "&password=" + this.state.password;
+
+        let onSuccess = this.props.onSuccess;
+        let onFail = this.props.onFail;
 
         fetch(this.props.requestUrl, {
             method: "POST",
@@ -54,12 +57,17 @@ class Form extends React.Component {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(function () {
-            this.props.onSuccess();
-        }).then(function () {
-            this.props.onFail();
+        }).then(function (res) {
+            switch(res.status) {
+            case 204:
+                onSuccess();
+                break;
+            case 401:
+                onFail();
+            }
+        }).catch(function() {
+            alert("Error while querying login server");
         });
-
         event.preventDefault();
     }
 
