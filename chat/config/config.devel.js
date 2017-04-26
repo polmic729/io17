@@ -4,7 +4,7 @@ config.env      = "devel";
 config.hostname = "localhost";
 
 config.mongodb = {
-    url: "mongodb://localhost:27017/users",
+    url: "mongodb://localhost:27017/skal",
 };
 
 config.websocket = {
