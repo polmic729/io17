@@ -1,5 +1,5 @@
 import React from "react";
-import MainApp from "./components/MainApp";
+import Root from "./components/Root";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
@@ -11,7 +11,7 @@ class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <MainApp />
+                <Root />
             </Provider>
         );
     }

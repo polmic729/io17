@@ -10,7 +10,7 @@ import { setWebsocket } from "../actions/websocket";
 
 let config = require("../../../config");
 
-class MainApp extends React.Component {
+class Root extends React.Component {
     constructor(props) {
         super(props);
         document.title = "skål";
@@ -44,4 +44,4 @@ let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({setWebsocket}, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainApp);
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
