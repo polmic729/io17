@@ -8,6 +8,8 @@ import Chat from "./chat/Chat";
 import {Screens} from "../actions/screens";
 import { setWebsocket } from "../actions/websocket";
 
+let config = require("../../../config");
+
 class MainApp extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,7 @@ class MainApp extends React.Component {
 
     createWebsocket() {
         // TODO: it should be created only if user has successfully logged in
-        let socket = io("http://localhost:3001");
+        let socket = io("http://" + config.websocket.host + ":" + config.websocket.port);
         this.props.actions.setWebsocket(socket);
     }
 

@@ -3,13 +3,12 @@
 let bcrypt = require("bcryptjs");
 let Q = require("q");
 let client = require("mongodb").MongoClient;
-
-const MONGO_URL = "mongodb://localhost:27017/users";
+let config = require("../../../config");
 
 exports.register = function (username, password) {
     const deferred = Q.defer();
 
-    client.connect(MONGO_URL, function (err, db) {
+    client.connect(config.mongodb.url, function (err, db) {
         const collection = db.collection("users");
         collection.findOne({"username": username})
             .then(function (result) {
@@ -36,7 +35,7 @@ exports.register = function (username, password) {
 exports.auth = function (username, password) {
     const deferred = Q.defer();
 
-    client.connect(MONGO_URL, function (err, db) {
+    client.connect(config.mongodb.url, function (err, db) {
         const collection = db.collection("users");
         collection.findOne({"username": username})
             .then(function (result) {

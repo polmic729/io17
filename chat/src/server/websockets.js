@@ -1,16 +1,14 @@
 let socketio = require("socket.io");
 let http = require("http");
-
-const PORT = 3001;
-const HOST = "0.0.0.0";
-
+let config = require("../../config");
 
 class WebSockets {
 
     constructor(app) {
         let httpServer = http.Server(app);
         let io = socketio(httpServer);
-        httpServer.listen(PORT, HOST);
+        httpServer.listen(config.websocket.port,
+                          config.websocket.host);
 
         this.initializeMessages(io);
     }
