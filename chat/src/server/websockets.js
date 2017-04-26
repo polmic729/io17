@@ -2,7 +2,7 @@ let socketio = require("socket.io");
 let http = require("http");
 
 const PORT = 3001;
-const HOST = "localhost";
+const HOST = "0.0.0.0";
 
 
 class WebSockets {
