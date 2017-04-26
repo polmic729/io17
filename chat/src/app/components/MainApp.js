@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Login from "./Login";
+import Signup from "./Signup";
 import Chat from "./chat/Chat";
 import {Screens} from "../actions/screens";
 import { setWebsocket } from "../actions/websocket";
@@ -25,6 +26,8 @@ class MainApp extends React.Component {
         switch (this.props.screen) {
         case Screens.CHAT:
             return (<Chat />);
+        case Screens.REGISTER:
+            return (<Signup />);
         default:
             return (<Login />);
         }

@@ -1,20 +1,56 @@
 import React from "react";
 import {StyleRoot} from "radium";
 import FormComponents from "./Form";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setScreen, Screens} from "../actions/screens";
 
 class Signup extends React.Component {
     constructor(props) {
         super(props);
-        this.authSuccess = this.authSuccess.bind(this);
-        this.authFail = this.authFail.bind(this);
+        this.authSuccess  = this.authSuccess.bind(this);
+        this.authFail     = this.authFail.bind(this);
+        this.goToLogin    = this.goToLogin.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    goToLogin() {
+        this.props.actions.setScreen(Screens.LOGIN);
     }
 
     authSuccess() {
         alert("Signup successful");
+        this.props.actions.setScreen(Screens.LOGIN);
     }
 
     authFail() {
         alert("Signup failed");
+    }
+
+    handleSubmit(username, password) {
+        let body = "username=" + username + "&password=" + password;
+
+        let onSuccess = this.authSuccess;
+        let onFail = this.authFail;
+
+        fetch("/auth/register", {
+            method: "POST",
+            body: body,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function (res) {
+            switch(res.status) {
+            case 204:
+                onSuccess();
+                break;
+            case 401:
+                onFail();
+            }
+        }).catch(function() {
+            alert("Error while querying login server");
+        });
+
     }
 
     render() {
@@ -23,10 +59,9 @@ class Signup extends React.Component {
                 <div id="wrapper" style={FormComponents.styles.wrapper}>
                     <div id="box" style={FormComponents.styles.box}>
                         <h1 style={FormComponents.styles.header}>skål</h1>
-                        <FormComponents.Form onSuccess={this.authSuccess}
-                                             onFail={this.authFail}
-                                             requestUrl="/auth/register"
+                        <FormComponents.Form onSubmit={this.handleSubmit}
                                              buttonLabel="Sign up"/>
+                    <a href="#" onClick={this.goToLogin}>Login</a>
                     </div>
                 </div>
             </StyleRoot>
@@ -34,4 +69,8 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup;
+let mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({ setScreen }, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Signup);

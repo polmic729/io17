@@ -28,14 +28,7 @@ passport.use("register", new LocalStrategy(
     function (req, username, password, done) {
         db.register(username, password)
             .then(function (user) {
-                if (user) {
-                    req.status(204);
-                    done(null, user);
-                }
-                if (!user) {
-                    req.status(401);
-                    done(null, user);
-                }
+                done(null, user);
             });
     }
 ));
