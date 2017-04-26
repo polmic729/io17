@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { setScreen, Screens} from "../actions/screens";
 
 class Login extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -28,14 +29,12 @@ class Login extends React.Component {
     }
 
     handleSubmit(username, password) {
-        let body = "username=" + username + "&password=" + password;
-
         let onSuccess = this.authSuccess;
         let onFail = this.authFail;
 
         fetch("/auth/login", {
             method: "POST",
-            body: body,
+            body: "username=" + username + "&password=" + password,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -50,7 +49,6 @@ class Login extends React.Component {
         }).catch(function() {
             alert("Error while querying login server");
         });
-
     }
 
     render() {

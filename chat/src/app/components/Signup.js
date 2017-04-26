@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setScreen, Screens} from "../actions/screens";
 
-class Signup extends React.Component {
+class SignUp extends React.Component {
+
     constructor(props) {
         super(props);
         this.authSuccess  = this.authSuccess.bind(this);
@@ -19,23 +20,21 @@ class Signup extends React.Component {
     }
 
     authSuccess() {
-        alert("Signup successful");
+        alert("SignUp successful");
         this.props.actions.setScreen(Screens.LOGIN);
     }
 
     authFail() {
-        alert("Signup failed");
+        alert("SignUp failed");
     }
 
     handleSubmit(username, password) {
-        let body = "username=" + username + "&password=" + password;
-
         let onSuccess = this.authSuccess;
         let onFail = this.authFail;
 
         fetch("/auth/register", {
             method: "POST",
-            body: body,
+            body: "username=" + username + "&password=" + password,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -50,7 +49,6 @@ class Signup extends React.Component {
         }).catch(function() {
             alert("Error while querying login server");
         });
-
     }
 
     render() {
@@ -73,4 +71,4 @@ let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({ setScreen }, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(null, mapDispatchToProps)(SignUp);
