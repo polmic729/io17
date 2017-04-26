@@ -1,16 +1,21 @@
-let path = require("path");
-let express = require("express");
-let websockets = require("./websockets");
-
-let auth = require("./auth");
-
-let cookieParser = require("cookie-parser");
-let bodyParser = require("body-parser");
-let session = require("express-session");
+let bodyParser      = require("body-parser");
+let cookieParser    = require("cookie-parser");
+let express         = require("express");
 let method_override = require("express-method-override");
+let mongoose        = require("mongoose");
+let path            = require("path");
+let session         = require("express-session");
+
+let config     = require("../../config");
+let auth       = require("./auth");
+let websockets = require("./websockets");
 
 const PATH_STYLES = path.resolve(__dirname, "../client/styles");
 const PATH_DIST = path.resolve(__dirname, "../../dist");
+
+// Connect to mongoDB
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongodb.url);
 
 let app = express();
 

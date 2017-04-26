@@ -12,4 +12,6 @@ config.websocket = {
     host: "localhost"
 };
 
-
+config.crypto = {
+    saltRounds: 10
+};

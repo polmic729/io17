@@ -2,8 +2,8 @@ let express = require("express");
 let router = express.Router();
 let passport = require("passport");
 let LocalStrategy = require("passport-local");
-let db = require("./database/functions.js");
 let flash = require("connect-flash");
+let User = require("./models/user");
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -13,25 +13,11 @@ passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
-passport.use("login", new LocalStrategy(
-    {passReqToCallback: true}, //allows us to pass back the request to the callback
-    function (req, username, password, done) {
-        db.auth(username, password)
-            .then(function (user) {
-                done(null, user);
-            });
-    }
-));
+passport.use("login",
+    new LocalStrategy((user, pass, done) => User.authenticate(user, pass, done)));
 
-passport.use("register", new LocalStrategy(
-    {passReqToCallback: true},
-    function (req, username, password, done) {
-        db.register(username, password)
-            .then(function (user) {
-                done(null, user);
-            });
-    }
-));
+passport.use("register",
+    new LocalStrategy((user, pass, done) => User.create(user, pass, done)));
 
 router.use(passport.initialize());
 router.use(passport.session());
