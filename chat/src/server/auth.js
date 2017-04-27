@@ -2,7 +2,6 @@ let express = require("express");
 let router = express.Router();
 let passport = require("passport");
 let LocalStrategy = require("passport-local");
-let flash = require("connect-flash");
 let User = require("./models/user");
 
 passport.serializeUser(function(user, done) {
@@ -21,7 +20,6 @@ passport.use("register",
 
 router.use(passport.initialize());
 router.use(passport.session());
-router.use(flash());
 
 router.get("/logout", (req, res) => {
     req.logout();
