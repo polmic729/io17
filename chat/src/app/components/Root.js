@@ -6,7 +6,7 @@ import { Screens } from "../actions/screens";
 import { setWebsocket } from "../actions/websocket";
 import Chat from "./chat/Chat";
 import Login from "./Login";
-import Signup from "./Signup";
+import SignUp from "./SignUp";
 
 let config = require("../../../config");
 
@@ -29,7 +29,7 @@ class Root extends React.Component {
         case Screens.CHAT:
             return (<Chat />);
         case Screens.REGISTER:
-            return (<Signup />);
+            return (<SignUp />);
         default:
             return (<Login />);
         }
