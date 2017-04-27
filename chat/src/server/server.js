@@ -4,6 +4,7 @@ let express = require("express");
 let mongoose = require("mongoose");
 let path = require("path");
 let session = require("express-session");
+let mongoStore = require("connect-mongo")(session);
 let passport = require("passport");
 
 let config = require("../../config");
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session({
     secret: config.secret,
+    store: new mongoStore({ mongooseConnection: mongoose.connection }),
     resave: false,
     saveUninitialized: true
 }));

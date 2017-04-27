@@ -9,6 +9,10 @@ let userSchema = new mongoose.Schema({
 });
 
 class UserModel {
+    static byId(id) {
+        return this.findOne({_id: id}).exec();
+    }
+
     static byUsername(username) {
         return this.findOne({ username }).exec();
     }

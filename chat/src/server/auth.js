@@ -8,8 +8,12 @@ passport.serializeUser(function (user, done) {
     done(null, user._id);
 });
 
-passport.deserializeUser(function (obj, done) {
-    done(null, User.byUsername(obj));
+passport.deserializeUser(function (userId, done) {
+    User.byId(userId).then(user => {
+        done(null, user);
+    }).catch(reason => {
+        done(reason, false);
+    });
 });
 
 passport.use("login",
