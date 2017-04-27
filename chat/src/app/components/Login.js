@@ -35,6 +35,7 @@ class Login extends React.Component {
         fetch("/auth/login", {
             method: "POST",
             body: "username=" + username + "&password=" + password,
+            credentials: "include",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
