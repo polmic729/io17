@@ -4,6 +4,7 @@ let express = require("express");
 let mongoose = require("mongoose");
 let path = require("path");
 let session = require("express-session");
+let passport = require("passport");
 
 let config = require("../../config");
 let auth = require("./auth");
@@ -37,6 +38,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use("/auth", auth);
 
 // Catch 404 and forward to error handler

@@ -4,12 +4,12 @@ let passport = require("passport");
 let LocalStrategy = require("passport-local");
 let User = require("./models/user");
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function (user, done) {
+    done(null, user._id);
 });
 
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
+passport.deserializeUser(function (obj, done) {
+    done(null, User.byUsername(obj));
 });
 
 passport.use("login",
@@ -18,48 +18,19 @@ passport.use("login",
 passport.use("register",
     new LocalStrategy((user, pass, done) => User.create(user, pass, done)));
 
-router.use(passport.initialize());
-router.use(passport.session());
-
 router.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
 });
 
-router.post("/register", function(req, res, next) {
-    passport.authenticate("register", function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            res.status(401).send("Registration failed");
-            return;
-        }
-        req.logIn(user, function(err) {
-            if (err) {
-                return next(err);
-            }
-            res.status(204).send("Registration successful");
-        });
-    })(req, res, next);
+// FIXME somewhat works but probably autologins by mistake
+// i believe we shouldn't do this here unless we want to autologin
+router.post("/register", passport.authenticate("register"), (req, res) => {
+    res.status(204).send();
 });
 
-router.post("/login", function(req, res, next) {
-    passport.authenticate("login", function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            res.status(401).send("Unauthorised");
-            return;
-        }
-        req.logIn(user, function(err) {
-            if (err) {
-                return next(err);
-            }
-            res.status(204).send("Authorised");
-        });
-    })(req, res, next);
+router.post("/login", passport.authenticate("login"), (req, res) => {
+    res.status(204).send();
 });
 
 module.exports = router;
