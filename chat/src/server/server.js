@@ -1,7 +1,6 @@
 let bodyParser      = require("body-parser");
 let cookieParser    = require("cookie-parser");
 let express         = require("express");
-let method_override = require("express-method-override");
 let mongoose        = require("mongoose");
 let path            = require("path");
 let session         = require("express-session");
@@ -30,9 +29,14 @@ app.get("/", (req, res) => {
 });
 
 app.use(cookieParser());
-app.use(bodyParser());
-app.use(method_override());
-app.use(session({ secret: "supernova" }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(session({
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: true,
+}));
 app.use("/auth", auth);
 
 
