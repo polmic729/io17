@@ -5,25 +5,22 @@ class Messages extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             messages: []
         };
-
-        this.newMessage = this.newMessage.bind(this);
+        this.onNewMessage = this.onNewMessage.bind(this);
     }
 
-    newMessage(message) {
+    onNewMessage(message) {
         let messages = this.state.messages;
         messages.push(message);
-
         this.setState({
             messages: messages
         });
     }
 
     componentDidMount() {
-        this.props.websocket.on("chat-message", this.newMessage);
+        this.props.socket.on("chat-message", this.onNewMessage);
     }
 
     render() {
@@ -45,7 +42,7 @@ class Messages extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    websocket: state.websocket.websocket
+    socket: state.connections.socket
 });
 
 export default connect(mapStateToProps, null)(Messages);

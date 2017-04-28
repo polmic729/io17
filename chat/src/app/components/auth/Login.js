@@ -2,7 +2,7 @@ import { StyleRoot } from "radium";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Views, setView } from "../../actions/views";
+import { setView, Views } from "../../actions/views";
 import FormComponents from "./Form";
 
 class Login extends React.Component {
@@ -36,9 +36,7 @@ class Login extends React.Component {
             method: "POST",
             body: "username=" + username + "&password=" + password,
             credentials: "include",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }).then(function(res) {
             switch (res.status) {
             case 204:

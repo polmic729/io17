@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import io from "socket.io-client";
+import { setSocket } from "../actions/connections";
 import { Views } from "../actions/views";
-import { setWebsocket } from "../actions/websocket";
-import Chat from "./chat/Chat";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
+import Chat from "./chat/Chat";
 
 let config = require("../../../config");
 
@@ -21,7 +21,7 @@ class Root extends React.Component {
     createWebsocket() {
         // TODO: it should be created only if user has successfully logged in
         let socket = io("http://" + config.websocket.host + ":" + config.websocket.port);
-        this.props.actions.setWebsocket(socket);
+        this.props.actions.setSocket(socket);
     }
 
     render() {
@@ -41,7 +41,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setWebsocket }, dispatch)
+    actions: bindActionCreators({ setSocket }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

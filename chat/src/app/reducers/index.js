@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import { views } from "./views";
-import { websocket } from "./websocket";
+import { connections } from "./connections";
 
 export default combineReducers({
     views,
-    websocket
+    connections
 });

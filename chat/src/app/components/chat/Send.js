@@ -6,7 +6,6 @@ class Send extends React.Component {
     constructor(props) {
         super(props);
         this.state = { message: "" };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -16,12 +15,9 @@ class Send extends React.Component {
     }
 
     handleSubmit() {
-        this.props.websocket.emit("chat-message", this.state.message);
-
+        this.props.socket.emit("chat-message", this.state.message);
         this.refs.textBox.value = "";
-        this.setState({
-            message: ""
-        });
+        this.setState({ message: "" });
     }
 
     render() {
@@ -35,7 +31,7 @@ class Send extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    websocket: state.websocket.websocket
+    socket: state.connections.socket
 });
 
 export default connect(mapStateToProps, null)(Send);
