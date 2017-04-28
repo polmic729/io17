@@ -2,7 +2,7 @@ import { StyleRoot } from "radium";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Screens, setScreen } from "../../actions/screens";
+import { Views, setView } from "../../actions/views";
 import FormComponents from "./Form";
 
 class SignUp extends React.Component {
@@ -16,12 +16,12 @@ class SignUp extends React.Component {
     }
 
     goToLogin() {
-        this.props.actions.setScreen(Screens.LOGIN);
+        this.props.actions.setView(Views.LOGIN);
     }
 
     authSuccess() {
         alert("SignUp successful");
-        this.props.actions.setScreen(Screens.LOGIN);
+        this.props.actions.setView(Views.LOGIN);
     }
 
     authFail() {
@@ -68,7 +68,7 @@ class SignUp extends React.Component {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setScreen }, dispatch)
+    actions: bindActionCreators({ setView }, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

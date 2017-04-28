@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import io from "socket.io-client";
-import { Screens } from "../actions/screens";
+import { Views } from "../actions/views";
 import { setWebsocket } from "../actions/websocket";
 import Chat from "./chat/Chat";
 import Login from "./auth/Login";
@@ -25,10 +25,10 @@ class Root extends React.Component {
     }
 
     render() {
-        switch (this.props.screen) {
-        case Screens.CHAT:
+        switch (this.props.currentView) {
+        case Views.CHAT:
             return (<Chat />);
-        case Screens.REGISTER:
+        case Views.REGISTER:
             return (<SignUp />);
         default:
             return (<Login />);
@@ -37,7 +37,7 @@ class Root extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    screen: state.screen.screen
+    currentView: state.views.current
 });
 
 let mapDispatchToProps = (dispatch) => ({
