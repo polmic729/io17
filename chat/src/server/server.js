@@ -5,7 +5,6 @@ let mongoose = require("mongoose");
 let path = require("path");
 let session = require("express-session");
 let mongoStore = require("connect-mongo")(session);
-let passport = require("passport");
 
 let config = require("../../config");
 let auth = require("./auth");
@@ -30,18 +29,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/index.html"));
 });
 
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(session({
-    secret: config.secret,
-    store: new mongoStore({ mongooseConnection: mongoose.connection }),
-    resave: false,
-    saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use("/auth", auth);
 
 // Catch 404 and forward to error handler
