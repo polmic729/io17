@@ -10,7 +10,7 @@ let userSchema = new mongoose.Schema({
 
 class UserModel {
     static byId(id) {
-        return this.findOne({_id: id}).exec();
+        return this.findOne({ _id: id }).exec();
     }
 
     static byUsername(username) {
@@ -38,13 +38,12 @@ class UserModel {
     }
 
     static create(username, password, done) {
-        // Check if this user already exists
         let existingUser = this.byUsername(username);
         let newHash = this.makePassword(password);
 
         Promise.all([existingUser, newHash]).then(values => {
             let [user, hash] = values;
-            if (user) // if user already exists we stop next actions
+            if (user) // user exists
                 return Promise.reject();
             let newUser = new this({
                 username: username,

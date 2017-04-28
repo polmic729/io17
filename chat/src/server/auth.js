@@ -4,11 +4,11 @@ let passport = require("passport");
 let LocalStrategy = require("passport-local");
 let User = require("./models/user");
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done) {
     done(null, user._id);
 });
 
-passport.deserializeUser(function (userId, done) {
+passport.deserializeUser(function(userId, done) {
     User.byId(userId).then(user => {
         done(null, user);
     }).catch(reason => {
