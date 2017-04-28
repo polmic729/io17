@@ -9,9 +9,9 @@ class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
-        this.authSuccess  = this.authSuccess.bind(this);
-        this.authFail     = this.authFail.bind(this);
-        this.goToLogin    = this.goToLogin.bind(this);
+        this.authSuccess = this.authSuccess.bind(this);
+        this.authFail = this.authFail.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -38,7 +38,7 @@ class SignUp extends React.Component {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(function (res) {
+        }).then(function(res) {
             switch(res.status) {
             case 204:
                 onSuccess();

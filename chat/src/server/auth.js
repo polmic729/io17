@@ -5,11 +5,11 @@ let LocalStrategy = require("passport-local");
 let flash = require("connect-flash");
 let User = require("./models/user");
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done) {
     done(null, user);
 });
 
-passport.deserializeUser(function (obj, done) {
+passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
@@ -28,8 +28,8 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-router.post("/register", function (req, res, next) {
-    passport.authenticate("register", function (err, user) {
+router.post("/register", function(req, res, next) {
+    passport.authenticate("register", function(err, user) {
         if (err) {
             return next(err);
         }
@@ -37,7 +37,7 @@ router.post("/register", function (req, res, next) {
             res.status(401).send("Registration failed");
             return;
         }
-        req.logIn(user, function (err) {
+        req.logIn(user, function(err) {
             if (err) {
                 return next(err);
             }
@@ -46,8 +46,8 @@ router.post("/register", function (req, res, next) {
     })(req, res, next);
 });
 
-router.post("/login", function (req, res, next) {
-    passport.authenticate("login", function (err, user) {
+router.post("/login", function(req, res, next) {
+    passport.authenticate("login", function(err, user) {
         if (err) {
             return next(err);
         }
@@ -55,7 +55,7 @@ router.post("/login", function (req, res, next) {
             res.status(401).send("Unauthorised");
             return;
         }
-        req.logIn(user, function (err) {
+        req.logIn(user, function(err) {
             if (err) {
                 return next(err);
             }

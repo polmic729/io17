@@ -1,10 +1,10 @@
-let mongoose  = require("mongoose");
+let mongoose = require("mongoose");
 let loadClass = require("mongoose-class-wrapper");
-let bcrypt    = require("bcrypt");
-let config    = require("../../../config");
+let bcrypt = require("bcrypt");
+let config = require("../../../config");
 
 let userSchema = new mongoose.Schema({
-    username:       { type: String, unique: true, required: true },
+    username: { type: String, unique: true, required: true },
     passwordHashed: { type: String, required: true },
 });
 

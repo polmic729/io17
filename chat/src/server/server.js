@@ -1,12 +1,12 @@
-let bodyParser      = require("body-parser");
-let cookieParser    = require("cookie-parser");
-let express         = require("express");
-let mongoose        = require("mongoose");
-let path            = require("path");
-let session         = require("express-session");
+let bodyParser = require("body-parser");
+let cookieParser = require("cookie-parser");
+let express = require("express");
+let mongoose = require("mongoose");
+let path = require("path");
+let session = require("express-session");
 
-let config     = require("../../config");
-let auth       = require("./auth");
+let config = require("../../config");
+let auth = require("./auth");
 let websockets = require("./websockets");
 
 const PATH_STYLES = path.resolve(__dirname, "../client/styles");
