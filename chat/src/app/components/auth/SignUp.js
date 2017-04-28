@@ -2,7 +2,7 @@ import { StyleRoot } from "radium";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Screens, setScreen } from "../actions/screens";
+import { Screens, setScreen } from "../../actions/screens";
 import FormComponents from "./Form";
 
 class SignUp extends React.Component {

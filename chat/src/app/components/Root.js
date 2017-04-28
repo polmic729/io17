@@ -5,8 +5,8 @@ import io from "socket.io-client";
 import { Screens } from "../actions/screens";
 import { setWebsocket } from "../actions/websocket";
 import Chat from "./chat/Chat";
-import Login from "./Login";
-import SignUp from "./SignUp";
+import Login from "./auth/Login";
+import SignUp from "./auth/SignUp";
 
 let config = require("../../../config");
 
