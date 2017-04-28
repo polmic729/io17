@@ -1,9 +1,9 @@
+import { StyleRoot } from "radium";
 import React from "react";
-import {StyleRoot} from "radium";
-import FormComponents from "./Form";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setScreen, Screens} from "../actions/screens";
+import { Screens, setScreen } from "../actions/screens";
+import FormComponents from "./Form";
 
 class SignUp extends React.Component {
 
@@ -39,7 +39,7 @@ class SignUp extends React.Component {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(res) {
-            switch(res.status) {
+            switch (res.status) {
             case 204:
                 onSuccess();
                 break;
@@ -59,7 +59,7 @@ class SignUp extends React.Component {
                         <h1 style={FormComponents.styles.header}>skål</h1>
                         <FormComponents.Form onSubmit={this.handleSubmit}
                                              buttonLabel="Sign up"/>
-                    <a href="#" onClick={this.goToLogin}>Login</a>
+                        <a href="#" onClick={this.goToLogin}>Login</a>
                     </div>
                 </div>
             </StyleRoot>

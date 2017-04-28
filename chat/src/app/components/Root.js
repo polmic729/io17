@@ -1,12 +1,12 @@
-import io from "socket.io-client";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import io from "socket.io-client";
+import { Screens } from "../actions/screens";
+import { setWebsocket } from "../actions/websocket";
+import Chat from "./chat/Chat";
 import Login from "./Login";
 import Signup from "./Signup";
-import Chat from "./chat/Chat";
-import {Screens} from "../actions/screens";
-import { setWebsocket } from "../actions/websocket";
 
 let config = require("../../../config");
 
@@ -41,7 +41,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setWebsocket}, dispatch)
+    actions: bindActionCreators({ setWebsocket }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

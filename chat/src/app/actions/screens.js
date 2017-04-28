@@ -4,7 +4,7 @@ export const Screens = {
     REGISTER: "REGISTER",
     LOGIN: "LOGIN",
     MAIN: "MAIN",
-    CHAT: "CHAT",
+    CHAT: "CHAT"
 };
 
 export function setScreen(screen) {

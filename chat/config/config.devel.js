@@ -5,7 +5,7 @@ config.hostname = "localhost";
 config.secret = "allyourbasearebelongtous";
 
 config.mongodb = {
-    url: "mongodb://localhost:27017/skal",
+    url: "mongodb://localhost:27017/skal"
 };
 
 config.websocket = {

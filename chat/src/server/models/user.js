@@ -5,12 +5,12 @@ let config = require("../../../config");
 
 let userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    passwordHashed: { type: String, required: true },
+    passwordHashed: { type: String, required: true }
 });
 
 class UserModel {
     static byUsername(username) {
-        return this.findOne({username}).exec();
+        return this.findOne({ username }).exec();
     }
 
     static makePassword(pass) {

@@ -14,7 +14,7 @@ module.exports = {
                 exclude: /node_modules/,
                 query: {
                     presets: ["react", "es2015"],
-                    plugins: ["syntax-decorators", "transform-object-rest-spread"],
+                    plugins: ["syntax-decorators", "transform-object-rest-spread"]
                 }
             }
         ]

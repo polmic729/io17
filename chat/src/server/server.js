@@ -35,10 +35,9 @@ app.use(bodyParser.urlencoded({
 app.use(session({
     secret: config.secret,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true
 }));
 app.use("/auth", auth);
-
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

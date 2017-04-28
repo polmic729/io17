@@ -8,7 +8,7 @@ class WebSockets {
         let httpServer = http.Server(app);
         let io = socketio(httpServer);
         httpServer.listen(config.websocket.port,
-                          config.websocket.host);
+            config.websocket.host);
 
         this.initializeMessages(io);
     }

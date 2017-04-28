@@ -1,9 +1,9 @@
+import { StyleRoot } from "radium";
 import React from "react";
-import {StyleRoot} from "radium";
-import FormComponents from "./Form";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setScreen, Screens} from "../actions/screens";
+import { Screens, setScreen } from "../actions/screens";
+import FormComponents from "./Form";
 
 class Login extends React.Component {
 
@@ -39,7 +39,7 @@ class Login extends React.Component {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(res) {
-            switch(res.status) {
+            switch (res.status) {
             case 204:
                 onSuccess();
                 break;
@@ -66,7 +66,6 @@ class Login extends React.Component {
         );
     }
 }
-
 
 let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({ setScreen }, dispatch)

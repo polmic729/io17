@@ -1,6 +1,5 @@
-import React from "react";
 import { StyleRoot } from "radium";
-
+import React from "react";
 
 class InputBox extends React.Component {
 
@@ -20,11 +19,10 @@ class InputBox extends React.Component {
                    type={this.props.type}
                    style={styles.input}
                    onChange={this.handleOnChange}
-                   required />
+                   required/>
         );
     }
 }
-
 
 class Form extends React.Component {
     constructor(props) {
@@ -47,7 +45,7 @@ class Form extends React.Component {
 
     handleSubmit(event) {
         this.props.onSubmit(this.state.username,
-                            this.state.password);
+            this.state.password);
         event.preventDefault();
     }
 
@@ -55,8 +53,8 @@ class Form extends React.Component {
         return (
             <StyleRoot>
                 <form onSubmit={this.handleSubmit}>
-                    <InputBox name="username" onChange={this.handleInputChange} />
-                    <InputBox name="password" type="password" onChange={this.handleInputChange} />
+                    <InputBox name="username" onChange={this.handleInputChange}/>
+                    <InputBox name="password" type="password" onChange={this.handleInputChange}/>
                     <button style={styles.button} type="submit">
                         {this.props.buttonLabel}
                     </button>
@@ -73,7 +71,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
+        height: "100%"
     },
 
     box: {
@@ -85,15 +83,15 @@ const styles = {
         maxWidth: "600px",
 
         "@media screen and (min-width: 600px)": {
-            width: "50%",
-        },
+            width: "50%"
+        }
     },
 
     header: {
         textAlign: "center",
         fontSize: "50px",
         marginBottom: "20px",
-        color: "#43587B",
+        color: "#43587B"
     },
 
     input: {
@@ -102,7 +100,7 @@ const styles = {
         marginBottom: "30px",
         border: 0,
         padding: "10px",
-        fontSize: "20px",
+        fontSize: "20px"
     },
 
     button: {
@@ -119,14 +117,14 @@ const styles = {
         transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
 
         "@media screen and (max-width: 600px)": {
-            width: "100%",
+            width: "100%"
         },
 
         ":hover": {
             boxShadow: "0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22)",
-            background: "#EF233C",
+            background: "#EF233C"
         }
-    },
+    }
 };
 
-export default {Form, styles};
+export default { Form, styles };
