@@ -70,7 +70,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
+        height: "100%"
     },
 
     box: {
@@ -105,7 +105,7 @@ const styles = {
         color: "#43587B",
 
         ":hover": {
-            color: "#28407b",
+            color: "#28407b"
         }
     },
 

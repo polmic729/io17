@@ -1,5 +1,4 @@
 import { USER_LOGIN, USER_LOGOUT } from "../actions/user";
-import { Views, setView } from "../actions/views";
 
 const initial = {
     name: "",
