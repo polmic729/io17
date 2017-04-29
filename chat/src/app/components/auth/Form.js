@@ -71,7 +71,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%"
+        height: "100%",
     },
 
     box: {
@@ -92,6 +92,22 @@ const styles = {
         fontSize: "50px",
         marginBottom: "20px",
         color: "#43587B"
+    },
+
+    error: {
+        textAlign: "center",
+        fontSize: "15px",
+        marginBottom: "10px",
+        color: "#D90429"
+    },
+
+    register: {
+        textDecoration: "none",
+        color: "#43587B",
+
+        ":hover": {
+            color: "#28407b",
+        }
     },
 
     input: {

@@ -20,12 +20,15 @@ class Login extends React.Component {
         this.props.actions.setView(Views.REGISTER);
     }
 
-    authSuccess() {
+    authSuccess(token) {
+        window.sessionStorage.setItem("token", token);
         this.props.actions.setView(Views.CHAT);
     }
 
-    authFail() {
-        alert("Login failed");
+    authFail(message) {
+        this.setState({
+            message: message
+        });
     }
 
     handleSubmit(username, password) {
@@ -34,19 +37,28 @@ class Login extends React.Component {
 
         fetch("/auth/login", {
             method: "POST",
-            body: "username=" + username + "&password=" + password,
-            credentials: "include",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        }).then(function(res) {
+            body: JSON.stringify({ username: username, password: password }),
+            headers: { "Content-Type": "application/json" }
+        }).then((res) => {
             switch (res.status) {
-            case 204:
-                onSuccess();
-                break;
+            case 200:
+                return res.json();
             case 401:
-                onFail();
+                onFail("Invalid username or password.");
+                return;
+            case 400:
+                onFail("Sorry, something went wrong.");
+                return;
+            case 500:
+                onFail("Sorry, our amazing servers are down.");
+                return;
             }
-        }).catch(function() {
-            alert("Error while querying login server");
+        }).then((data) => {
+            if (data["token"] === undefined) {
+                onFail("Sorry, something went wrong.");
+                return;
+            }
+            onSuccess(data["token"]);
         });
     }
 
@@ -56,9 +68,9 @@ class Login extends React.Component {
                 <div id="wrapper" style={FormComponents.styles.wrapper}>
                     <div id="box" style={FormComponents.styles.box}>
                         <h1 style={FormComponents.styles.header}>skål</h1>
-                        <FormComponents.Form onSubmit={this.handleSubmit}
-                                             buttonLabel="Login"/>
-                        <a href="#" onClick={this.goToRegister}>Register</a>
+                        <p id="error" style={FormComponents.styles.error}> {this.state.message} </p>
+                        <FormComponents.Form onSubmit={this.handleSubmit} buttonLabel="Login"/>
+                        <a href="#" onClick={this.goToRegister} style={FormComponents.styles.register}>Sign Up</a>
                     </div>
                 </div>
             </StyleRoot>
