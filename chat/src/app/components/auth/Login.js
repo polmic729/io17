@@ -2,7 +2,8 @@ import { StyleRoot } from "radium";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setView, Views } from "../../actions/views";
+import { Views, setView } from "../../actions/views";
+import { userLogin } from "../../actions/user";
 import FormComponents from "./Form";
 
 class Login extends React.Component {
@@ -20,8 +21,10 @@ class Login extends React.Component {
         this.props.actions.setView(Views.REGISTER);
     }
 
-    authSuccess(token) {
+    authSuccess(username, token) {
         window.sessionStorage.setItem("token", token);
+        window.sessionStorage.setItem("name", username);
+        this.props.actions.userLogin(username);
         this.props.actions.setView(Views.CHAT);
     }
 
@@ -35,6 +38,8 @@ class Login extends React.Component {
         let onSuccess = this.authSuccess;
         let onFail = this.authFail;
 
+        let formUsername = username;
+
         fetch("/auth/login", {
             method: "POST",
             body: JSON.stringify({ username: username, password: password }),
@@ -44,7 +49,7 @@ class Login extends React.Component {
             case 200:
                 return res.json();
             case 401:
-                onFail("Invalid username or password.");
+                onFail("Invalid name or password.");
                 return;
             case 400:
                 onFail("Sorry, something went wrong.");
@@ -58,7 +63,7 @@ class Login extends React.Component {
                 onFail("Sorry, something went wrong.");
                 return;
             }
-            onSuccess(data["token"]);
+            onSuccess(formUsername, data["token"]);
         });
     }
 
@@ -79,7 +84,7 @@ class Login extends React.Component {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setView }, dispatch)
+    actions: bindActionCreators({ setView, userLogin }, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(Login);

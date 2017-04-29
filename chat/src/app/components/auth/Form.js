@@ -44,8 +44,7 @@ class Form extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.onSubmit(this.state.username,
-            this.state.password);
+        this.props.onSubmit(this.state.username, this.state.password);
         event.preventDefault();
     }
 

@@ -34,7 +34,7 @@ class SignUp extends React.Component {
 
         fetch("/auth/register", {
             method: "POST",
-            body: "username=" + username + "&password=" + password,
+            body: "name=" + username + "&password=" + password,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
