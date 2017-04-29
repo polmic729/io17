@@ -31,9 +31,9 @@ class UserModel {
 
         Promise.all([userPromise, authPromise]).then(values => {
             let [user, authenticated] = values;
-            done(null, authenticated ? user : null);
-        }).catch(reason => {
-            done(reason, null);
+            done(authenticated ? user : null, null);
+        }).catch(error => {
+            done(null, error);
         });
     }
 
@@ -43,17 +43,17 @@ class UserModel {
 
         Promise.all([existingUser, newHash]).then(values => {
             let [user, hash] = values;
-            if (user) // user exists
+            if (user) // already exists
                 return Promise.reject();
-            let newUser = new this({
+            user = new this({
                 username: username,
                 passwordHashed: hash
             });
-            return newUser.save();
-        }).then(result => {
-            done(null, result);
-        }).catch(reason => {
-            done(reason, null);
+            return user.save();
+        }).then(user => {
+            done(user, null);
+        }).catch(error => {
+            done(null, error);
         });
     }
 }
