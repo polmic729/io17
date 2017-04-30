@@ -44,7 +44,7 @@ class UserModel {
         Promise.all([existingUser, newHash]).then(values => {
             let [user, hash] = values;
             if (user) // already exists
-                return Promise.reject();
+                return Promise.reject("User already exists");
             user = new this({
                 username: username,
                 passwordHashed: hash
