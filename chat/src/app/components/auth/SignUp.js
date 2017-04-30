@@ -34,15 +34,13 @@ class SignUp extends React.Component {
 
         fetch("/auth/register", {
             method: "POST",
-            body: "name=" + username + "&password=" + password,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }).then(function(res) {
+            body: JSON.stringify({username, password}),
+            headers: { "Content-Type": "application/json" }
+        }).then(res => {
             switch (res.status) {
             case 204:
                 onSuccess();
-                break;
+                return;
             case 401:
                 onFail();
             }
