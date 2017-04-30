@@ -23,8 +23,6 @@
     "mongoose": "^4.9.6",
     "mongoose-class-wrapper": "^0.8.1",
     "morgan": "~1.8.1",
-    "passport": "^0.3.2",
-    "passport-jwt": "^2.2.1",
     "q": "^1.0.1",
     "radium": "^0.18.2",
     "react": "^15.5.4",
