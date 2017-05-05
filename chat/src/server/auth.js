@@ -31,7 +31,7 @@ router.post("/register", (req, res) => {
     User.create(req.body.username, req.body.password, (user, error) => {
         if (error === "user_exists") {
             res.status(403).json({ message: "User already exists" });
-        } else (error) {
+        } else if(error) {
             res.status(500).json({ message: "Unknown error" });
             return;
         }
