@@ -47,15 +47,15 @@ class Login extends React.Component {
                 return res.json();
             }
 
-            return Promise.reject()
+            return Promise.reject();
         }).then(data => {
-            if ("token" in data) {
+            if (!("token" in data)) {
                 onFail("Sorry, something went wrong.");
                 return;
             }
             onSuccess(formUsername, data["token"]);
         }).catch(() => {
-            onFail("Unknown error occurred.");
+            onFail("Wrong username of password");
         });
     }
 
