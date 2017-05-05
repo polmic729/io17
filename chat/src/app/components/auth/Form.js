@@ -35,6 +35,8 @@ class Form extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateUsername = this.validateUsername.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
     }
 
     handleInputChange(key, value) {
@@ -51,6 +53,13 @@ class Form extends React.Component {
             });
             return;
         }
+        if (!this.validatePassword(this.state.password)) {
+            this.setState({
+                message: "Password must have at least 8 characters"
+            });
+            return;
+        }
+        this.setState({ message: "" }); // clear any error
         this.props.onSubmit(this.state.username, this.state.password);
     }
 
@@ -62,10 +71,14 @@ class Form extends React.Component {
         return true;
     }
 
+    validatePassword(password) {
+        return password.length >= 8;
+    }
+
     render() {
         return (
             <StyleRoot>
-                <p style={styles.error}>{this.props.errorMessage || this.state.message}</p>
+                <p style={styles.error}>{this.state.message || this.props.errorMessage}</p>
                 <form onSubmit={this.handleSubmit}>
                     <InputBox name="username" onChange={this.handleInputChange}/>
                     <InputBox name="password" type="password" onChange={this.handleInputChange}/>
