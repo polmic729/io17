@@ -12,7 +12,7 @@ router.post("/login", (req, res) => {
     }
     User.authenticate(req.body.username, req.body.password, (user, error) => {
         if (error) {
-            res.status(500).json({ message: error });
+            res.status(500).json({ message: "Unknown error" });
             return;
         }
         if (user) {
@@ -31,6 +31,7 @@ router.post("/register", (req, res) => {
     User.create(req.body.username, req.body.password, (user, error) => {
         if (error === "user_exists") {
             res.status(403).json({ message: "User already exists" });
+            return;
         } else if(error) {
             res.status(500).json({ message: "Unknown error" });
             return;

@@ -21,7 +21,19 @@ class UserModel {
         return bcrypt.hash(pass, config.crypto.saltRounds);
     }
 
+    static credentialsValid(username, password) {
+        let usernameRegex = /^[a-z0-9]+$/;
+        if (!username.match(usernameRegex) || password.length < 8) {
+            return false;
+        }
+        return true;
+    }
+
     static authenticate(username, password, done) {
+        if (!this.credentialsValid(username, password)) {
+            done(null, true);
+            return;
+        }
         let userPromise = this.byUsername(username);
         let authPromise = userPromise.then(user => {
             if (!user)
@@ -38,6 +50,10 @@ class UserModel {
     }
 
     static create(username, password, done) {
+        if (!this.credentialsValid(username, password)) {
+            done(null, true);
+            return;
+        }
         let noUser = this.byUsername(username).then(user => {
             if (user) {
                 return Promise.reject("user_exists");
