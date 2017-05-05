@@ -29,9 +29,7 @@ class Login extends React.Component {
     }
 
     authFail(message) {
-        this.setState({
-            message: message
-        });
+        this.setState({ message });
     }
 
     handleSubmit(username, password) {
@@ -45,25 +43,19 @@ class Login extends React.Component {
             body: JSON.stringify({ username: username, password: password }),
             headers: { "Content-Type": "application/json" }
         }).then((res) => {
-            switch (res.status) {
-            case 200:
+            if (res.status === 200) {
                 return res.json();
-            case 401:
-                onFail("Invalid name or password.");
-                return;
-            case 400:
-                onFail("Sorry, something went wrong.");
-                return;
-            case 500:
-                onFail("Sorry, our amazing servers are down.");
-                return;
             }
-        }).then((data) => {
-            if (data["token"] === undefined) {
+
+            return Promise.reject()
+        }).then(data => {
+            if ("token" in data) {
                 onFail("Sorry, something went wrong.");
                 return;
             }
             onSuccess(formUsername, data["token"]);
+        }).catch(() => {
+            onFail("Unknown error occurred.");
         });
     }
 
@@ -73,9 +65,11 @@ class Login extends React.Component {
                 <div id="wrapper" style={FormComponents.styles.wrapper}>
                     <div id="box" style={FormComponents.styles.box}>
                         <h1 style={FormComponents.styles.header}>skål</h1>
-                        <p id="error" style={FormComponents.styles.error}> {this.state.message} </p>
-                        <FormComponents.Form onSubmit={this.handleSubmit} buttonLabel="Login"/>
-                        <a href="#" onClick={this.goToRegister} style={FormComponents.styles.register}>Sign Up</a>
+                        <FormComponents.Form onSubmit={this.handleSubmit}
+                                             errorMessage={this.state.message}
+                                             buttonLabel="Login"/>
+                        <a onClick={this.goToRegister}
+                           style={FormComponents.styles.switchLink}>Sign Up</a>
                     </div>
                 </div>
             </StyleRoot>

@@ -51,6 +51,7 @@ class Form extends React.Component {
     render() {
         return (
             <StyleRoot>
+                <p style={styles.error}>{this.props.errorMessage}</p>
                 <form onSubmit={this.handleSubmit}>
                     <InputBox name="username" onChange={this.handleInputChange}/>
                     <InputBox name="password" type="password" onChange={this.handleInputChange}/>
@@ -100,8 +101,9 @@ const styles = {
         color: "#D90429"
     },
 
-    register: {
+    switchLink: {
         textDecoration: "none",
+        cursor: "pointer",
         color: "#43587B",
 
         ":hover": {

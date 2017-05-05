@@ -9,6 +9,7 @@ class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {};
         this.authSuccess = this.authSuccess.bind(this);
         this.authFail = this.authFail.bind(this);
         this.goToLogin = this.goToLogin.bind(this);
@@ -20,12 +21,11 @@ class SignUp extends React.Component {
     }
 
     authSuccess() {
-        alert("SignUp successful");
         this.props.actions.setView(Views.LOGIN);
     }
 
-    authFail() {
-        alert("SignUp failed");
+    authFail(message) {
+        this.setState({ message });
     }
 
     handleSubmit(username, password) {
@@ -41,11 +41,11 @@ class SignUp extends React.Component {
             case 204:
                 onSuccess();
                 return;
-            case 401:
-                onFail();
+            case 500:
+                onFail("User already exists");
             }
-        }).catch(function() {
-            alert("Error while querying login server");
+        }).catch(() => {
+            onFail("Unknown error occurred.");
         });
     }
 
@@ -56,8 +56,10 @@ class SignUp extends React.Component {
                     <div id="box" style={FormComponents.styles.box}>
                         <h1 style={FormComponents.styles.header}>skål</h1>
                         <FormComponents.Form onSubmit={this.handleSubmit}
+                                             errorMessage={this.state.message}
                                              buttonLabel="Sign up"/>
-                        <a href="#" onClick={this.goToLogin}>Login</a>
+                        <a onClick={this.goToLogin}
+                           style={FormComponents.styles.switchLink}>Login</a>
                     </div>
                 </div>
             </StyleRoot>
