@@ -43,6 +43,7 @@ class SignUp extends React.Component {
                 return;
             case 500:
                 onFail("User already exists");
+                return;
             }
         }).catch(() => {
             onFail("Unknown error occurred.");

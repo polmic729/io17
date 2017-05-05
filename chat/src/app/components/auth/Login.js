@@ -36,26 +36,26 @@ class Login extends React.Component {
         let onSuccess = this.authSuccess;
         let onFail = this.authFail;
 
-        let formUsername = username;
-
-        fetch("/auth/login", {
+        let jsonRequest = fetch("/auth/login", {
             method: "POST",
-            body: JSON.stringify({ username: username, password: password }),
+            body: JSON.stringify({ username, password }),
             headers: { "Content-Type": "application/json" }
-        }).then((res) => {
-            if (res.status === 200) {
-                return res.json();
-            }
+        });
+        let jsonData = jsonRequest.then(res => res.json());
 
-            return Promise.reject();
-        }).then(data => {
-            if (!("token" in data)) {
-                onFail("Sorry, something went wrong.");
+        Promise.all([jsonRequest, jsonData]).then(values => {
+            let [response, data] = values;
+            if (response.status === 200) {
+                onSuccess(username, data.token);
                 return;
+            } else if("message" in data) {
+                onFail(data.message);
+                return;
+            } else {
+                return Promise.reject();
             }
-            onSuccess(formUsername, data["token"]);
         }).catch(() => {
-            onFail("Wrong username of password");
+            onFail("Unknown error occurred");
         });
     }
 
