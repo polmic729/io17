@@ -38,21 +38,25 @@ class UserModel {
     }
 
     static create(username, password, done) {
-        let existingUser = this.byUsername(username);
+        let noUser = this.byUsername(username).then(user => {
+            if (user) {
+                return Promise.reject("user_exists");
+            }
+            return Promise.resolve(true);
+        });
         let newHash = this.makePassword(password);
 
-        Promise.all([existingUser, newHash]).then(values => {
-            let [user, hash] = values;
-            if (user) // already exists
-                return Promise.reject("User already exists");
-            user = new this({
+        Promise.all([noUser, newHash]).then(values => {
+            // noUser wasn't rejected => user doesn't exist
+            let hash = values[1];
+            let user = new this({
                 username: username,
                 passwordHashed: hash
             });
             return user.save();
         }).then(user => {
             done(user, null);
-        }).catch(error => {
+        }).catch(error => { // when user exists or other error occurred
             done(null, error);
         });
     }
