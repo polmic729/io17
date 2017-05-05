@@ -33,7 +33,7 @@
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3"
   },
-    "devDependencies": {
+  "devDependencies": {
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0",
