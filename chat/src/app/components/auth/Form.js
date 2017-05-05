@@ -44,14 +44,28 @@ class Form extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.onSubmit(this.state.username, this.state.password);
         event.preventDefault();
+        if (!this.validateUsername(this.state.username)) {
+            this.setState({
+                message: "Username can contain only digits and lowercase letters"
+            });
+            return;
+        }
+        this.props.onSubmit(this.state.username, this.state.password);
+    }
+
+    validateUsername(username) {
+        let usernameRegex = /^[a-z0-9]+$/;
+        if (!username.match(usernameRegex)) {
+            return false;
+        }
+        return true;
     }
 
     render() {
         return (
             <StyleRoot>
-                <p style={styles.error}>{this.props.errorMessage}</p>
+                <p style={styles.error}>{this.props.errorMessage || this.state.message}</p>
                 <form onSubmit={this.handleSubmit}>
                     <InputBox name="username" onChange={this.handleInputChange}/>
                     <InputBox name="password" type="password" onChange={this.handleInputChange}/>
