@@ -2,52 +2,53 @@ import { StyleRoot } from "radium";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Screens, setScreen } from "../actions/screens";
+import { Views, setView } from "../../actions/views";
 import FormComponents from "./Form";
 
-class Login extends React.Component {
+class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {};
         this.authSuccess = this.authSuccess.bind(this);
         this.authFail = this.authFail.bind(this);
-        this.goToRegister = this.goToRegister.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    goToRegister() {
-        this.props.actions.setScreen(Screens.REGISTER);
+    goToLogin() {
+        this.props.actions.setView(Views.LOGIN);
     }
 
     authSuccess() {
-        this.props.actions.setScreen(Screens.CHAT);
+        this.props.actions.setView(Views.LOGIN);
     }
 
-    authFail() {
-        alert("Login failed");
+    authFail(message) {
+        this.setState({ message });
     }
 
     handleSubmit(username, password) {
         let onSuccess = this.authSuccess;
         let onFail = this.authFail;
 
-        fetch("/auth/login", {
+        fetch("/auth/register", {
             method: "POST",
-            body: "username=" + username + "&password=" + password,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }).then(function(res) {
+            body: JSON.stringify({username, password}),
+            headers: { "Content-Type": "application/json" }
+        }).then(res => {
             switch (res.status) {
             case 204:
                 onSuccess();
-                break;
-            case 401:
-                onFail();
+                return;
+            case 403:
+                onFail("User already exists");
+                return;
+            default:
+                onFail("Unknown error occurred");
             }
-        }).catch(function() {
-            alert("Error while querying login server");
+        }).catch(() => {
+            onFail("Unknown error occurred.");
         });
     }
 
@@ -58,8 +59,10 @@ class Login extends React.Component {
                     <div id="box" style={FormComponents.styles.box}>
                         <h1 style={FormComponents.styles.header}>skål</h1>
                         <FormComponents.Form onSubmit={this.handleSubmit}
-                                             buttonLabel="Login"/>
-                        <a href="#" onClick={this.goToRegister}>Register</a>
+                                             errorMessage={this.state.message}
+                                             buttonLabel="Sign up"/>
+                        <a onClick={this.goToLogin}
+                           style={FormComponents.styles.switchLink}>Login</a>
                     </div>
                 </div>
             </StyleRoot>
@@ -68,7 +71,7 @@ class Login extends React.Component {
 }
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setScreen }, dispatch)
+    actions: bindActionCreators({ setView }, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(SignUp);

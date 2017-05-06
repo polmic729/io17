@@ -1,6 +1,7 @@
 import React from "react";
 import Messages from "./Messages";
 import Send from "./Send";
+import TopBar from "./TopBar";
 
 class Chat extends React.Component {
 
@@ -11,6 +12,7 @@ class Chat extends React.Component {
     render() {
         return (
             <section>
+                <TopBar />
                 <Messages />
                 <Send />
             </section>

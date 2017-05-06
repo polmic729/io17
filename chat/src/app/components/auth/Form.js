@@ -35,6 +35,8 @@ class Form extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateUsername = this.validateUsername.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
     }
 
     handleInputChange(key, value) {
@@ -44,14 +46,39 @@ class Form extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.onSubmit(this.state.username,
-            this.state.password);
         event.preventDefault();
+        if (!this.validateUsername(this.state.username)) {
+            this.setState({
+                message: "Username can contain only digits and lowercase letters"
+            });
+            return;
+        }
+        if (!this.validatePassword(this.state.password)) {
+            this.setState({
+                message: "Password must have at least 8 characters"
+            });
+            return;
+        }
+        this.setState({ message: "" }); // clear any error
+        this.props.onSubmit(this.state.username, this.state.password);
+    }
+
+    validateUsername(username) {
+        let usernameRegex = /^[a-z0-9]+$/;
+        if (!username.match(usernameRegex)) {
+            return false;
+        }
+        return true;
+    }
+
+    validatePassword(password) {
+        return password.length >= 8;
     }
 
     render() {
         return (
             <StyleRoot>
+                <p style={styles.error}>{this.state.message || this.props.errorMessage}</p>
                 <form onSubmit={this.handleSubmit}>
                     <InputBox name="username" onChange={this.handleInputChange}/>
                     <InputBox name="password" type="password" onChange={this.handleInputChange}/>
@@ -92,6 +119,23 @@ const styles = {
         fontSize: "50px",
         marginBottom: "20px",
         color: "#43587B"
+    },
+
+    error: {
+        textAlign: "center",
+        fontSize: "15px",
+        marginBottom: "10px",
+        color: "#D90429"
+    },
+
+    switchLink: {
+        textDecoration: "none",
+        cursor: "pointer",
+        color: "#43587B",
+
+        ":hover": {
+            color: "#28407b"
+        }
     },
 
     input: {

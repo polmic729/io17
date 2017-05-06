@@ -1,65 +1,43 @@
 let express = require("express");
 let router = express.Router();
-let passport = require("passport");
-let LocalStrategy = require("passport-local");
+let jwt = require("jsonwebtoken");
+
+let config = require("../../config");
 let User = require("./models/user");
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
-
-passport.use("login",
-    new LocalStrategy((user, pass, done) => User.authenticate(user, pass, done)));
-
-passport.use("register",
-    new LocalStrategy((user, pass, done) => User.create(user, pass, done)));
-
-router.use(passport.initialize());
-router.use(passport.session());
-
-router.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect("/");
-});
-
-router.post("/register", function(req, res, next) {
-    passport.authenticate("register", function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            res.status(401).send("Registration failed");
+router.post("/login", (req, res) => {
+    if (!req.body.username || !req.body.password) {
+        res.status(400).json({ message: "Fields 'username' and 'password' are required." });
+        return;
+    }
+    User.authenticate(req.body.username, req.body.password, (user, error) => {
+        if (error) {
+            res.status(500).json({ message: "Unknown error" });
             return;
         }
-        req.logIn(user, function(err) {
-            if (err) {
-                return next(err);
-            }
-            res.status(204).send("Registration successful");
-        });
-    })(req, res, next);
+        if (user) {
+            res.status(200).json({ token: jwt.sign({ id: user._id }, config.secret) });
+        } else {
+            res.status(401).json({ message: "Invalid username or password." });
+        }
+    });
 });
 
-router.post("/login", function(req, res, next) {
-    passport.authenticate("login", function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            res.status(401).send("Unauthorised");
+router.post("/register", (req, res) => {
+    if (!req.body.username || !req.body.password) {
+        res.status(400).json({ message: "Fields 'username' and 'password' are required." });
+        return;
+    }
+    User.create(req.body.username, req.body.password, (user, error) => {
+        if (error === "user_exists") {
+            res.status(403).json({ message: "User already exists" });
+            return;
+        } else if(error) {
+            res.status(500).json({ message: "Unknown error" });
             return;
         }
-        req.logIn(user, function(err) {
-            if (err) {
-                return next(err);
-            }
-            res.status(204).send("Authorised");
-        });
-    })(req, res, next);
+        res.status(204).send();
+    });
 });
 
 module.exports = router;

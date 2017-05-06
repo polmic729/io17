@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import { screen } from "./screen";
-import { websocket } from "./websocket";
+import { views } from "./views";
+import { connections } from "./connections";
+import { user } from "./user";
 
 export default combineReducers({
-    screen,
-    websocket
+    user,
+    views,
+    connections
 });

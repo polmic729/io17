@@ -9,6 +9,10 @@ let userSchema = new mongoose.Schema({
 });
 
 class UserModel {
+    static byId(id) {
+        return this.findOne({ _id: id }).exec();
+    }
+
     static byUsername(username) {
         return this.findOne({ username }).exec();
     }
@@ -17,7 +21,19 @@ class UserModel {
         return bcrypt.hash(pass, config.crypto.saltRounds);
     }
 
+    static credentialsValid(username, password) {
+        let usernameRegex = /^[a-z0-9]+$/;
+        if (!username.match(usernameRegex) || password.length < 8) {
+            return false;
+        }
+        return true;
+    }
+
     static authenticate(username, password, done) {
+        if (!this.credentialsValid(username, password)) {
+            done(null, true);
+            return;
+        }
         let userPromise = this.byUsername(username);
         let authPromise = userPromise.then(user => {
             if (!user)
@@ -27,30 +43,37 @@ class UserModel {
 
         Promise.all([userPromise, authPromise]).then(values => {
             let [user, authenticated] = values;
-            done(null, authenticated ? user : null);
-        }).catch(reason => {
-            done(reason, null);
+            done(authenticated ? user : null, null);
+        }).catch(error => {
+            done(null, error);
         });
     }
 
     static create(username, password, done) {
-        // Check if this user already exists
-        let existingUser = this.byUsername(username);
+        if (!this.credentialsValid(username, password)) {
+            done(null, true);
+            return;
+        }
+        let noUser = this.byUsername(username).then(user => {
+            if (user) {
+                return Promise.reject("user_exists");
+            }
+            return Promise.resolve(true);
+        });
         let newHash = this.makePassword(password);
 
-        Promise.all([existingUser, newHash]).then(values => {
-            let [user, hash] = values;
-            if (user) // if user already exists we stop next actions
-                return Promise.reject();
-            let newUser = new this({
+        Promise.all([noUser, newHash]).then(values => {
+            // noUser wasn't rejected => user doesn't exist
+            let hash = values[1];
+            let user = new this({
                 username: username,
                 passwordHashed: hash
             });
-            return newUser.save();
-        }).then(result => {
-            done(null, result);
-        }).catch(reason => {
-            done(reason, null);
+            return user.save();
+        }).then(user => {
+            done(user, null);
+        }).catch(error => { // when user exists or other error occurred
+            done(null, error);
         });
     }
 }

@@ -1,11 +1,22 @@
 const path = require("path");
+let webpack = require("webpack");
 
 module.exports = {
-    entry: path.resolve(__dirname, "./src/client/scripts/client.js"),
+    context: __dirname,
+    entry: [
+        "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+        path.resolve(__dirname, "./src/client/scripts/client.js")
+    ],
     output: {
         path: path.resolve(__dirname, "./dist"),
+        publicPath: "/",
         filename: "bundle.js"
     },
+    devtool: "#source-map",
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
+    ],
     module: {
         loaders: [
             {
