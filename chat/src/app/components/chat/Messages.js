@@ -9,6 +9,7 @@ class Messages extends React.Component {
             messages: []
         };
         this.onNewMessage = this.onNewMessage.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     onNewMessage(message) {
