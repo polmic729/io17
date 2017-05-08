@@ -1,15 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import io from "socket.io-client";
-import { setSocket } from "../actions/connections";
 import { userLogin, userLogout } from "../actions/user";
 import { setView, Views } from "../actions/views";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import Chat from "./chat/Chat";
 
-let config = require("../../../config");
 
 class Root extends React.Component {
     constructor(props) {
@@ -17,8 +14,6 @@ class Root extends React.Component {
         document.title = "skål";
         this.checkIfLoggedIn = this.checkIfLoggedIn.bind(this);
         this.checkIfLoggedIn();
-        this.createWebsocket = this.createWebsocket.bind(this);
-        this.createWebsocket();
     }
 
     checkIfLoggedIn() {
@@ -35,10 +30,6 @@ class Root extends React.Component {
             this.props.actions.userLogout();
             this.props.actions.setView(Views.LOGIN);
         }
-    }
-
-    createWebsocket() {
-        this.props.actions.setSocket(io("http://" + config.websocket.host + ":" + config.websocket.port));
     }
 
     render() {
@@ -60,7 +51,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setSocket, setView, userLogin, userLogout }, dispatch)
+    actions: bindActionCreators({ setView, userLogin, userLogout }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
