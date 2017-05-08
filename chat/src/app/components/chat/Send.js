@@ -16,9 +16,11 @@ class Send extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.socket.emit("chat-message", this.state.message);
-        this.refs.textBox.value = "";
-        this.setState({ message: "" });
+        if (this.state.message !== "") {
+            this.props.socket.emit("chat-message", this.state.message);
+            this.refs.textBox.value = "";
+            this.setState({ message: "" });
+        }
     }
 
     render() {
