@@ -14,7 +14,8 @@ class Send extends React.Component {
         this.setState({ message: event.target.value });
     }
 
-    handleSubmit() {
+    handleSubmit(event) {
+        event.preventDefault();
         this.props.socket.emit("chat-message", this.state.message);
         this.refs.textBox.value = "";
         this.setState({ message: "" });
@@ -23,8 +24,10 @@ class Send extends React.Component {
     render() {
         return (
             <section>
-                <input ref="textBox" type="text" name="message" placeholder="message" onChange={this.handleChange}/>
-                <button onClick={this.handleSubmit}>Send</button>
+                <form onSubmit={this.handleSubmit}>
+                    <input ref="textBox" type="text" name="message" placeholder="message" onChange={this.handleChange}/>
+                    <input type="submit" value="Send"/>
+                </form>
             </section>
         );
     }
