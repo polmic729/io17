@@ -22,26 +22,30 @@ class Chat extends React.Component {
         return (
             <div id="container">
                 <div id="leftBar" className="sideBar">
-                    <h2>Znajomi</h2>
+                    <h2>Czaty</h2>
                     <div className="clientContainer">
-                        <h3>dostępni</h3>
+                        <h3>grupowe</h3>
                         <div>test_online1</div>
                         <div>test_online2</div>
-                        <h3>niedostępni</h3>
+                        <h3>znajomi</h3>
                         <div>test_offline1</div>
                         <div>test_offline2</div>
                     </div>
                 </div>
                 <div id="content">
-                    <section>
-                        <h1>skål</h1>
-                        <TopBar />
-                        <Messages />
-                        <Send />
-                    </section>
+                    <h1>skål</h1>
+                    {/*<TopBar />*/}
+                    <div id="chatContainer">
+                        <div id="messages">
+                            <Messages />
+                        </div>
+                        <div id="textBox">
+                            <Send />
+                        </div>
+                    </div>
                 </div>
                 <div id="rightBar" className="sideBar">
-                    <h2>Uczestnicy czatu</h2>
+                    <h2>Uczestnicy</h2>
                     <div className="clientContainer">
                         <h3>dostępni</h3>
                         <div>test_online1</div>

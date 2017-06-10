@@ -13,21 +13,27 @@ html, body, #main {
 }
 
 h1 {
+    line-height: 60px;
     font-family: 'Varela Round', sans-serif;
     text-align: center;
     font-size: 50px;
-    margin: 20px 0;
+    padding: 10px 0;
     color: #43587B;
+
+    border-bottom: 1px solid;
+    vertical-align: middle;
 }
 
 h2 {
+    line-height: 60px;
     font-family: 'Varela Round', sans-serif;
     text-align: center;
     font-size: 30px;
-    padding: 20px 0;
-    margin: 0 15px;
+    padding: 10px 0;
     color: #43587B;
+
     border-bottom: 1px solid;
+    vertical-align: middle;
 }
 
 #main > div {
@@ -35,13 +41,12 @@ h2 {
 }
 
 #container {
-
     display: flex;
 }
 
 .sideBar {
     width: 20%;
-
+    min-width: 240px;
     color: #868B8F;
 }
 
@@ -50,26 +55,27 @@ h2 {
     margin-top: 30px;
     padding: 5px 30px;
     color: #868BAF;
+
 }
 
 #leftBar {
     background: #303136;
 }
 
-#leftBar h2 {
-    border-color: #404040;
-}
-
 #rightBar {
     background: #F3F3F3;
+}
+
+#leftBar h2 {
+    border-color: #404040;
 }
 
 #rightBar h2 {
     border-color: #CFCFCF;
 }
 
-#content {
-    width: 60%;
+#content h1 {
+    border-color: #CFCFCF;
 }
 
 .clientContainer {
@@ -81,8 +87,30 @@ h2 {
     padding: 5px 30px;
     height: 40px;
     line-height: 40px;
-    /*align-items: center;*/
-    /*text-align: center;*/
-    /*vertical-align: middle;*/
-    /*width: 80%;*/
+}
+
+#content {
+    width: 60%;
+}
+
+#chatContainer {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 81px);
+
+}
+
+#chatContainer > div {
+    display: flex;
+    min-width: 100%;
+}
+
+#messages {
+    flex-grow: 1;
+    height: calc(90% - 81px);
+}
+
+#textBox {
+    flex-grow: 1;
+    height: calc(10% - 81px);
 }
