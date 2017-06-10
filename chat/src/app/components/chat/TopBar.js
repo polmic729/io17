@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 class TopBar extends React.Component {
 
@@ -13,10 +13,10 @@ class TopBar extends React.Component {
 
     render() {
         return (
-            <header>
+            <div id="settings">
                 <p> { this.props.username } </p>
                 <button onSubmit={this.logout} value="Logout"/>
-            </header>
+            </div>
         );
     }
 }
