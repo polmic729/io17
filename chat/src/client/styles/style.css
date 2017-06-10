@@ -11,6 +11,54 @@ html, body, #main {
     height: 100%;
 }
 
+h1 {
+    font-family: 'Varela Round', sans-serif;
+    text-align: center;
+    font-size: 50px;
+    margin: 20px 0;
+    color: #43587B;
+}
+
+h2 {
+    font-family: 'Varela Round', sans-serif;
+    text-align: center;
+    font-size: 30px;
+    margin: 20px 0;
+    color: #43587B;
+}
+
 #main > div {
     height: 100%;
+}
+
+#container {
+
+    display: flex;
+}
+
+
+.sideBar {
+    width: 20%;
+}
+
+#leftBar {
+    background: #303136;
+}
+#rightBar {
+    background: #F3F3F3;
+}
+
+#content {
+    width: 60%;
+}
+
+.clientContainer {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.clientContainer > div {
+    height: 40px;
+    width: 80%;
 }
