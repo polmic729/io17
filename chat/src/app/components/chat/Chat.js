@@ -23,11 +23,13 @@ class Chat extends React.Component {
             <div id="container">
                 <div id="leftBar" className="sideBar">
                     <h2>Znajomi</h2>
-                    <div id="online">
+                    <div className="clientContainer">
                         <h3>dostępni</h3>
-                    </div>
-                    <div id="offline">
+                        <div>test_online1</div>
+                        <div>test_online2</div>
                         <h3>niedostępni</h3>
+                        <div>test_offline1</div>
+                        <div>test_offline2</div>
                     </div>
                 </div>
                 <div id="content">
@@ -40,19 +42,13 @@ class Chat extends React.Component {
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy czatu</h2>
-                    <div id="online">
+                    <div className="clientContainer">
                         <h3>dostępni</h3>
-                        <div className="clientContainer">
-                            <div>test_online1</div>
-                            <div>test_online2</div>
-                        </div>
-                    </div>
-                    <div id="offline">
+                        <div>test_online1</div>
+                        <div>test_online2</div>
                         <h3>niedostępni</h3>
-                        <div className="clientContainer">
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                        </div>
+                        <div>test_offline1</div>
+                        <div>test_offline2</div>
                     </div>
                 </div>
             </div>
