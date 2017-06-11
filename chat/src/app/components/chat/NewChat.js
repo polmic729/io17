@@ -19,9 +19,9 @@ class NewChat extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.groupName !== "") {
+        if (this.state.name !== "") {
             const message = {
-                groupName: this.state.groupName
+                groupName: this.state.name
             };
             this.props.socket.emit("newGroup", message);
             this.refs.textBox.value = "";

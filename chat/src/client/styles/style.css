@@ -102,9 +102,9 @@ h2 {
     height: calc(100% - 81px  - 127px);
 }
 
-#chatGroups {
+#chatRooms {
     flex-grow: 1;
-    height: calc(100% - 81px - 127px - 60px);
+    height: calc(100% - 81px - 127px);
 }
 
 #settings {
@@ -273,12 +273,12 @@ label:focus,
 }
 
 
-.groupSelected {
+.roomSelected {
     background-color: #42464F;
     cursor: pointer;
 }
 
-.groupDefault:hover {
+.roomDefault:hover {
     background-color: #363942;
     cursor: pointer;
 }

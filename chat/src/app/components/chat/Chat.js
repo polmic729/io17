@@ -6,16 +6,18 @@ import io from "socket.io-client";
 import Messages from "./Messages";
 import Send from "./Send";
 import SettingsBar from "./SettingsBar";
-import Groups from "./Groups";
+import Rooms from "./Rooms";
 import Members from "./Members";
 import AddMember from "./AddMember";
 import NewChat from "./NewChat";
+import {setSelectedRoom} from "../../actions/rooms";
 
 let config = require("../../../../config");
 
 class Chat extends React.Component {
     constructor(props) {
         super(props);
+        this.props.actions.setSelectedRoom();
     }
 
     componentWillMount() {
@@ -28,7 +30,7 @@ class Chat extends React.Component {
                 <div id="leftBar" className="sideBar">
                     <h2>Czaty</h2>
                     <NewChat />
-                    <Groups />
+                    <Rooms />
                     <SettingsBar />
                 </div>
                 <div id="content">
@@ -53,7 +55,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSocket}, dispatch)
+    actions: bindActionCreators({setSocket, setSelectedRoom}, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

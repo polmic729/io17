@@ -29,7 +29,7 @@ class Members extends React.Component {
         return (
             <div id="chatMembers">
                 <div className="entityContainer">
-                    <h3>w grupie</h3>
+                    <h3>w grupie {this.props.group}</h3>
                     { membersList }
                 </div>
             </div>
@@ -39,7 +39,8 @@ class Members extends React.Component {
 
 let mapStateToProps = (state) => ({
     username: state.user.name,
-    socket: state.connections.socket
+    socket: state.connections.socket,
+    group: state.rooms.name
 });
 
 export default connect(mapStateToProps, null)(Members);
