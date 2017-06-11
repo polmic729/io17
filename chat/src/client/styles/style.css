@@ -11,7 +11,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
 html, body, #main {
@@ -55,11 +55,11 @@ h2 {
 }
 
 .sideBar h3 {
+    font-size: 20px;
     font-weight: normal;
     margin-top: 30px;
     padding: 5px 30px;
     color: #868BAF;
-
 }
 
 #leftBar {
@@ -85,7 +85,7 @@ h2 {
 .clientContainer {
     display: flex;
     flex-direction: column;
-    overflow-y:auto;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -99,14 +99,38 @@ h2 {
     height: calc(100% - 81px);
 }
 
-
 #chats {
     flex-grow: 1;
-    height: calc(90% - 131px);
+    height: calc(90% - 142px);
 }
 
 #settings {
-    height: 50px;
+    border-top: 1px solid #404040;
+    height: 60px;
+    display: flex;
+}
+
+#settings h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 59px;
+}
+
+#user {
+    flex-grow: 1;
+    width: 140px;
+}
+
+#logout {
+    flex-grow: 1;
+    width: 58px;
+    border-left: 1px solid #424242;
+    border-right: 1px solid #424242;
+    font-size: 8px;
+    line-height: 59px;
+    text-align: center;
+    background: url('imgs/logoff.png') no-repeat center;
 }
 
 #content {
@@ -119,7 +143,6 @@ h2 {
     flex-direction: column;
     height: calc(100% - 81px);
 }
-
 
 #messages {
     flex-grow: 1;

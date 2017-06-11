@@ -5,7 +5,7 @@ import {setSocket} from "../../actions/connections";
 import io from "socket.io-client";
 import Messages from "./Messages";
 import Send from "./Send";
-import SettingsBar from "./TopBar";
+import SettingsBar from "./SettingsBar";
 
 let config = require("../../../../config");
 
