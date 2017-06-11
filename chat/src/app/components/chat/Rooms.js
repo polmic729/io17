@@ -19,7 +19,7 @@ class Rooms extends React.Component {
             [2137, "glowny"],
             [1488, "rozrywkowy"],
             [21, "towarzyski"],
-            [37, "algorytmiczno-zabawowy"]
+            [37, "algorytmicznozabawowy"]
         ];
         this.state = {
             selectedRoom: selectedRoom,
