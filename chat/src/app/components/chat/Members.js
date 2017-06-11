@@ -8,38 +8,32 @@ class Members extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            members: ["michal", "hubert", "mateusz", "kuba"]
+        };
+        this.onMembersUpdate = this.onMembersUpdate.bind(this);
     }
 
+    onMembersUpdate(members) {
+        this.setState({
+            members: members
+        });
+    }
+
+    componentDidMount() {
+        this.props.socket.on("membersUpdate", this.onMembersUpdate);
+    }
 
     render() {
+        const membersList = this.state.members.map((member) =>
+            <div className="chatMember" key={member}> {member}</div>
+        );
 
         return (
             <div id="chatMembers">
                 <div className="entityContainer">
-                    <h3>dostępni</h3>
-                    <div>test_online1</div>
-                    <div>test_online2</div>
-                    <h3>niedostępni</h3>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
+                    <h3>w grupie</h3>
+                    { membersList }
                 </div>
             </div>
         );
@@ -47,7 +41,8 @@ class Members extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    username: state.user.name
+    username: state.user.name,
+    socket: state.connections.socket
 });
 
 export default connect(mapStateToProps, null)(Members);

@@ -31,10 +31,10 @@ class Messages extends React.Component {
                 <span className="timestamp">
                     {msg.date.hours}:{msg.date.minutes}
                 </span>
-                <span className="messageAuthor">
+                    <span className="messageAuthor">
                     {msg.author}
                 </span>
-                <span className="messageContent">
+                    <span className="messageContent">
                     {msg.content}
                 </span>
                 </div>

@@ -17,6 +17,7 @@ class Groups extends React.Component {
             groups: groups
         };
         this.changeGroup = this.changeGroup.bind(this);
+        this.onGroupUpdate = this.onGroupUpdate.bind(this);
     }
 
     changeGroup(key) {
@@ -24,6 +25,16 @@ class Groups extends React.Component {
             selected_channel: key
         });
         window.sessionStorage.setItem("selectedGroup", key);
+    }
+
+    onGroupUpdate(groups) {
+        this.setState({
+            groups: groups
+        });
+    }
+
+    componentDidMount() {
+        this.props.socket.on("groupsUpdate", this.onGroupUpdate);
     }
 
     render() {
@@ -44,7 +55,8 @@ class Groups extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    username: state.user.name
+    username: state.user.name,
+    socket: state.connections.socket
 });
 
 export default connect(mapStateToProps, null)(Groups);
