@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 class Messages extends React.Component {
 
@@ -27,16 +27,16 @@ class Messages extends React.Component {
     render() {
         const messageList = this.state.messages.map((msg, index) =>
             <li key={index}>
-                {msg}
+                {msg.date.hours}:{msg.date.minutes}:{msg.date.seconds} : {msg.author} : {msg.content}
             </li>
         );
 
         return (
-            <section>
+            <div id="messages">
                 <ul>
                     { messageList }
                 </ul>
-            </section>
+            </div>
         );
     }
 }

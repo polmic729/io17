@@ -5,22 +5,34 @@ class Send extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {message: ""};
+        this.state = {
+            textArea: ""
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePressKey = this.handlePressKey.bind(this);
     }
 
     handleChange(event) {
-        this.setState({message: event.target.value});
+        this.setState({textArea: event.target.value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.message !== "") {
-            this.props.socket.emit("chat-message", this.state.message);
+        if (this.state.textArea !== "") {
+            const submitDate = new Date();
+            const message = {
+                date: {
+                    hours: submitDate.getHours(),
+                    minutes: submitDate.getMinutes(),
+                    seconds: submitDate.getSeconds()
+                },
+                author: this.props.username,
+                content: this.state.textArea
+            };
+            this.props.socket.emit("chat-message", message);
             this.refs.textBox.value = "";
-            this.setState({message: ""});
+            this.setState({textArea: ""});
         }
     }
 
@@ -37,7 +49,7 @@ class Send extends React.Component {
                     <div id="textArea">
                         <div id="send" onClick={this.handleSubmit}>
                         </div>
-                        <textarea ref="textBox" type="text" name="message" placeholder="Napisz coś!"
+                        <textarea ref="textBox" type="text" name="textArea" placeholder="Napisz coś!"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                     </div>
                 </form>
@@ -47,7 +59,8 @@ class Send extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    socket: state.connections.socket
+    socket: state.connections.socket,
+    username: state.user.name
 });
 
 export default connect(mapStateToProps, null)(Send);

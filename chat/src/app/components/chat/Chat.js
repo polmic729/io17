@@ -38,9 +38,7 @@ class Chat extends React.Component {
                 <div id="content">
                     <h1>skål</h1>
                     <div id="chatContainer">
-                        <div id="messages">
                             <Messages />
-                        </div>
                         <Send />
                     </div>
                 </div>
