@@ -47,7 +47,6 @@ h2 {
 }
 
 .sideBar {
-    /*width: 20%;*/
     min-width: 240px;
     color: #868B8F;
     display: flex;
@@ -183,14 +182,12 @@ h2 {
 
 .messageContent {
     overflow-x: hidden;
-    /*width: 500px;*/
     height: auto;
     word-wrap: break-word;
     padding-right: 15px;
 }
 
 #messageInput {
-    /*flex-grow: 1;*/
     height: 94px;
 }
 

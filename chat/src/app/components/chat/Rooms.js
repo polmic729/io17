@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
-import {setSelectedRoom, setGeneralRoomId} from "../../actions/rooms";
+import {setGeneralRoomId, setSelectedRoom} from "../../actions/rooms";
 
 class Rooms extends React.Component {
 
@@ -16,7 +16,6 @@ class Rooms extends React.Component {
             selectedRoom = 0;
         }
 
-        // todo to check
         let rooms = JSON.parse(localStorage.getItem("rooms"));
         if (!rooms) {
             rooms = [];
@@ -63,7 +62,7 @@ class Rooms extends React.Component {
     componentWillMount() {
         this.props.actions.setGeneralRoomId(0);
         this.props.actions.setSelectedRoom(this.state.selectedRoom);
-        this.props.socket.emit("getGeneralRoomId", this.props.username); //todo move to Chat
+        this.props.socket.emit("getGeneralRoomId", this.props.username);
         this.props.socket.emit("getUserRooms", this.props.username);
     }
 

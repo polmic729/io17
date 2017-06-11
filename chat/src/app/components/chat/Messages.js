@@ -40,8 +40,6 @@ class Messages extends React.Component {
     }
 
     componentDidUpdate() {
-        // alert(this.state.lastRoom);
-        // alert(this.props.room);
         if (this.state.lastRoom !== this.props.room) {
             this.setState({
                 messages: [],
