@@ -8,6 +8,7 @@ class Send extends React.Component {
         this.state = {message: ""};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePressKey = this.handlePressKey.bind(this);
     }
 
     handleChange(event) {
@@ -23,6 +24,12 @@ class Send extends React.Component {
         }
     }
 
+    handlePressKey(event) {
+        if (event.key === "Enter") {
+            this.handleSubmit(event);
+        }
+    }
+
     render() {
         return (
             <div id="messageInput">
@@ -31,11 +38,8 @@ class Send extends React.Component {
                         <div id="send" onClick={this.handleSubmit}>
                         </div>
                         <textarea ref="textBox" type="text" name="message" placeholder="Napisz coś!"
-                                  onChange={this.handleChange}/>
-                        {/*<input type="submit" value="Send"/>*/}
+                                  onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                     </div>
-                    {/*<input ref="textBox" type="text" name="message"
-                     placeholder="message" onChange={this.handleChange}/>*/}
                 </form>
             </div>
         );

@@ -48,7 +48,7 @@ h2 {
 
 .sideBar {
     /*width: 20%;*/
-    min-width: 200px;
+    min-width: 240px;
     color: #868B8F;
     display: flex;
     flex-direction: column;
@@ -135,7 +135,7 @@ h2 {
 
 #content {
     min-width: 200px;
-    width: calc(100% - 400px);
+    width: calc(100% - 480px);
 }
 
 #chatContainer {
