@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
-import {setSelectedRoom} from "../../actions/rooms";
+import {setSelectedRoom, setGeneralRoomId} from "../../actions/rooms";
 
 class Rooms extends React.Component {
 
@@ -12,44 +12,67 @@ class Rooms extends React.Component {
         if (selectedRoom) {
             selectedRoom = Number(selectedRoom);
         } else {
-            selectedRoom = 2137;//todo selectedRoom = general_channel
+            selectedRoom = 0; //todo change to this.props.generalRoomId?
         }
-        let rooms = [2137, 1488, 21, 37];//todo rooms = getUserGroups(this.state.username)
+
+        let rooms = [
+            [2137, "glowny"],
+            [1488, "rozrywkowy"],
+            [21, "towarzyski"],
+            [37, "algorytmiczno-zabawowy"]
+        ];
         this.state = {
             selectedRoom: selectedRoom,
             rooms: rooms
         };
         this.changeRoom = this.changeRoom.bind(this);
-        this.onRoomUpdate = this.onRoomUpdate.bind(this);
+        this.onRoomsUpdate = this.onRoomsUpdate.bind(this);
     }
 
-    changeRoom(key) {
-        this.setState({
-            selectedRoom: key
-        });
-        window.sessionStorage.setItem("selectedRoom", key);
-        this.props.actions.setSelectedRoom(key);
+    changeRoom(roomId) {
+        if (roomId !== this.state.selectedRoom) {
+            this.setState({
+                selectedRoom: roomId
+            });
+            window.sessionStorage.setItem("selectedRoom", roomId);
+            this.props.actions.setSelectedRoom(roomId);
+            const args = {
+                roomId: roomId,
+                username: this.props.username
+            };
+            this.props.socket.emit("getRoomInfo", args);
+        }
     }
 
-    onRoomUpdate(rooms) {
+    onRoomsUpdate(event) {
         this.setState({
-            rooms: rooms
+            rooms: event.rooms
         });
-        //todo send request for updateMembers
+    }
+
+    onGeneralRoomId(id) {
+        this.props.actions.setGeneralRoomId(id);
+        this.setState({
+            generalRoomId: id
+        });
     }
 
     componentWillMount() {
+        this.props.actions.setGeneralRoomId(0);
         this.props.actions.setSelectedRoom(this.state.selectedRoom);
+        this.props.socket.emit("getGeneralRoomId", this.props.username); //todo move to Chat
+        this.props.socket.emit("getUserRooms", this.props.username);
     }
 
     componentDidMount() {
-        this.props.socket.on("roomsUpdate", this.onRoomUpdate);
+        this.props.socket.on("generalRoomId", this.onGeneralRoomId);
+        this.props.socket.on("userRooms", this.onRoomsUpdate);
     }
 
     render() {
         const roomsList = this.state.rooms.map((room) =>
-            <div className={ room === this.state.selectedRoom ? "roomSelected" : "roomDefault"}
-                 onClick={() => this.changeRoom(room)} key={room}> test_online{room}</div>
+            <div className={ room[0] === this.state.selectedRoom ? "roomSelected" : "roomDefault"}
+                 onClick={() => this.changeRoom(room[0])} key={room[0]}> {room[1]}</div>
         );
 
         return (
@@ -69,7 +92,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setSelectedRoom }, dispatch)
+    actions: bindActionCreators({setSelectedRoom, setGeneralRoomId}, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

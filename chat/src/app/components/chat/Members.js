@@ -6,19 +6,21 @@ class Members extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            members: ["michal", "hubert", "mateusz", "kuba"]
+            members: ["michal", "hubert", "mateusz", "kuba"] //todo to remove
         };
         this.onMembersUpdate = this.onMembersUpdate.bind(this);
     }
 
-    onMembersUpdate(members) {
-        this.setState({
-            members: members
-        });
+    onMembersUpdate(event) {
+        if (event.id === this.props.room) {
+            this.setState({
+                members: event.users
+            });
+        }
     }
 
     componentDidMount() {
-        this.props.socket.on("membersUpdate", this.onMembersUpdate);
+        this.props.socket.on("roomInfo", this.onMembersUpdate);
     }
 
     render() {
@@ -29,7 +31,7 @@ class Members extends React.Component {
         return (
             <div id="chatMembers">
                 <div className="entityContainer">
-                    <h3>w grupie {this.props.group}</h3>
+                    <h3>w grupie {this.props.room}</h3>
                     { membersList }
                 </div>
             </div>
@@ -40,7 +42,7 @@ class Members extends React.Component {
 let mapStateToProps = (state) => ({
     username: state.user.name,
     socket: state.connections.socket,
-    group: state.rooms.name
+    room: state.rooms.name
 });
 
 export default connect(mapStateToProps, null)(Members);

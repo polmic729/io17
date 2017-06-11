@@ -24,13 +24,14 @@ class Chat extends React.Component {
         this.props.actions.setSocket(io("http://" + config.websocket.host + ":" + config.websocket.port));
     }
 
+
     render() {
         return (
             <div id="container">
                 <div id="leftBar" className="sideBar">
                     <h2>Czaty</h2>
                     <NewChat />
-                    <Rooms />
+                    <Rooms/>
                     <SettingsBar />
                 </div>
                 <div id="content">
