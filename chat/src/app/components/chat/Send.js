@@ -53,15 +53,17 @@ class Send extends React.Component {
         return (
             <div id="messageInput">
                 <form onSubmit={this.handleSubmit}>
-                    <div id="textArea">
-                        <div id="send" onClick={this.handleSubmit}>
+                    <div className="messageInputWrapper">
+                        <div className="send" onClick={this.handleSubmit}>
                         </div>
-                        <textarea ref="textBox" type="text" name="textArea" placeholder="Napisz coś!"
+                        <textarea className="messageTextArea" ref="textBox"
+                                  type="text" name="textArea" placeholder="Napisz coś!"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                     </div>
                 </form>
             </div>
-        );
+        )
+            ;
     }
 }
 

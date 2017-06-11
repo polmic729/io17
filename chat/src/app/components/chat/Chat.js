@@ -8,6 +8,8 @@ import Send from "./Send";
 import SettingsBar from "./SettingsBar";
 import Groups from "./Groups";
 import Members from "./Members";
+import AddMember from "./AddMember";
+import NewChat from "./NewChat";
 
 let config = require("../../../../config");
 
@@ -25,6 +27,7 @@ class Chat extends React.Component {
             <div id="container">
                 <div id="leftBar" className="sideBar">
                     <h2>Czaty</h2>
+                    <NewChat />
                     <Groups />
                     <SettingsBar />
                 </div>
@@ -37,6 +40,7 @@ class Chat extends React.Component {
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy</h2>
+                    <AddMember />
                     <Members />
                 </div>
             </div>

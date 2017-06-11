@@ -31,6 +31,7 @@ class Groups extends React.Component {
         this.setState({
             groups: groups
         });
+        //todo send request for updateMembers
     }
 
     componentDidMount() {
@@ -46,7 +47,7 @@ class Groups extends React.Component {
         return (
             <div id="chatGroups">
                 <div className="entityContainer">
-                    <h3>grupowe</h3>
+                    <h3>twoje grupy</h3>
                     { groupList }
                 </div>
             </div>
