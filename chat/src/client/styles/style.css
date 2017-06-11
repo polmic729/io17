@@ -119,14 +119,13 @@ h2 {
 
 #user {
     flex-grow: 1;
-    width: 140px;
+    width: 180px;
 }
 
 #logout {
     flex-grow: 1;
-    width: 58px;
+    width: 59px;
     border-left: 1px solid #424242;
-    border-right: 1px solid #424242;
     font-size: 8px;
     line-height: 59px;
     text-align: center;
@@ -144,9 +143,43 @@ h2 {
     height: calc(100% - 81px);
 }
 
-#messages {
+#messagesContainer {
     flex-grow: 1;
     height: calc(100% - 125px);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.messageContentWrapper {
+    min-height: 40px;
+    padding: 0;
+    margin: 6px 0;
+    display: flex;
+}
+
+.messageContentWrapper > span {
+    display: inline-block;
+}
+
+.timestamp {
+    width: 50px;
+    font-size: 12px;
+    padding: 0 10px;
+}
+
+.messageAuthor {
+    font-size: 16px;
+    color: #868BAF;
+    padding-right: 10px;
+}
+
+.messageContent {
+    overflow-x: hidden;
+    /*width: 500px;*/
+    height: auto;
+    word-wrap: break-word;
+    padding-right: 15px;
 }
 
 #messageInput {

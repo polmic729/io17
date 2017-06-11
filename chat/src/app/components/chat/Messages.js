@@ -25,17 +25,25 @@ class Messages extends React.Component {
     }
 
     render() {
-        const messageList = this.state.messages.map((msg, index) =>
-            <li key={index}>
-                {msg.date.hours}:{msg.date.minutes}:{msg.date.seconds} : {msg.author} : {msg.content}
-            </li>
+        const messagesList = this.state.messages.map((msg, index) =>
+            <div className="message" key={index}>
+                <div className="messageContentWrapper">
+                <span className="timestamp">
+                    {msg.date.hours}:{msg.date.minutes}
+                </span>
+                <span className="messageAuthor">
+                    {msg.author}
+                </span>
+                <span className="messageContent">
+                    {msg.content}
+                </span>
+                </div>
+            </div>
         );
 
         return (
-            <div id="messages">
-                <ul>
-                    { messageList }
-                </ul>
+            <div id="messagesContainer">
+                { messagesList }
             </div>
         );
     }

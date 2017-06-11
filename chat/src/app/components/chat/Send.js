@@ -1,6 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 
+function formatDate(k) {
+    if (k < 10) {
+        k = "0" + k;
+    }
+    return k;
+}
+
 class Send extends React.Component {
 
     constructor(props) {
@@ -23,9 +30,9 @@ class Send extends React.Component {
             const submitDate = new Date();
             const message = {
                 date: {
-                    hours: submitDate.getHours(),
-                    minutes: submitDate.getMinutes(),
-                    seconds: submitDate.getSeconds()
+                    hours: formatDate(submitDate.getHours()),
+                    minutes: formatDate(submitDate.getMinutes()),
+                    seconds: formatDate(submitDate.getSeconds())
                 },
                 author: this.props.username,
                 content: this.state.textArea
