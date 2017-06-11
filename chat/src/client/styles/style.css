@@ -91,8 +91,11 @@ h2 {
 
 .entityContainer > div {
     padding: 5px 30px;
+    margin: 1px 0;
     height: 40px;
-    line-height: 40px;
+    font-size: 16px;
+    line-height: 32px;
+    vertical-align: top;
 }
 
 #chatMembers {
@@ -232,6 +235,17 @@ button:hover,
 label:focus,
 .btn:active,
 .btn.active {
-    outline: 0px !important;
+    outline: 0;
     -webkit-appearance: none;
+}
+
+
+.groupSelected {
+    background-color: #42464F;
+    cursor: pointer;
+}
+
+.groupDefault:hover {
+    background-color: #363942;
+    cursor: pointer;
 }
