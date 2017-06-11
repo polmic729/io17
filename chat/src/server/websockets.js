@@ -14,12 +14,14 @@ class WebSockets {
     }
 
     initializeMessages(io) {
+        // TODO: sending messages only to specified rooms
         io.on("connection", function(socket) {
             socket.on("chat-message", function(message) {
                 io.emit("chat-message", message);
             });
         });
     }
+    // TODO: create room, add user to room, get users of room
 }
 
 module.exports = WebSockets;

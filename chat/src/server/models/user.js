@@ -17,6 +17,10 @@ class UserModel {
         return this.findOne({ username }).exec();
     }
 
+    static getAll() {
+        return this.find({}).sort("username").exec();
+    }
+
     static makePassword(pass) {
         return bcrypt.hash(pass, config.crypto.saltRounds);
     }
