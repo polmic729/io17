@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import ReactDOM from "react-dom";
 
 class Messages extends React.Component {
 
@@ -20,9 +21,20 @@ class Messages extends React.Component {
         });
     }
 
+    scrollToBottom() {
+        const node = ReactDOM.findDOMNode(this.messagesEnd);
+        node.scrollIntoView({behavior: "smooth"});
+    }
+
     componentDidMount() {
+        this.scrollToBottom();
         this.props.socket.on("chat-message", this.onNewMessage);
     }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
 
     render() {
         const messagesList = this.state.messages.map((msg, index) =>
@@ -44,6 +56,10 @@ class Messages extends React.Component {
         return (
             <div id="messagesContainer">
                 { messagesList }
+                <div style={{float: "left", clear: "both"}}
+                     ref={(el) => {
+                         this.messagesEnd = el;
+                     }}/>
             </div>
         );
     }
