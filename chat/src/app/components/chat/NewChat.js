@@ -37,10 +37,10 @@ class NewChat extends React.Component {
 
     render() {
         return (
-            <div id="newChatInput">
+            <div id="newChatInput" className="sideInputBar">
                 <form onSubmit={this.handleSubmit}>
                     <h3>utwórz nową grupę</h3>
-                    <div id="newChatInput" className="sideInputWrapper">
+                    <div id="newChatWrapper" className="sideInputWrapper">
                         <textarea className="sideTextArea" ref="textBox"
                                   type="text" name="groupName" placeholder="nazwa kanału"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>

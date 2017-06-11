@@ -37,7 +37,7 @@ class AddMember extends React.Component {
 
     render() {
         return (
-            <div id="newMemberInput">
+            <div id="newMemberInput" className="sideInputBar">
                 <h3>dodaj użytkownika</h3>
                 <form onSubmit={this.handleSubmit}>
                     <div id="newMemberWrapper" className="sideInputWrapper">

@@ -99,12 +99,12 @@ h2 {
 }
 
 #chatMembers {
-    height: calc(100% - 81px);
+    height: calc(100% - 81px  - 127px);
 }
 
 #chatGroups {
     flex-grow: 1;
-    height: calc(90% - 142px);
+    height: calc(100% - 81px - 127px - 60px);
 }
 
 #settings {
@@ -249,6 +249,11 @@ textarea {
     width: 155px;
     line-height: 33px;
     padding-left: 5px;
+}
+
+.sideInputBar {
+    flex-grow: 1;
+    height: 127px;
 }
 
 textarea:hover,
