@@ -6,6 +6,8 @@ import io from "socket.io-client";
 import Messages from "./Messages";
 import Send from "./Send";
 import SettingsBar from "./SettingsBar";
+import Groups from "./Groups";
+import Members from "./Members";
 
 let config = require("../../../../config");
 
@@ -23,55 +25,19 @@ class Chat extends React.Component {
             <div id="container">
                 <div id="leftBar" className="sideBar">
                     <h2>Czaty</h2>
-                    <div id="chats">
-                        <div className="clientContainer">
-                            <h3>grupowe</h3>
-                            <div>test_online1</div>
-                            <div>test_online2</div>
-                            <h3>znajomi</h3>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                        </div>
-                    </div>
+                    <Groups />
                     <SettingsBar />
                 </div>
                 <div id="content">
                     <h1>skål</h1>
                     <div id="chatContainer">
-                            <Messages />
+                        <Messages />
                         <Send />
                     </div>
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy</h2>
-                    <div id="chatMembers">
-                        <div className="clientContainer">
-                            <h3>dostępni</h3>
-                            <div>test_online1</div>
-                            <div>test_online2</div>
-                            <h3>niedostępni</h3>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                            <div>test_offline1</div>
-                            <div>test_offline2</div>
-                        </div>
-                    </div>
+                    <Members />
                 </div>
             </div>
         );
