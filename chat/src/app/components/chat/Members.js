@@ -6,7 +6,7 @@ class Members extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            members: ["michal", "hubert", "mateusz", "kuba"] //todo to remove
+            members: []
         };
         this.onMembersUpdate = this.onMembersUpdate.bind(this);
     }

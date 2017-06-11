@@ -1,7 +1,7 @@
 import { ROOM_CHANGE } from "../actions/rooms";
 
 const initial = {
-    roomId: 2137
+    roomId: 0
 };
 
 export function rooms(state = initial, action) {

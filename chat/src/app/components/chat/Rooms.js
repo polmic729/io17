@@ -8,19 +8,21 @@ class Rooms extends React.Component {
 
     constructor(props) {
         super(props);
+
         let selectedRoom = window.sessionStorage.getItem("selectedRoom");
         if (selectedRoom) {
             selectedRoom = Number(selectedRoom);
         } else {
-            selectedRoom = 0; //todo change to this.props.generalRoomId?
+            selectedRoom = 0;
         }
 
-        let rooms = [
-            [2137, "glowny"],
-            [1488, "rozrywkowy"],
-            [21, "towarzyski"],
-            [37, "algorytmicznozabawowy"]
-        ];
+        // todo to check
+        let rooms = JSON.parse(localStorage.getItem("rooms"));
+        if (!rooms) {
+            rooms = [];
+        }
+        localStorage.setItem("rooms", JSON.stringify(rooms));
+
         this.state = {
             selectedRoom: selectedRoom,
             rooms: rooms
@@ -48,6 +50,7 @@ class Rooms extends React.Component {
         this.setState({
             rooms: event.rooms
         });
+        window.sessionStorage.setItem("rooms", event.rooms);
     }
 
     onGeneralRoomId(id) {
