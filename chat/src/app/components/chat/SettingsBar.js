@@ -1,14 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
+import { setView, Views } from "../../actions/views";
+import { bindActionCreators } from "redux";
+import { userLogout } from "../../actions/user";
 
 class SettingsBar extends React.Component {
 
     constructor(props) {
         super(props);
+        this.logout = this.logout.bind(this);
     }
 
     logout() {
-        alert("logout");
+        window.sessionStorage.removeItem("token");
+        this.props.actions.userLogout();
+        this.props.actions.setView(Views.LOGIN);
     }
 
     render() {
@@ -18,16 +24,18 @@ class SettingsBar extends React.Component {
                     <h3> { this.props.username } </h3>
                 </div>
                 <div id="logout" onClick={this.logout}>
-                    {/*logout*/}
-                    {/*<button onSubmit={this.logout} value="Logout"/>*/}
                 </div>
             </div>
         );
     }
 }
 
+let mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({ setView, userLogout }, dispatch)
+});
+
 let mapStateToProps = (state) => ({
     username: state.user.name
 });
 
-export default connect(mapStateToProps, null)(SettingsBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsBar);
