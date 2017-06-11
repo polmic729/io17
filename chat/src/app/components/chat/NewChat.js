@@ -6,7 +6,7 @@ class NewChat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupName: ""
+            roomname: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,16 +14,17 @@ class NewChat extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({groupName: event.target.value});
+        this.setState({roomname: event.target.value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
         if (this.state.name !== "") {
             const message = {
-                groupName: this.state.name
+                roomname: this.state.roomname,
+                username: this.props.username
             };
-            this.props.socket.emit("newGroup", message);
+            this.props.socket.emit("createRoom", message);
             this.refs.textBox.value = "";
             this.setState({groupName: ""});
         }

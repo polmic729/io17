@@ -31,7 +31,7 @@ class Members extends React.Component {
         return (
             <div id="chatMembers">
                 <div className="entityContainer">
-                    <h3>w grupie {this.props.room}</h3>
+                    <h3>w grupie</h3>
                     { membersList }
                 </div>
             </div>

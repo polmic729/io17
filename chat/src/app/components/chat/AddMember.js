@@ -21,9 +21,10 @@ class AddMember extends React.Component {
         event.preventDefault();
         if (this.state.username !== "") {
             const message = {
-                username: this.state.username
+                name: this.state.username,
+                id: this.props.room
             };
-            this.props.socket.emit("addMember", message);
+            this.props.socket.emit("addUserToRoom", message);
             this.refs.textBox.value = "";
             this.setState({username: ""});
         }
@@ -55,7 +56,8 @@ class AddMember extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    username: state.user.name
+    username: state.user.name,
+    room: state.rooms.name
 });
 
 export default connect(mapStateToProps, null)(AddMember);
