@@ -41,9 +41,9 @@ class Chat extends React.Component {
                         <div id="messages">
                             <Messages />
                         </div>
-                        <div id="textBox">
+                        {/*<div id="textBox">*/}
                             <Send />
-                        </div>
+                        {/*</div>*/}
                     </div>
                 </div>
                 <div id="rightBar" className="sideBar">

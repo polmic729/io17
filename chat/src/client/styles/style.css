@@ -146,10 +146,40 @@ h2 {
 
 #messages {
     flex-grow: 1;
-    height: calc(90% - 81px);
+    height: calc(100% - 125px);
 }
 
-#textBox {
+#messageInput {
+    /*flex-grow: 1;*/
+    height: 94px;
+}
+
+#textArea {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 15px;
+
+    width: calc(100% - 30px);
+    border: 2px solid #CFCFCF;
+}
+
+#send {
     flex-grow: 1;
-    height: calc(10% - 81px);
+    width: 58px;
+    height: 58px;
+    border-right: 1px solid #F3F3F3;
+    font-size: 8px;
+    line-height: 59px;
+    text-align: center;
+    background: url('imgs/send.png') no-repeat center;
+    background-size: 26px 26px;
+}
+
+#textArea textarea {
+    resize: none;
+    border: none;
+    padding: 12px 15px;
+    font-size: 15px;
+    height: calc(100% - 20px);
+    width: calc(100% - 58px);
 }
