@@ -30,22 +30,18 @@ class RoomModel {
     }
 
     static create(name, user) {
-        User.byUsername(user)
-            .then((user) => {
-            let room = new this({
-                name: name,
-                users: []
-            });
-            room.users.push(user);
-            room.save();
+        let room = new this({
+            name: name,
+            users: []
+        });
+        room.users.push(user);
 
-            User.addRoom(user, room, (user, error) => {
-                if (error !== null) {
-                    console.log(error);
-                }
-            });
-        }).catch((error) => {
-            console.log(error);
+        User.addRoom(user, room, (user, error) => {
+            if (error !== null) {
+                console.log(error);
+            } else {
+                room.save();
+            }
         });
     }
 }

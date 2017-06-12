@@ -31,13 +31,7 @@ class UserModel {
         return !(!username.match(usernameRegex) || password.length < 8);
     }
 
-    static addRoom(username, room, done) {
-        let user = this.byUsername(username).then(user => {
-            if (!user) {
-                return Promise.reject("User not found.");
-            }
-            return Promise.resolve(user);
-        });
+    static addRoom(user, room, done) {
         Promise.all([user, room]).then(args => {
             let user = args[0];
             let room = args[1];

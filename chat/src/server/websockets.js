@@ -15,23 +15,26 @@ class WebSockets {
         this.initialize(io);
     }
 
-
-    static getUserRooms(username) {
-        let message = {name: username, rooms: [[0, "główny"]]};
-        message.rooms.push([2, "dupa"]);
-        let userPromise = UserModel.byUsername(username);
-
-        const user = userPromise.then(user => {
-            if (!user) {
-                return Promise.reject("User not found.");
-            }
-            return Promise.resolve(user);
+    static getUserRooms(username, done) {
+        let userPromise = UserModel.byUsername(username).then(user => {
+            return user;
+        }).catch((error) => {
+            console.log(error);
         });
 
-        const rooms = user.rooms;
-        for (let room in rooms) {
-            message.rooms.push([room._id, room.name]);
-        }
+        let message = userPromise.then((user) => {
+            let message = { name: username, rooms: [[0, "główny"]] };
+            if (user !== undefined) {
+                for (let roomId of user.rooms) {
+                    // TODO: our architecture is so fucking awesome, that we must
+                    //      do request to database for all rooms (we need name)
+                    message.rooms.push([roomId, roomId]);
+                }
+            }
+            return message;
+        }).catch((error) => {
+            return { name: username, error: error}
+        });
 
         return message;
     }
@@ -40,7 +43,7 @@ class WebSockets {
         if (roomId === 0) {
             let usersPromise = UserModel.getAll();
             const users = usersPromise.then(users => Promise.resolve(users));
-            return {id: 0, users: users};
+            return { id: 0, users: users };
         }
         let roomPromise = RoomModel.byId(roomId);
 
@@ -56,7 +59,7 @@ class WebSockets {
         for (let member in members) {
             userList.push(member.username);
         }
-        return {id: roomId, users: userList};
+        return { id: roomId, users: userList };
     }
 
     static addUserToRoom(username, roomId) {
@@ -85,7 +88,11 @@ class WebSockets {
     }
 
     static createRoom(roomname, username) {
-        RoomModel.create(roomname, username);
+        UserModel.byUsername(username).then((user) => {
+            RoomModel.create(roomname, user);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     initialize(io) {
@@ -96,8 +103,9 @@ class WebSockets {
             });
 
             socket.on("getUserRooms", function(message) {
-                let username = message.username;
-                socket.emit("userRooms", WebSockets.getUserRooms(username));
+                WebSockets.getUserRooms(message.username).then((message) => {
+                    socket.emit("userRooms", message);
+                })
             });
 
             socket.on("getRoomInfo", function(message) {
@@ -110,15 +118,20 @@ class WebSockets {
                 let roomId = message.roomId;
                 WebSockets.addUserToRoom(username, roomId);
 
-                socket.emit("userRooms", WebSockets.getUserRooms(username));
+                WebSockets.getUserRooms(username).then((message) => {
+                    socket.emit("userRooms", message);
+                })
             });
 
             socket.on("createRoom", function(message) {
                 let roomname = message.roomname;
                 let username = message.username;
+
                 WebSockets.createRoom(roomname, username);
 
-                socket.emit("userRooms", WebSockets.getUserRooms(username));
+                WebSockets.getUserRooms(username).then((message) => {
+                    socket.emit("userRooms", message);
+                })
             });
 
             socket.on("getGeneralRoomId", function() {
