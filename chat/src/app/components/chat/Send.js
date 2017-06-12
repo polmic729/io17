@@ -29,7 +29,7 @@ class Send extends React.Component {
         if (this.state.textArea !== "") {
             const submitDate = new Date();
             const message = {
-                roomId: this.props.room,
+                roomId: this.props.selected,
                 date: {
                     hours: formatDate(submitDate.getHours()),
                     minutes: formatDate(submitDate.getMinutes()),
@@ -63,15 +63,14 @@ class Send extends React.Component {
                     </div>
                 </form>
             </div>
-        )
-            ;
+        );
     }
 }
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
     username: state.user.name,
-    room: state.rooms.name
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(Send);

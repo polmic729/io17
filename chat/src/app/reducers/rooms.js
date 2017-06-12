@@ -1,13 +1,16 @@
-import { SET_ROOM_SELECTED } from "../actions/rooms";
+import {SET_ROOM_GENERAL, SET_ROOM_SELECTED} from "../actions/rooms";
 
 const initial = {
-    roomId: 0
+    selected: 0,
+    general: 0
 };
 
-export function rooms(state = initial, action) {
+export function room(state = initial, action) {
     switch (action.type) {
     case SET_ROOM_SELECTED:
-        return {...state, name: action.roomId};
+        return {...state, selected: action.selected};
+    case SET_ROOM_GENERAL:
+        return {...state, general: action.general};
     }
     return state;
 }

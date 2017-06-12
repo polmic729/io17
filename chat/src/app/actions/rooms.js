@@ -1,16 +1,16 @@
 export const SET_ROOM_SELECTED = "SET_ROOM_SELECTED";
 export const SET_ROOM_GENERAL = "SET_ROOM_GENERAL";
 
-export function setSelectedRoom(id) {
+export function setSelectedRoom(selected) {
     return {
         type: SET_ROOM_SELECTED,
-        id
+        selected
     };
 }
 
-export function setGeneralRoom(id) {
+export function setGeneralRoom(general) {
     return {
         type: SET_ROOM_GENERAL,
-        id
+        general
     };
 }

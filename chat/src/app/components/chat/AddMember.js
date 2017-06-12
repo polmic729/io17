@@ -22,7 +22,7 @@ class AddMember extends React.Component {
         if (this.state.username !== "") {
             const message = {
                 name: this.state.username,
-                id: this.props.room
+                id: this.props.selected
             };
             this.props.socket.emit("addUserToRoom", message);
             this.refs.textBox.value = "";
@@ -57,7 +57,7 @@ class AddMember extends React.Component {
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
     username: state.user.name,
-    room: state.rooms.name
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(AddMember);

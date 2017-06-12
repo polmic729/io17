@@ -15,11 +15,8 @@ class Messages extends React.Component {
     }
 
     onNewMessage(message) {
-        if (message.roomId === this.props.room) {
-            let messages = [];
-            if (message.roomId === this.state.lastRoom) {
-                messages = this.state.messages;
-            }
+        if (message.roomId === this.props.selected) {
+            let messages = this.state.messages;
 
             messages.push(message);
             this.setState({
@@ -40,10 +37,10 @@ class Messages extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.state.lastRoom !== this.props.room) {
+        if (this.state.lastRoom !== this.props.selected) {
             this.setState({
                 messages: [],
-                lastRoom: this.props.room
+                lastRoom: this.props.selected
             });
         }
         this.scrollToBottom();
@@ -80,7 +77,7 @@ class Messages extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    room: state.rooms.name
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(Messages);

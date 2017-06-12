@@ -1,8 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-import { bindActionCreators } from "redux";
-import { setGeneralRoom, setSelectedRoom } from "../../actions/rooms";
+import {bindActionCreators} from "redux";
+import {setGeneralRoom, setSelectedRoom} from "../../actions/rooms";
 
 class Rooms extends React.Component {
 
@@ -47,9 +47,9 @@ class Rooms extends React.Component {
 
     onRoomsUpdate(event) {
         this.setState({
-            rooms: event.rooms
+            rooms: event.room
         });
-        window.sessionStorage.setItem("rooms", event.rooms);
+        window.sessionStorage.setItem("room", event.room);
     }
 
     onGeneralRoom(id) {

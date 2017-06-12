@@ -12,7 +12,7 @@ class Members extends React.Component {
     }
 
     onMembersUpdate(event) {
-        if (event.id === this.props.room) {
+        if (event.id === this.props.selected) {
             this.setState({
                 members: event.users
             });
@@ -42,7 +42,7 @@ class Members extends React.Component {
 let mapStateToProps = (state) => ({
     username: state.user.name,
     socket: state.connections.socket,
-    room: state.rooms.name
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(Members);
