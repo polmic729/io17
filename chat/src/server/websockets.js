@@ -60,7 +60,28 @@ class WebSockets {
     }
 
     static addUserToRoom(username, roomId) {
-
+        let room = RoomModel.byId(roomId).then(room => {
+            if (!room) {
+                return Promise.reject("Room not found.");
+            }
+            return Promise.resolve(room);
+        });
+        let user = UserModel.byUsername(username).then(user => {
+            if (!user) {
+                return Promise.reject("User not found.");
+            }
+            return Promise.resolve(user);
+        });
+        RoomModel.addUser(user, room, (user, error) => {
+            if (error !== null) {
+                console.log(error);
+            }
+        });
+        UserModel.addRoom(username, room, (user, error) => {
+            if (error !== null) {
+                console.log(error);
+            }
+        });
     }
 
     static createRoom(roomname, username) {

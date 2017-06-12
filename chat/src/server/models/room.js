@@ -13,6 +13,22 @@ class RoomModel {
         return this.findOne({ _id: id }).exec();
     }
 
+    static addUser(user, room, done) {
+        Promise.all([user, room]).then(args => {
+            let user = args[0];
+            let room = args[1];
+            if (room.users === undefined) {
+                room.users = [];
+            }
+            room.users.push(user);
+            return room.save();
+        }).then(room => {
+            done(room, null);
+        }).catch(error => {
+            done(null, error);
+        });
+    }
+
     static create(name, user) {
         User.byUsername(user)
             .then((user) => {

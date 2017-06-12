@@ -51,6 +51,19 @@ class UserModel {
         }).catch(error => {
             done(null, error);
         });
+        Promise.all([user, room]).then(args => {
+            let user = args[0];
+            let room = args[1];
+            if (user.rooms === undefined) {
+                user.rooms = [];
+            }
+            user.rooms.push(room);
+            return user.save();
+        }).then(user => {
+            done(user, null);
+        }).catch(error => {
+            done(null, error);
+        });
     }
 
     static authenticate(username, password, done) {
