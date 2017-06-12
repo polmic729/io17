@@ -3,9 +3,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import io from "socket.io-client";
 import { setSocket } from "../../actions/connections";
-import ViewsBar from "./ViewsBar";
+import ViewsBar from "../shared/ViewsBar";
+import AddFriend from "./AddFriend";
+import FriendsList from "./FriendsList";
+import SettingsBar from "../shared/SettingsBar";
 
-let config = require("../../../../config");
+let config = require("../../../../config/index");
 
 class Friends extends React.Component {
     constructor(props) {
@@ -21,10 +24,13 @@ class Friends extends React.Component {
             <div id="container">
                 <ViewsBar />
                 <div id="leftBar" className="sideBar">
+                    <h2>znajomi</h2>
+                    <AddFriend />
+                    <FriendsList />
+                    <SettingsBar />
                 </div>
-                <div id="content">
+                <div id="friendsContent">
                     <h1>skål</h1>
-
                 </div>
             </div>
         );

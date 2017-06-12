@@ -29,8 +29,8 @@ class ViewsBar extends React.Component {
 
         return (
             <div id="leftestBar">
-                <div id="friends" onClick={this.setToChat}/>
-                <div id="chat" onClick={this.setToFriends}/>
+                <div id="friends" onClick={this.setToFriends}/>
+                <div id="chat" onClick={this.setToChat}/>
             </div>
         );
     }

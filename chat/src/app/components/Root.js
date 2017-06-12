@@ -6,7 +6,7 @@ import { setView, Views } from "../actions/views";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import Chat from "./chat/Chat";
-import Friends from "./chat/Friends";
+import Friends from "./friends/Friends";
 
 
 class Root extends React.Component {

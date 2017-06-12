@@ -9,8 +9,8 @@ import Messages from "./Messages";
 import NewChat from "./NewChat";
 import Rooms from "./Rooms";
 import Send from "./Send";
-import SettingsBar from "./SettingsBar";
-import ViewsBar from "./ViewsBar";
+import SettingsBar from "../shared/SettingsBar";
+import ViewsBar from "../shared/ViewsBar";
 
 let config = require("../../../../config");
 

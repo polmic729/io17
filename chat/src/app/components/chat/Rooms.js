@@ -68,7 +68,7 @@ class Rooms extends React.Component {
 
     render() {
         const roomsList = this.state.rooms.map((room) =>
-            <div className={ room[0] === this.state.selectedRoom ? "roomSelected" : "roomDefault"}
+            <div className={ room[0] === this.state.selectedRoom ? "leftSelected" : "leftDefault"}
                  onClick={() => this.changeRoom(room[0])} key={room[0]}> {room[1]}</div>
         );
 

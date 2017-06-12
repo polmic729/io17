@@ -288,12 +288,12 @@ label:focus,
 }
 
 
-.roomSelected {
+.leftSelected {
     background-color: #42464F;
     cursor: pointer;
 }
 
-.roomDefault:hover {
+.leftDefault:hover {
     background-color: #363942;
     cursor: pointer;
 }
