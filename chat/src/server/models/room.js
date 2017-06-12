@@ -1,7 +1,7 @@
+let User = require("./user");
+
 let mongoose = require("mongoose");
 let loadClass = require("mongoose-class-wrapper");
-// let UserModel = require("user");
-// import UserModel from "user";
 
 let roomSchema = new mongoose.Schema({
     name: { type: String, unique: false, required: false },
@@ -14,13 +14,23 @@ class RoomModel {
     }
 
     static create(name, user) {
-        let room = new this({
-            name: name,
-            users: [user]
-        });
-        room.save();
+        User.byUsername(user)
+            .then((user) => {
+            let room = new this({
+                name: name,
+                users: []
+            });
+            room.users.push(user);
+            room.save();
 
-        // UserModel.addRoom(user, room);
+            User.addRoom(user, room, (user, error) => {
+                if (error !== null) {
+                    console.log(error);
+                }
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 }
 

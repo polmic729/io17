@@ -31,15 +31,26 @@ class UserModel {
         return !(!username.match(usernameRegex) || password.length < 8);
     }
 
-    static addRoom(username, room) {
+    static addRoom(username, room, done) {
         let user = this.byUsername(username).then(user => {
             if (!user) {
                 return Promise.reject("User not found.");
             }
             return Promise.resolve(user);
         });
-        user.rooms.append(room);
-        user.save();
+        Promise.all([user, room]).then(args => {
+            let user = args[0];
+            let room = args[1];
+            if (user.rooms === undefined) {
+                user.rooms = [];
+            }
+            user.rooms.push(room);
+            return user.save();
+        }).then(user => {
+            done(user, null);
+        }).catch(error => {
+            done(null, error);
+        });
     }
 
     static authenticate(username, password, done) {
@@ -80,7 +91,8 @@ class UserModel {
             let hash = values[1];
             let user = new this({
                 username: username,
-                passwordHashed: hash
+                passwordHashed: hash,
+                rooms: []
             });
             return user.save();
         }).then(user => {
