@@ -117,10 +117,6 @@ class WebSockets {
                 let username = message.name;
                 let roomId = message.id;
                 WebSockets.addUserToRoom(username, roomId);
-
-                WebSockets.getUserRooms(username).then((message) => {
-                    socket.emit("userRooms", message);
-                });
             });
 
             socket.on("createRoom", function(message) {
