@@ -1,6 +1,3 @@
-/**
- * Created by mizworski on 6/11/17.
- */
 import React from "react";
 import {connect} from "react-redux";
 
@@ -8,38 +5,34 @@ class Members extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            members: []
+        };
+        this.onMembersUpdate = this.onMembersUpdate.bind(this);
     }
 
+    onMembersUpdate(event) {
+        if (event.id === this.props.selected) {
+            this.setState({
+                members: event.users
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.props.socket.on("roomInfo", this.onMembersUpdate);
+    }
 
     render() {
+        const membersList = this.state.members.map((member) =>
+            <div className="chatMember" key={member}> {member}</div>
+        );
 
         return (
             <div id="chatMembers">
                 <div className="entityContainer">
-                    <h3>dostępni</h3>
-                    <div>test_online1</div>
-                    <div>test_online2</div>
-                    <h3>niedostępni</h3>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
-                    <div>test_offline1</div>
-                    <div>test_offline2</div>
+                    <h3>w grupie</h3>
+                    { membersList }
                 </div>
             </div>
         );
@@ -47,7 +40,9 @@ class Members extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    username: state.user.name
+    username: state.user.name,
+    socket: state.connections.socket,
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(Members);

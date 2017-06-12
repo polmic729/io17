@@ -1,19 +1,23 @@
 import React from "react";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setSocket} from "../../actions/connections";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import io from "socket.io-client";
+import { setSocket } from "../../actions/connections";
+import { setSelectedRoom } from "../../actions/rooms";
+import AddMember from "./AddMember";
+import Members from "./Members";
 import Messages from "./Messages";
+import NewChat from "./NewChat";
+import Rooms from "./Rooms";
 import Send from "./Send";
 import SettingsBar from "./SettingsBar";
-import Groups from "./Groups";
-import Members from "./Members";
 
 let config = require("../../../../config");
 
 class Chat extends React.Component {
     constructor(props) {
         super(props);
+        this.props.actions.setSelectedRoom();
     }
 
     componentWillMount() {
@@ -25,7 +29,8 @@ class Chat extends React.Component {
             <div id="container">
                 <div id="leftBar" className="sideBar">
                     <h2>Czaty</h2>
-                    <Groups />
+                    <NewChat />
+                    <Rooms/>
                     <SettingsBar />
                 </div>
                 <div id="content">
@@ -37,6 +42,7 @@ class Chat extends React.Component {
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy</h2>
+                    <AddMember />
                     <Members />
                 </div>
             </div>
@@ -49,7 +55,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSocket}, dispatch)
+    actions: bindActionCreators({ setSocket, setSelectedRoom }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

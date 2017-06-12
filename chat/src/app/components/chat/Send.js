@@ -29,6 +29,7 @@ class Send extends React.Component {
         if (this.state.textArea !== "") {
             const submitDate = new Date();
             const message = {
+                roomId: this.props.selected,
                 date: {
                     hours: formatDate(submitDate.getHours()),
                     minutes: formatDate(submitDate.getMinutes()),
@@ -53,10 +54,11 @@ class Send extends React.Component {
         return (
             <div id="messageInput">
                 <form onSubmit={this.handleSubmit}>
-                    <div id="textArea">
-                        <div id="send" onClick={this.handleSubmit}>
+                    <div className="messageInputWrapper">
+                        <div className="send" onClick={this.handleSubmit}>
                         </div>
-                        <textarea ref="textBox" type="text" name="textArea" placeholder="Napisz coś!"
+                        <textarea className="messageTextArea" ref="textBox"
+                                  type="text" name="textArea" placeholder="Napisz coś!"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                     </div>
                 </form>
@@ -67,7 +69,8 @@ class Send extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    username: state.user.name
+    username: state.user.name,
+    selected: state.room.selected
 });
 
 export default connect(mapStateToProps, null)(Send);
