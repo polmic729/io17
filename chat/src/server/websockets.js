@@ -80,7 +80,7 @@ class WebSockets {
                 console.log(error);
             }
         });
-        UserModel.addRoom(username, room, (user, error) => {
+        UserModel.addRoom(user, room, (user, error) => {
             if (error !== null) {
                 console.log(error);
             }
@@ -114,8 +114,8 @@ class WebSockets {
             });
 
             socket.on("addUserToRoom", function(message) {
-                let username = message.username;
-                let roomId = message.roomId;
+                let username = message.name;
+                let roomId = message.id;
                 WebSockets.addUserToRoom(username, roomId);
 
                 WebSockets.getUserRooms(username).then((message) => {

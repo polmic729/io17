@@ -20,7 +20,7 @@ class RoomModel {
             if (room.users === undefined) {
                 room.users = [];
             }
-            room.users.push([user._id, user.name ]);
+            room.users.push([user._id, user.username ]);
             return room.save();
         }).then(room => {
             done(room, null);
