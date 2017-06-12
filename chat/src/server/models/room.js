@@ -36,13 +36,9 @@ class RoomModel {
         });
         room.users.push([ user._id, user.username ]);
 
-        User.addRoom(user, room, (user, error) => {
-            if (error !== null) {
-                console.log(error);
-            } else {
-                room.save();
-            }
-        });
+        return User.addRoom(user, room).then(() =>
+            room.save()
+        );
     }
 }
 

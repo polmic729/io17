@@ -31,8 +31,8 @@ class UserModel {
         return !(!username.match(usernameRegex) || password.length < 8);
     }
 
-    static addRoom(user, room, done) {
-        Promise.all([user, room]).then(args => {
+    static addRoom(user, room) {
+        return Promise.all([user, room]).then(args => {
             let user = args[0];
             let room = args[1];
             if (user.rooms === undefined) {
@@ -40,10 +40,6 @@ class UserModel {
             }
             user.rooms.push([room._id, room.name]);
             return user.save();
-        }).then(user => {
-            done(user, null);
-        }).catch(error => {
-            done(null, error);
         });
     }
 

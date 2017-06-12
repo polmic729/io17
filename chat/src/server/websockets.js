@@ -86,11 +86,9 @@ class WebSockets {
     }
 
     static createRoom(roomname, username) {
-        UserModel.byUsername(username).then((user) => {
-            RoomModel.create(roomname, user);
-        }).catch((error) => {
-            console.log(error);
-        });
+        return UserModel.byUsername(username).then(user =>
+            RoomModel.create(roomname, user)
+        );
     }
 
     initialize(io) {
@@ -103,7 +101,7 @@ class WebSockets {
             socket.on("getUserRooms", function(message) {
                 WebSockets.getUserRooms(message.username).then((message) => {
                     socket.emit("userRooms", message);
-                })
+                });
             });
 
             socket.on("getRoomInfo", function(message) {
@@ -118,18 +116,18 @@ class WebSockets {
 
                 WebSockets.getUserRooms(username).then((message) => {
                     socket.emit("userRooms", message);
-                })
+                });
             });
 
             socket.on("createRoom", function(message) {
                 let roomname = message.roomname;
                 let username = message.username;
 
-                WebSockets.createRoom(roomname, username);
-
-                WebSockets.getUserRooms(username).then((message) => {
+                WebSockets.createRoom(roomname, username).then(() =>
+                    WebSockets.getUserRooms(username)
+                ).then(message => {
                     socket.emit("userRooms", message);
-                })
+                });
             });
 
             socket.on("getGeneralRoomId", function() {
