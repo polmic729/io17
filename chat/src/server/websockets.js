@@ -37,7 +37,7 @@ class WebSockets {
         });
 
         const rooms = userPromise.rooms;
-        message.rooms.push([1, "dupa"]);
+        message.rooms.push([0, "Główny"]);
         for (let room in rooms) {
             message.rooms.push([room._id, room.name]);
         }
@@ -46,11 +46,18 @@ class WebSockets {
     }
 
     static getRoomInfo(roomId) {
-        let room = Room.byId(roomId);
-        let members = room.users;
         let userList = [];
-        for (let member in members) {
-            userList.push(member.username);
+        if (roomId === 0) { // Main room
+            let users = UserModel.find({}).exec();
+            for (let user in users) {
+                userList.push(user.username);
+            }
+        } else {
+            let room = Room.byId(roomId);
+            let members = room.users;
+            for (let member in members) {
+                userList.push(member.username);
+            }
         }
         return {id: roomId, users: userList};
     }
@@ -114,10 +121,8 @@ class WebSockets {
             });
 
             // getGeneralRoomId
-            socket.on("getGeneralRoomId", function(message) {
-
-                // io.emit("userRooms", WebSockets.getUserRooms(""));
-                // TODO I don't know how to do this
+            socket.on("getGeneralRoomId", function() {
+                io.emit("userRooms", 0);
             });
         });
     }
