@@ -5,7 +5,7 @@ let loadClass = require("mongoose-class-wrapper");
 
 let roomSchema = new mongoose.Schema({
     name: { type: String, unique: false, required: false },
-    users: [{ type: mongoose.Schema.ObjectId, ref: "User" }]
+    users: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "User" }]]
 });
 
 class RoomModel {
@@ -20,7 +20,7 @@ class RoomModel {
             if (room.users === undefined) {
                 room.users = [];
             }
-            room.users.push(user);
+            room.users.push([user._id, user.name ]);
             return room.save();
         }).then(room => {
             done(room, null);
@@ -34,7 +34,7 @@ class RoomModel {
             name: name,
             users: []
         });
-        room.users.push(user);
+        room.users.push([ user._id, user.username ]);
 
         User.addRoom(user, room, (user, error) => {
             if (error !== null) {

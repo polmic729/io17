@@ -25,10 +25,8 @@ class WebSockets {
         let message = userPromise.then((user) => {
             let message = { name: username, rooms: [[0, "główny"]] };
             if (user !== undefined) {
-                for (let roomId of user.rooms) {
-                    // TODO: our architecture is so fucking awesome, that we must
-                    //      do request to database for all rooms (we need name)
-                    message.rooms.push([roomId, roomId]);
+                for (let room of user.rooms) {
+                    message.rooms.push([room[0], room[1]]);
                 }
             }
             return message;

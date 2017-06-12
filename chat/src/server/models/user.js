@@ -6,7 +6,7 @@ let config = require("../../../config");
 let userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
     passwordHashed: { type: String, required: true },
-    rooms: [{ type: mongoose.Schema.ObjectId, ref: "Room" }]
+    rooms: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "Room" }]]
 });
 
 class UserModel {
@@ -38,20 +38,7 @@ class UserModel {
             if (user.rooms === undefined) {
                 user.rooms = [];
             }
-            user.rooms.push(room);
-            return user.save();
-        }).then(user => {
-            done(user, null);
-        }).catch(error => {
-            done(null, error);
-        });
-        Promise.all([user, room]).then(args => {
-            let user = args[0];
-            let room = args[1];
-            if (user.rooms === undefined) {
-                user.rooms = [];
-            }
-            user.rooms.push(room);
+            user.rooms.push([room._id, room.name]);
             return user.save();
         }).then(user => {
             done(user, null);
