@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 import io from "socket.io-client";
 import { setSocket } from "../../actions/connections";
 import { setSelectedRoom } from "../../actions/rooms";
-import AddMember from "./AddMember";
 import Members from "./Members";
 import Messages from "./Messages";
 import NewChat from "./NewChat";
@@ -42,7 +41,6 @@ class Chat extends React.Component {
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy</h2>
-                    <AddMember />
                     <Members />
                 </div>
             </div>

@@ -84,8 +84,6 @@ h2 {
 .entityContainer {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    height: 100%;
 }
 
 .entityContainer > div {
@@ -98,7 +96,10 @@ h2 {
 }
 
 #chatMembers {
-    height: calc(100% - 81px  - 127px);
+    /*height: calc(100% - 81px  - 127px);*/
+    height: calc(100% - 81px);
+    overflow-y: auto;
+    /*height: 100%;*/
 }
 
 #chatRooms {
