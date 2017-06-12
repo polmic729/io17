@@ -4,17 +4,17 @@ import { bindActionCreators } from "redux";
 import io from "socket.io-client";
 import { setSocket } from "../../actions/connections";
 import { setSelectedRoom } from "../../actions/rooms";
+import AddMember from "./AddMember";
 import Members from "./Members";
 import Messages from "./Messages";
 import NewChat from "./NewChat";
 import Rooms from "./Rooms";
 import Send from "./Send";
 import SettingsBar from "./SettingsBar";
-import ViewsBar from "./ViewsBar";
 
 let config = require("../../../../config");
 
-class Chat extends React.Component {
+class Friends extends React.Component {
     constructor(props) {
         super(props);
         this.props.actions.setSelectedRoom();
@@ -43,6 +43,7 @@ class Chat extends React.Component {
                 </div>
                 <div id="rightBar" className="sideBar">
                     <h2>Uczestnicy</h2>
+                    <AddMember />
                     <Members />
                 </div>
             </div>
@@ -58,4 +59,4 @@ let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({ setSocket, setSelectedRoom }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);

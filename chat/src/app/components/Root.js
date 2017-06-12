@@ -6,6 +6,7 @@ import { setView, Views } from "../actions/views";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import Chat from "./chat/Chat";
+import Friends from "./chat/Friends";
 
 
 class Root extends React.Component {
@@ -34,6 +35,8 @@ class Root extends React.Component {
 
     render() {
         switch (this.props.view) {
+        case Views.Friends:
+            return (<Friends />);
         case Views.CHAT:
             return (<Chat />);
         case Views.REGISTER:

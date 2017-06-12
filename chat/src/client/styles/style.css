@@ -64,6 +64,24 @@ h2 {
 #leftBar {
     background: #303136;
 }
+#leftestBar {
+    background: #202126;
+    width: 80px;
+    color: #868B8F;
+    display: flex;
+    flex-direction: column;
+}
+
+#leftestBar > div {
+    margin: 15px 10px 0 10px;
+    height: 60px;
+    width: 60px;
+    font-size: 16px;
+    line-height: 32px;
+    vertical-align: top;
+    cursor: pointer;
+    border: 1px solid #404040;
+}
 
 #rightBar {
     background: #F3F3F3;
@@ -139,7 +157,7 @@ h2 {
 
 #content {
     min-width: 200px;
-    width: calc(100% - 480px);
+    width: calc(100% - 480px - 80px);
 }
 
 #chatContainer {
@@ -279,4 +297,12 @@ label:focus,
 .roomDefault:hover {
     background-color: #363942;
     cursor: pointer;
+}
+
+#friends {
+    background: url('imgs/logoff.png') no-repeat center;
+}
+
+#chat {
+    background: url('imgs/logoff.png') no-repeat center;
 }
