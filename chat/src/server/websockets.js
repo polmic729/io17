@@ -15,6 +15,29 @@ class WebSockets {
         this.initialize(io);
     }
 
+
+    static getUserFriends(username, done) {
+        let userPromise = UserModel.byUsername(username).then(user => {
+            return user;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        let message = userPromise.then((user) => {
+            let message = { name: username, friends: [] };
+            if (user !== undefined) {
+                for (let friend of user.friends) {
+                    message.friends.push([friend[0], friend[1]]);
+                }
+            }
+            return message;
+        }).catch((error) => {
+            return { name: username, error: error}
+        });
+
+        return message;
+    }
+
     static getUserRooms(username, done) {
         let userPromise = UserModel.byUsername(username).then(user => {
             return user;
@@ -87,6 +110,32 @@ class WebSockets {
         });
     }
 
+    static addFriend(username, friendname) {
+        let friend = UserModel.byUsername(friendname).then(user => {
+            if (!user) {
+                return Promise.reject("Friend not found.");
+            }
+            return Promise.resolve(user);
+
+        });
+        let user = UserModel.byUsername(username).then(user => {
+            if (!user) {
+                return Promise.reject("User not found.");
+            }
+            return Promise.resolve(user);
+        });
+        UserModel.addFriend(user, friend, (user, error) => {
+            if (error !== null) {
+                console.log(error);
+            }
+        });
+        UserModel.addFriend(friend, user, (user, error) => {
+            if (error !== null) {
+                console.log(error);
+            }
+        });
+    }
+
     static createRoom(roomname, username) {
         return UserModel.byUsername(username).then(user =>
             RoomModel.create(roomname, user)
@@ -132,6 +181,18 @@ class WebSockets {
 
             socket.on("getGeneralRoomId", function() {
                 io.emit("userRooms", 0);
+            });
+
+            socket.on("getUserFriends", function(message) {
+                WebSockets.getUserFriends(message.username).then((message) => {
+                    socket.emit("userFriends", message);
+                });
+            });
+
+            socket.on("addFriend", function(message) {
+                let username = message.name;
+                let friend = message.friend;
+                WebSockets.addFriend(username, friend);
             });
         });
     }
