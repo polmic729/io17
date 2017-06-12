@@ -1,16 +1,16 @@
 import React from "react";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setSocket} from "../../actions/connections";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import io from "socket.io-client";
+import { setSocket } from "../../actions/connections";
+import { setSelectedRoom } from "../../actions/rooms";
+import AddMember from "./AddMember";
+import Members from "./Members";
 import Messages from "./Messages";
+import NewChat from "./NewChat";
+import Rooms from "./Rooms";
 import Send from "./Send";
 import SettingsBar from "./SettingsBar";
-import Rooms from "./Rooms";
-import Members from "./Members";
-import AddMember from "./AddMember";
-import NewChat from "./NewChat";
-import {setSelectedRoom} from "../../actions/rooms";
 
 let config = require("../../../../config");
 
@@ -23,7 +23,6 @@ class Chat extends React.Component {
     componentWillMount() {
         this.props.actions.setSocket(io("http://" + config.websocket.host + ":" + config.websocket.port));
     }
-
 
     render() {
         return (
@@ -56,7 +55,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSocket, setSelectedRoom}, dispatch)
+    actions: bindActionCreators({ setSocket, setSelectedRoom }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
