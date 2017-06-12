@@ -80,7 +80,6 @@ h2 {
     line-height: 32px;
     vertical-align: top;
     cursor: pointer;
-    border: 1px solid #404040;
 }
 
 #rightBar {
@@ -300,9 +299,9 @@ label:focus,
 }
 
 #friends {
-    background: url('imgs/logoff.png') no-repeat center;
+    background: url('imgs/friends.png') no-repeat center;
 }
 
 #chat {
-    background: url('imgs/logoff.png') no-repeat center;
+    background: url('imgs/chat.png') no-repeat center;
 }
