@@ -64,7 +64,7 @@ class WebSockets {
     }
 
     static createRoom(roomname, username) {
-
+        RoomModel.create(roomname, username);
     }
 
     initialize(io) {

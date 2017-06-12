@@ -31,6 +31,17 @@ class UserModel {
         return !(!username.match(usernameRegex) || password.length < 8);
     }
 
+    static addRoom(username, room) {
+        let user = this.byUsername(username).then(user => {
+            if (!user) {
+                return Promise.reject("User not found.");
+            }
+            return Promise.resolve(user);
+        });
+        user.rooms.append(room);
+        user.save();
+    }
+
     static authenticate(username, password, done) {
         if (!this.credentialsValid(username, password)) {
             done(null, true);
