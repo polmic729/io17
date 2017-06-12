@@ -165,7 +165,7 @@ h2 {
     height: calc(100% - 81px);
 }
 
-#messagesContainer {
+.messagesContainer {
     flex-grow: 1;
     height: calc(100% - 125px);
     display: flex;

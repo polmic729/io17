@@ -1,12 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
 import io from "socket.io-client";
-import { setSocket } from "../../actions/connections";
+import {setSocket} from "../../actions/connections";
 import ViewsBar from "../shared/ViewsBar";
 import AddFriend from "./AddFriend";
 import FriendsList from "./FriendsList";
 import SettingsBar from "../shared/SettingsBar";
+import PrivateMessages from "./PrivateMessages";
+import SendPrivate from "./SendPrivate";
 
 let config = require("../../../../config/index");
 
@@ -31,6 +33,10 @@ class Friends extends React.Component {
                 </div>
                 <div id="friendsContent">
                     <h1>skål</h1>
+                    <div id="chatContainer">
+                        <PrivateMessages />
+                        <SendPrivate />
+                    </div>
                 </div>
             </div>
         );
@@ -42,7 +48,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setSocket }, dispatch)
+    actions: bindActionCreators({setSocket}, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

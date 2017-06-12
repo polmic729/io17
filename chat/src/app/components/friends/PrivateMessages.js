@@ -2,13 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import ReactDOM from "react-dom";
 
-class Messages extends React.Component {
+class PrivateMessages extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             messages: [],
-            lastRoom: 0
+            selectedFriend: ""
         };
         this.onNewMessage = this.onNewMessage.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -77,7 +77,7 @@ class Messages extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    selected: state.room.selected
+    selectedFriend: state.room.selectedFriend
 });
 
-export default connect(mapStateToProps, null)(Messages);
+export default connect(mapStateToProps, null)(PrivateMessages);
