@@ -28,10 +28,7 @@ class UserModel {
 
     static credentialsValid(username, password) {
         let usernameRegex = /^[a-z0-9]+$/;
-        if (!username.match(usernameRegex) || password.length < 8) {
-            return false;
-        }
-        return true;
+        return !(!username.match(usernameRegex) || password.length < 8);
     }
 
     static authenticate(username, password, done) {

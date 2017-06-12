@@ -2,7 +2,7 @@ let socketio = require("socket.io");
 let http = require("http");
 let config = require("../../config");
 let UserModel = require("./models/user");
-let Room = require("./models/room");
+let RoomModel = require("./models/room");
 
 class WebSockets {
 
@@ -28,16 +28,18 @@ class WebSockets {
     }
 
     static getUserRooms(username) {
-        let message = {name: username, rooms: []};
-        let userPromise = UserModel.byUsername(username).then(user => {
+        let message = {name: username, rooms: [[0, "główny"]]};
+        message.rooms.push([2, "dupa"]);
+        let userPromise = UserModel.byUsername(username);
+
+        const user = userPromise.then(user => {
             if (!user) {
-                return Promise.reject("User not found in database.");
+                return Promise.reject("User not found.");
             }
             return Promise.resolve(user);
         });
 
-        const rooms = userPromise.rooms;
-        message.rooms.push([0, "Główny"]);
+        const rooms = user.rooms;
         for (let room in rooms) {
             message.rooms.push([room._id, room.name]);
         }
@@ -46,20 +48,30 @@ class WebSockets {
     }
 
     static getRoomInfo(roomId) {
+        if (roomId === 0) {
+            let usersPromise = UserModel.getAll();
+            const users = usersPromise.then(users => Promise.resolve(users));
+            return {id: 0, users: users};
+        }
+        let roomPromise = RoomModel.byId(roomId);
+
+        const room = roomPromise.then(room => {
+            if (!room) {
+                return Promise.reject("Room not found.");
+            }
+            return Promise.resolve(room);
+        });
+
+        const members = room.users;
         let userList = [];
-        if (roomId === 0) { // Main room
-            let users = UserModel.find({}).exec();
-            for (let user in users) {
-                userList.push(user.username);
-            }
-        } else {
-            let room = Room.byId(roomId);
-            let members = room.users;
-            for (let member in members) {
-                userList.push(member.username);
-            }
+        for (let member in members) {
+            userList.push(member.username);
         }
         return {id: roomId, users: userList};
+    }
+
+    static createRoom(roomname, username) {
+
     }
 
     initialize(io) {
@@ -69,25 +81,21 @@ class WebSockets {
                 io.emit("chat-message", message);
             });
 
-            // getUserRooms
             socket.on("getUserRooms", function(message) {
                 let username = message.username;
-                const msg = WebSockets.getUserRooms(username);
-                socket.emit("userRooms", msg);
+                socket.emit("userRooms", WebSockets.getUserRooms(username));
             });
 
-            // getRoomInfo
             socket.on("getRoomInfo", function(message) {
                 let roomId = message.roomId;
-                const msg = WebSockets.getRoomInfo(roomId);
-                socket.emit("roomInfo", msg);
+                socket.emit("roomInfo", WebSockets.getRoomInfo(roomId));
             });
 
             // addUserToRoom
             socket.on("addUserToRoom", function(message) {
                 let username = message.username;
                 let roomId = message.roomId;
-                let room = Room.byId(roomId);
+                let room = RoomModel.byId(roomId);
                 let user = UserModel.byUsername(username);
 
                 // TODO code below possibly bad
@@ -107,17 +115,9 @@ class WebSockets {
             socket.on("createRoom", function(message) {
                 let roomname = message.roomname;
                 let username = message.username;
-                let user = UserModel.byUsername(username);
-                Room.create(roomname, user, (room, error) => {
-                    if (!error) {
-                        let roomId = room._id;
-                        // We send information about our user rooms
-                        io.to(roomId).emit("userRooms", WebSockets.getUserRooms(username));
+                WebSockets.createRoom(roomname, username);
 
-                        // We send information about new composition of our room
-                        io.to(roomId).emit("roomInfo", WebSockets.getRoomInfo(roomId));
-                    }
-                });
+                socket.emit("userRooms", WebSockets.getUserRooms(username));
             });
 
             // getGeneralRoomId
