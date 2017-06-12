@@ -39,25 +39,27 @@ class WebSockets {
 
     static getRoomInfo(roomId) {
         if (roomId === 0) {
-            let usersPromise = UserModel.getAll();
-            const users = usersPromise.then(users => Promise.resolve(users));
-            return { id: 0, users: users };
+            return UserModel.getAll().then(users => {
+                let userList = [];
+                for (let user of users) {
+                    userList.push(user.username);
+                }
+                return { id: 0, users: userList };
+            }).catch((error) => {
+                return { id: 0, users: [], error: "Could not get users." }
+            });
         }
-        let roomPromise = RoomModel.byId(roomId);
 
-        const room = roomPromise.then(room => {
+        return RoomModel.byId(roomId).then(room => {
             if (!room) {
                 return Promise.reject("Room not found.");
             }
-            return Promise.resolve(room);
+            let userList = [];
+            for (let user of room.users) {
+                userList.push(user[1]);
+            }
+            return { id: roomId, users: userList };
         });
-
-        const members = room.users;
-        let userList = [];
-        for (let member in members) {
-            userList.push(member.username);
-        }
-        return { id: roomId, users: userList };
     }
 
     static addUserToRoom(username, roomId) {
@@ -106,7 +108,9 @@ class WebSockets {
 
             socket.on("getRoomInfo", function(message) {
                 let roomId = message.roomId;
-                socket.emit("roomInfo", WebSockets.getRoomInfo(roomId));
+                WebSockets.getRoomInfo(roomId).then(message => {
+                    socket.emit("roomInfo", message);
+                })
             });
 
             socket.on("addUserToRoom", function(message) {
