@@ -62,7 +62,6 @@ class Rooms extends React.Component {
     componentWillMount() {
         this.props.actions.setGeneralRoom(0);
         this.props.actions.setSelectedRoom(this.state.selectedRoom);
-        // this.props.socket.emit("getGeneralRoomId", {username: this.props.username});
         this.props.socket.emit("getUserRooms", {username: this.props.username});
     }
 
