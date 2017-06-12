@@ -12,20 +12,9 @@ class WebSockets {
         httpServer.listen(config.websocket.port,
             config.websocket.host);
 
-        // this.initializeMessages(io);
-
-        // TODO: uncomment this to register the functions
         this.initialize(io);
     }
 
-    // Old websocket function
-    initializeMessages(io) {
-        io.on("connection", function(socket) {
-            socket.on("chat-message", function(message) {
-                io.emit("chat-message", message);
-            });
-        });
-    }
 
     static getUserRooms(username) {
         let message = {name: username, rooms: [[0, "główny"]]};
@@ -91,7 +80,6 @@ class WebSockets {
                 socket.emit("roomInfo", WebSockets.getRoomInfo(roomId));
             });
 
-            // addUserToRoom
             socket.on("addUserToRoom", function(message) {
                 let username = message.username;
                 let roomId = message.roomId;
@@ -111,7 +99,6 @@ class WebSockets {
                 io.to(roomId).emit("roomInfo", WebSockets.getRoomInfo(roomId));
             });
 
-            // createRoom
             socket.on("createRoom", function(message) {
                 let roomname = message.roomname;
                 let username = message.username;
@@ -120,7 +107,6 @@ class WebSockets {
                 socket.emit("userRooms", WebSockets.getUserRooms(username));
             });
 
-            // getGeneralRoomId
             socket.on("getGeneralRoomId", function() {
                 io.emit("userRooms", 0);
             });
