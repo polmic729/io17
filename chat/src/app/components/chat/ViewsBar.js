@@ -1,22 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
+import { bindActionCreators } from "redux";
+import {Views, setView} from "../../actions/views";
 
 class ViewsBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            members: []
-        };
-        this.onMembersUpdate = this.onMembersUpdate.bind(this);
+
+        this.setToChat = this.setToChat.bind(this);
+        this.setToFriends = this.setToFriends.bind(this);
     }
 
-    onMembersUpdate(event) {
-        if (event.id === this.props.selected) {
-            this.setState({
-                members: event.users
-            });
-        }
+
+    setToChat() {
+        this.props.actions.setView(Views.CHAT);
+    }
+
+    setToFriends() {
+        this.props.actions.setView(Views.FRIENDS);
     }
 
     componentDidMount() {
@@ -27,17 +29,19 @@ class ViewsBar extends React.Component {
 
         return (
             <div id="leftestBar">
-                <div id="friends" />
-                <div id="chat" />
+                <div id="friends" onClick={this.setToChat}/>
+                <div id="chat" onClick={this.setToFriends}/>
             </div>
         );
     }
 }
 
 let mapStateToProps = (state) => ({
-    username: state.user.name,
-    socket: state.connections.socket,
-    selected: state.room.selected
+    socket: state.connections.socket
 });
 
-export default connect(mapStateToProps, null)(ViewsBar);
+let mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({setView}, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewsBar);

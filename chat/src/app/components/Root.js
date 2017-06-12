@@ -35,7 +35,7 @@ class Root extends React.Component {
 
     render() {
         switch (this.props.view) {
-        case Views.Friends:
+        case Views.FRIENDS:
             return (<Friends />);
         case Views.CHAT:
             return (<Chat />);

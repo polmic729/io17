@@ -15,12 +15,6 @@ class Rooms extends React.Component {
         } else {
             selectedRoom = 0;
         }
-        //
-        // let rooms = JSON.parse(localStorage.getItem("rooms"));
-        // if (!rooms) {
-        //     rooms = [];
-        // }
-        // localStorage.setItem("rooms", JSON.stringify(rooms));
 
         this.state = {
             selectedRoom: selectedRoom,
@@ -46,10 +40,12 @@ class Rooms extends React.Component {
     }
 
     onRoomsUpdate(event) {
-        this.setState({
-            rooms: event.rooms
-        });
-        window.sessionStorage.setItem("rooms", event.rooms);
+        if (event && event.room !== undefined) {
+            this.setState({
+                rooms: event.room
+            });
+            window.sessionStorage.setItem("room", event.room);
+        }
     }
 
     onGeneralRoom(id) {
