@@ -194,6 +194,7 @@ class WebSockets {
                 let friend = message.friend;
                 WebSockets.addFriend(username, friend);
             });
+            
         });
     }
 
