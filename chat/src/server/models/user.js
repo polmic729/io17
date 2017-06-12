@@ -5,7 +5,8 @@ let config = require("../../../config");
 
 let userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    passwordHashed: { type: String, required: true }
+    passwordHashed: { type: String, required: true },
+    rooms: [{ type: mongoose.Schema.ObjectId, ref: "Room" }]
 });
 
 class UserModel {

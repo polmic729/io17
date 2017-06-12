@@ -12,24 +12,18 @@ class RoomModel {
         return this.findOne({ _id: id }).exec();
     }
 
-    static create(name, done) {
-        let noRoom = this.byName(name).then(room => {
-            if (room) {
-                return Promise.reject("room_exists");
-            }
-            return Promise.resolve(true);
+    // TODO check if this method is correct
+    static create(name, user, done) {
+        let room = new this({
+            name: name,
+            users: [user]
         });
-
-        Promise.all([noRoom]).then(values => {
-            let name = values[0];
-            let room = new this({
-                name: name
-            });
-            return room.save();
-        }).then(room => {
-            done(room, null);
-        }).catch(error => { // when user exists or other error occurred
-            done(null, error);
+        room.save(function(err) {
+            if (err) {
+                done(null, err);
+            } else {
+                done(room, null);
+            }
         });
     }
 }

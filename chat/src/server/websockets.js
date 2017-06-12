@@ -1,8 +1,8 @@
 let socketio = require("socket.io");
 let http = require("http");
 let config = require("../../config");
-// let User = require("./models/user");
-// let Room = require("./models/room");
+let User = require("./models/user");
+let Room = require("./models/room");
 
 class WebSockets {
 
@@ -13,8 +13,12 @@ class WebSockets {
             config.websocket.host);
 
         this.initializeMessages(io);
+
+        // TODO: uncomment this to register the functions
+        // this.initialize(io);
     }
 
+    // Old websocket function
     initializeMessages(io) {
         io.on("connection", function(socket) {
             socket.on("chat-message", function(message) {
@@ -23,35 +27,81 @@ class WebSockets {
         });
     }
 
+    getUserRooms(username) {
+        let user = User.byUsername(username);
+        let rooms = user.rooms;
+        let roomList = [];
+        for (let room in rooms) {
+            roomList.push([room._id, room.name]);
+        }
+        return {name: username, rooms: roomList};
+    }
+
+    getRoomInfo(roomId) {
+        let room = Room.byId(roomId);
+        let members = room.users;
+        let userList = [];
+        for (let member in members) {
+            userList.push(member.username);
+        }
+        return {id: roomId, users: userList};
+    }
+
     initialize(io) {
         io.on("connection", function(socket) {
-            socket.on("chat-message", function(message) {
-                socket.join(message.room);
-                io.to(message.room).emit("chat-message", message.message);
+
+            // getUserRooms
+            socket.on("getUserRooms", function(message) {
+                let username = message.username;
+                socket.emit("userRooms", this.getUserRooms(username));
             });
 
-            socket.on("create-room", function(message) {
-                // TODO
-                // createRoom(message.name);
-                // socket.emit("create-room", success/failure);
+            // getRoomInfo
+            socket.on("getRoomInfo", function(message) {
+                let roomId = message.roomId;
+                socket.emit("roomInfo", this.getRoomInfo(roomId));
             });
 
-            socket.on("add-user", function(message) {
-                // TODO
-                // addUser(message.username);
-                // socket.emit("add-user", success/failure);
+            // addUserToRoom
+            socket.on("addUserToRoom", function(message) {
+                let username = message.username;
+                let roomId = message.roomId;
+                let room = Room.byId(roomId);
+                let user = User.byUsername(username);
+
+                // TODO code below possibly bad
+                room.users.push(user);
+                room.save();
+                user.rooms.push(room);
+                user.save();
+
+                // We send information about our user rooms
+                io.to(roomId).emit("userRooms", this.getUserRooms(username));
+
+                // We send information about new composition of our room
+                io.to(roomId).emit("roomInfo", this.getRoomInfo(roomId));
             });
 
-            socket.on("get-users", function(message) {
-                // TODO
-                // let roomUsers = getUsers(message.room_id);
-                // socket.emit("get-users", roomUsers);
+            // createRoom
+            socket.on("createRoom", function(message) {
+                let roomname = message.roomname;
+                let username = message.username;
+                let user = User.byUsername(username);
+                Room.create(roomname, user, (room, error) => {
+                    if (!error) {
+                        let roomId = room._id;
+                        // We send information about our user rooms
+                        io.to(roomId).emit("userRooms", this.getUserRooms(username));
+
+                        // We send information about new composition of our room
+                        io.to(roomId).emit("roomInfo", this.getRoomInfo(roomId));
+                    }
+                });
             });
 
-            socket.on("get-rooms", function(message) {
-                // TODO
-                // let userRooms = getRooms(message.username);
-                // socket.emit("get-rooms", userRooms);
+            // getGeneralRoomId
+            socket.on("getGeneralRoomId", function(message) {
+                // TODO I don't know how to do this
             });
         });
     }
