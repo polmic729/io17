@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
-import {setGeneralRoom, setSelectedRoom} from "../../actions/rooms";
+import {setSelectedFriend} from "../../actions/friend";
 
 class Rooms extends React.Component {
 
@@ -19,9 +19,16 @@ class Rooms extends React.Component {
         this.onFriendsListUpdate = this.onFriendsListUpdate.bind(this);
     }
 
-    selectFriend() {
-
+    selectFriend(name) {
+        if (name === this.state.selectedFriend) {
+            return;
+        }
+        this.setState({
+            selectedFriend: name
+        });
+        this.props.actions.setSelectedFriend(name);
     }
+
     onFriendRequest() {
 
     }
@@ -30,8 +37,12 @@ class Rooms extends React.Component {
 
     }
 
-    onFriendsListUpdate() {
-
+    onFriendsListUpdate(event) {
+        if (event && event.room !== undefined) {
+            this.setState({
+                friends: event.friends
+            });
+        }
     }
 
     componentWillMount() {
@@ -39,13 +50,14 @@ class Rooms extends React.Component {
     }
 
     componentDidMount() {
-        this.props.socket.on("userRooms", this.onRoomsUpdate);
+        this.props.socket.on("friendsListUpdate", this.onFriendsListUpdate);
+        this.props.socket.on("friendsRequest", this.onFriendRequest);
     }
 
     render() {
         const friendsList = this.state.friends.map((friend) =>
             <div className={ friend === this.state.selectedFriend ? "leftSelected" : "leftDefault"}
-                 onClick={() => this.changeRoom(friend)} key={friend}> {friend}</div>
+                 onClick={() => this.selectFriend(friend)} key={friend}> {friend}</div>
         );
 
         return (
@@ -60,12 +72,11 @@ class Rooms extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    username: state.user.name,
     socket: state.connections.socket
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({ setSelectedRoom, setGeneralRoom }, dispatch)
+    actions: bindActionCreators({ setSelectedFriend }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
