@@ -10,7 +10,7 @@ class Rooms extends React.Component {
         super(props);
 
         this.state = {
-            selectedFriend: 0,
+            selectedFriend: "",
             friends: ["hubert", "mateusz", "kuba"]
         };
         this.selectFriend = this.selectFriend.bind(this);
