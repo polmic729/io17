@@ -15,16 +15,16 @@ class Rooms extends React.Component {
         } else {
             selectedRoom = 0;
         }
-
-        let rooms = JSON.parse(localStorage.getItem("rooms"));
-        if (!rooms) {
-            rooms = [];
-        }
-        localStorage.setItem("rooms", JSON.stringify(rooms));
+        //
+        // let rooms = JSON.parse(localStorage.getItem("rooms"));
+        // if (!rooms) {
+        //     rooms = [];
+        // }
+        // localStorage.setItem("rooms", JSON.stringify(rooms));
 
         this.state = {
             selectedRoom: selectedRoom,
-            rooms: rooms
+            rooms: []
         };
         this.changeRoom = this.changeRoom.bind(this);
         this.onRoomsUpdate = this.onRoomsUpdate.bind(this);
@@ -47,9 +47,9 @@ class Rooms extends React.Component {
 
     onRoomsUpdate(event) {
         this.setState({
-            rooms: event.room
+            rooms: event.rooms
         });
-        window.sessionStorage.setItem("room", event.room);
+        window.sessionStorage.setItem("rooms", event.rooms);
     }
 
     onGeneralRoom(id) {
@@ -62,8 +62,8 @@ class Rooms extends React.Component {
     componentWillMount() {
         this.props.actions.setGeneralRoom(0);
         this.props.actions.setSelectedRoom(this.state.selectedRoom);
-        this.props.socket.emit("getGeneralRoomId", this.props.username);
-        this.props.socket.emit("getUserRooms", this.props.username);
+        // this.props.socket.emit("getGeneralRoomId", {username: this.props.username});
+        this.props.socket.emit("getUserRooms", {username: this.props.username});
     }
 
     componentDidMount() {
