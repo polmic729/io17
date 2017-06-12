@@ -59,6 +59,10 @@ class WebSockets {
         return {id: roomId, users: userList};
     }
 
+    static addUserToRoom(username, roomId) {
+
+    }
+
     static createRoom(roomname, username) {
 
     }
@@ -83,20 +87,9 @@ class WebSockets {
             socket.on("addUserToRoom", function(message) {
                 let username = message.username;
                 let roomId = message.roomId;
-                let room = RoomModel.byId(roomId);
-                let user = UserModel.byUsername(username);
+                WebSockets.addUserToRoom(username, roomId);
 
-                // TODO code below possibly bad
-                room.users.push(user);
-                room.save();
-                user.rooms.push(room);
-                user.save();
-
-                // We send information about our user rooms
-                io.to(roomId).emit("userRooms", WebSockets.getUserRooms(username));
-
-                // We send information about new composition of our room
-                io.to(roomId).emit("roomInfo", WebSockets.getRoomInfo(roomId));
+                socket.emit("userRooms", WebSockets.getUserRooms(username));
             });
 
             socket.on("createRoom", function(message) {
