@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
-import {setGeneralRoomId, setSelectedRoom} from "../../actions/rooms";
+import {setGeneralRoom, setSelectedRoom} from "../../actions/rooms";
 
 class Rooms extends React.Component {
 
@@ -53,14 +53,14 @@ class Rooms extends React.Component {
     }
 
     onGeneralRoomId(id) {
-        this.props.actions.setGeneralRoomId(id);
+        this.props.actions.setGeneralRoom(id);
         this.setState({
             generalRoomId: id
         });
     }
 
     componentWillMount() {
-        this.props.actions.setGeneralRoomId(0);
+        this.props.actions.setGeneralRoom(0);
         this.props.actions.setSelectedRoom(this.state.selectedRoom);
         this.props.socket.emit("getGeneralRoomId", this.props.username);
         this.props.socket.emit("getUserRooms", this.props.username);
@@ -94,7 +94,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSelectedRoom, setGeneralRoomId}, dispatch)
+    actions: bindActionCreators({setSelectedRoom, setGeneralRoom}, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
