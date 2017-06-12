@@ -45,9 +45,7 @@ class NewChat extends React.Component {
                         <textarea className="sideTextArea" ref="textBox"
                                   type="text" name="groupName" placeholder="nazwa kanału"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
-
-                        <div className="confirm" onClick={this.handleSubmit}>
-                        </div>
+                        <div className="confirm" onClick={this.handleSubmit} />
                     </div>
                 </form>
             </div>
