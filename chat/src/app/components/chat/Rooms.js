@@ -1,8 +1,8 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-import {bindActionCreators} from "redux";
-import {setGeneralRoom, setSelectedRoom} from "../../actions/rooms";
+import { bindActionCreators } from "redux";
+import { setGeneralRoom, setSelectedRoom } from "../../actions/rooms";
 
 class Rooms extends React.Component {
 
@@ -30,19 +30,19 @@ class Rooms extends React.Component {
         this.onRoomsUpdate = this.onRoomsUpdate.bind(this);
     }
 
-    changeRoom(roomId) {
-        if (roomId !== this.state.selectedRoom) {
-            this.setState({
-                selectedRoom: roomId
-            });
-            window.sessionStorage.setItem("selectedRoom", roomId);
-            this.props.actions.setSelectedRoom(roomId);
-            const args = {
-                roomId: roomId,
-                username: this.props.username
-            };
-            this.props.socket.emit("getRoomInfo", args);
+    changeRoom(id) {
+        if (id === this.state.selectedRoom) {
+            return;
         }
+        this.setState({
+            selectedRoom: id
+        });
+        window.sessionStorage.setItem("selectedRoom", id);
+        this.props.actions.setSelectedRoom(id);
+        this.props.socket.emit("getRoomInfo", {
+            roomId: id,
+            username: this.props.username
+        });
     }
 
     onRoomsUpdate(event) {
@@ -52,7 +52,7 @@ class Rooms extends React.Component {
         window.sessionStorage.setItem("rooms", event.rooms);
     }
 
-    onGeneralRoomId(id) {
+    onGeneralRoom(id) {
         this.props.actions.setGeneralRoom(id);
         this.setState({
             generalRoomId: id
@@ -67,7 +67,7 @@ class Rooms extends React.Component {
     }
 
     componentDidMount() {
-        this.props.socket.on("generalRoomId", this.onGeneralRoomId);
+        this.props.socket.on("generalRoomId", this.onGeneralRoom);
         this.props.socket.on("userRooms", this.onRoomsUpdate);
     }
 
@@ -94,7 +94,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSelectedRoom, setGeneralRoom}, dispatch)
+    actions: bindActionCreators({ setSelectedRoom, setGeneralRoom }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
