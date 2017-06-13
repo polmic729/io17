@@ -10,6 +10,7 @@ class Members extends React.Component {
             members: []
         };
         this.onMembersUpdate = this.onMembersUpdate.bind(this);
+        this.props.socket.on("roomInfo", this.onMembersUpdate);
     }
 
     onMembersUpdate(event) {
@@ -18,10 +19,6 @@ class Members extends React.Component {
                 members: event.users
             });
         }
-    }
-
-    componentDidMount() {
-        this.props.socket.on("roomInfo", this.onMembersUpdate);
     }
 
     render() {
