@@ -15,18 +15,13 @@ class PrivateMessages extends React.Component {
     }
 
     onNewMessage(message) {
-        alert(this.props.selectedFriend)
-        alert(this.props.username)
-        alert(message.author)
-        alert(message.receiver)
         if ((message.author === this.props.selectedFriend && message.receiver === this.props.username) ||
             (message.receiver === this.props.selectedFriend && message.author === this.props.username)) {
             let messages = this.state.messages;
 
             messages.push(message);
             this.setState({
-                messages: messages,
-                selectedFriend: message.friend
+                messages: messages
             });
         }
     }
@@ -83,6 +78,7 @@ class PrivateMessages extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
+    username: state.user.name,
     selectedFriend: state.friend.selectedFriend
 });
 
