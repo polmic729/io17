@@ -31,7 +31,7 @@ class Members extends React.Component {
 
         return (
             <div id="chatMembers">
-                { this.props.selected !== 0 &&
+                { this.props.selected !== 0 && this.props.selected !== "0" &&
                     <AddMember />
                 }
                 <div className="entityContainer">
