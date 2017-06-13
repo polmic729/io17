@@ -47,8 +47,8 @@ class Rooms extends React.Component {
 
     render() {
         const friendsList = this.state.friends.map((friend) =>
-            <div className={ friend === this.state.selectedFriend ? "leftSelected" : "leftDefault"}
-                 onClick={() => this.selectFriend(friend)} key={friend}> {friend}</div>
+            <div className={ friend[1] === this.state.selectedFriend ? "leftSelected" : "leftDefault"}
+                 onClick={() => this.selectFriend(friend[1])} key={friend[0]}> {friend[1]}</div>
         );
 
         return (
