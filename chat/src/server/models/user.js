@@ -101,6 +101,11 @@ class UserModel {
             if (user.friends === undefined) {
                 user.friends = [];
             }
+            for (let f of user.friends) {
+                if (f[1] === friend.username) {
+                    return;
+                }
+            }
             user.friends.push([friend._id, friend.username]);
             return user.save();
         });
