@@ -11,10 +11,9 @@ class FriendsList extends React.Component {
 
         this.state = {
             selectedFriend: "",
-            friends: ["hubert", "mateusz", "kuba"]
+            friends: []
         };
 
-        // this.props.actions.setSelectedFriend("");
         this.selectFriend = this.selectFriend.bind(this);
         this.onUserFriends = this.onUserFriends.bind(this);
     }
