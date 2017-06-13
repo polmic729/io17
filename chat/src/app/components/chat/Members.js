@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import AddMember from "./AddMember";
 
 class Members extends React.Component {
 
@@ -30,6 +31,9 @@ class Members extends React.Component {
 
         return (
             <div id="chatMembers">
+                { this.props.selected !== 0 &&
+                    <AddMember />
+                }
                 <div className="entityContainer">
                     <h3>w grupie</h3>
                     { membersList }

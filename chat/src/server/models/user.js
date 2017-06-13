@@ -5,7 +5,8 @@ let config = require("../../../config");
 
 let userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    passwordHashed: { type: String, required: true }
+    passwordHashed: { type: String, required: true },
+    rooms: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "Room" }]]
 });
 
 class UserModel {
@@ -17,16 +18,29 @@ class UserModel {
         return this.findOne({ username }).exec();
     }
 
+    static getAll() {
+        return this.find({}).sort("username").exec();
+    }
+
     static makePassword(pass) {
         return bcrypt.hash(pass, config.crypto.saltRounds);
     }
 
     static credentialsValid(username, password) {
         let usernameRegex = /^[a-z0-9]+$/;
-        if (!username.match(usernameRegex) || password.length < 8) {
-            return false;
-        }
-        return true;
+        return !(!username.match(usernameRegex) || password.length < 8);
+    }
+
+    static addRoom(user, room) {
+        return Promise.all([user, room]).then(args => {
+            let user = args[0];
+            let room = args[1];
+            if (user.rooms === undefined) {
+                user.rooms = [];
+            }
+            user.rooms.push([room._id, room.name]);
+            return user.save();
+        });
     }
 
     static authenticate(username, password, done) {
@@ -67,7 +81,8 @@ class UserModel {
             let hash = values[1];
             let user = new this({
                 username: username,
-                passwordHashed: hash
+                passwordHashed: hash,
+                rooms: []
             });
             return user.save();
         }).then(user => {
