@@ -30,7 +30,7 @@ class Rooms extends React.Component {
     }
 
     onUserFriends(event) {
-        if (event && event.room !== undefined) {
+        if (event && event.friends !== undefined) {
             this.setState({
                 friends: event.friends
             });
