@@ -6,7 +6,8 @@ let config = require("../../../config");
 let userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
     passwordHashed: { type: String, required: true },
-    rooms: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "Room" }]]
+    rooms: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "Room" }]],
+    friends: [[{type: String }, { type: mongoose.Schema.ObjectId, ref: "User" }]]
 });
 
 class UserModel {
@@ -37,6 +38,11 @@ class UserModel {
             let room = args[1];
             if (user.rooms === undefined) {
                 user.rooms = [];
+            }
+            for (let f of user.rooms) {
+                if (f[1] === room.name) {
+                    return;
+                }
             }
             user.rooms.push([room._id, room.name]);
             return user.save();
@@ -82,7 +88,8 @@ class UserModel {
             let user = new this({
                 username: username,
                 passwordHashed: hash,
-                rooms: []
+                rooms: [],
+                friends: []
             });
             return user.save();
         }).then(user => {
@@ -91,6 +98,24 @@ class UserModel {
             done(null, error);
         });
     }
+
+    static addFriend(user, friend) {
+        return Promise.all([user, friend]).then(args => {
+            let user = args[0];
+            let friend = args[1];
+            if (user.friends === undefined) {
+                user.friends = [];
+            }
+            for (let f of user.friends) {
+                if (f[1] === friend.username) {
+                    return;
+                }
+            }
+            user.friends.push([friend._id, friend.username]);
+            return user.save();
+        });
+    }
+
 }
 
 userSchema.plugin(loadClass, UserModel);

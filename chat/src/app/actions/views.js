@@ -4,7 +4,8 @@ export const Views = {
     REGISTER: "REGISTER",
     LOGIN: "LOGIN",
     MAIN: "MAIN",
-    CHAT: "CHAT"
+    CHAT: "CHAT",
+    FRIENDS: "FRIENDS"
 };
 
 export function setView(view) {

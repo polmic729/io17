@@ -20,6 +20,11 @@ class RoomModel {
             if (room.users === undefined) {
                 room.users = [];
             }
+            for (let f of room.users) {
+                if (f[1] === user.username) {
+                    return;
+                }
+            }
             room.users.push([user._id, user.username ]);
             return room.save();
         }).then(room => {

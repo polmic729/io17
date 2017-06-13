@@ -2,26 +2,26 @@ import React from "react";
 import {connect} from "react-redux";
 import ReactDOM from "react-dom";
 
-class Messages extends React.Component {
+class PrivateMessages extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             messages: [],
-            lastRoom: 0
+            selectedFriend: ""
         };
         this.onNewMessage = this.onNewMessage.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     onNewMessage(message) {
-        if (message.roomId === this.props.selected) {
+        if ((message.author === this.props.selectedFriend && message.receiver === this.props.username) ||
+            (message.receiver === this.props.selectedFriend && message.author === this.props.username)) {
             let messages = this.state.messages;
 
             messages.push(message);
             this.setState({
-                messages: messages,
-                lastRoom: message.roomId
+                messages: messages
             });
         }
     }
@@ -33,14 +33,14 @@ class Messages extends React.Component {
 
     componentDidMount() {
         this.scrollToBottom();
-        this.props.socket.on("chat-message", this.onNewMessage);
+        this.props.socket.on("private-message", this.onNewMessage);
     }
 
     componentDidUpdate() {
-        if (this.state.lastRoom !== this.props.selected) {
+        if (this.state.selectedFriend !== this.props.selectedFriend) {
             this.setState({
                 messages: [],
-                lastRoom: this.props.selected
+                selectedFriend: this.props.selectedFriend
             });
         }
         this.scrollToBottom();
@@ -66,6 +66,7 @@ class Messages extends React.Component {
         return (
             <div className="messagesContainer">
                 { messagesList }
+
                 <div style={{float: "left", clear: "both"}}
                      ref={(el) => {
                          this.messagesEnd = el;
@@ -77,7 +78,8 @@ class Messages extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    selected: state.room.selected
+    username: state.user.name,
+    selectedFriend: state.friend.selectedFriend
 });
 
-export default connect(mapStateToProps, null)(Messages);
+export default connect(mapStateToProps, null)(PrivateMessages);

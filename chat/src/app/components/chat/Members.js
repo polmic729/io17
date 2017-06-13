@@ -10,6 +10,7 @@ class Members extends React.Component {
             members: []
         };
         this.onMembersUpdate = this.onMembersUpdate.bind(this);
+        this.props.socket.on("roomInfo", this.onMembersUpdate);
     }
 
     onMembersUpdate(event) {
@@ -20,10 +21,6 @@ class Members extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.props.socket.on("roomInfo", this.onMembersUpdate);
-    }
-
     render() {
         const membersList = this.state.members.map((member) =>
             <div className="chatMember" key={member}> {member}</div>
@@ -31,7 +28,7 @@ class Members extends React.Component {
 
         return (
             <div id="chatMembers">
-                { this.props.selected !== 0 &&
+                { this.props.selected !== 0 && this.props.selected !== "0" &&
                     <AddMember />
                 }
                 <div className="entityContainer">
