@@ -26,7 +26,7 @@ class NewChat extends React.Component {
             };
             this.props.socket.emit("createRoom", message);
             this.refs.textBox.value = "";
-            this.setState({groupName: ""});
+            this.setState({roomname: ""});
         }
     }
 

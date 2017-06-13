@@ -6,7 +6,7 @@ class AddFriend extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            roomname: ""
+            friend: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddFriend = this.handleAddFriend.bind(this);
@@ -19,14 +19,14 @@ class AddFriend extends React.Component {
 
     handleAddFriend(event) {
         event.preventDefault();
-        if (this.state.name !== "") {
+        if (this.state.friend !== "") {
             const message = {
-                roomname: this.state.roomname,
-                username: this.props.username
+                name: this.props.username,
+                friend: this.state.friend
             };
-            this.props.socket.emit("createRoom", message);
+            this.props.socket.emit("addFriend", message);
             this.refs.textBox.value = "";
-            this.setState({groupName: ""});
+            this.setState({friend: ""});
         }
     }
 
