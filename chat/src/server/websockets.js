@@ -189,6 +189,10 @@ class WebSockets {
                 io.emit("userRooms", 0);
             });
 
+            socket.on("private-message", function(message) {
+                io.emit("private-message", message);
+            });
+
             socket.on("getUserFriends", function(message) {
                 WebSockets.getUserFriends(message.username).then((message) => {
                     socket.emit("userFriends", message);

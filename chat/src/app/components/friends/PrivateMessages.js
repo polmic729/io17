@@ -15,6 +15,10 @@ class PrivateMessages extends React.Component {
     }
 
     onNewMessage(message) {
+        alert(this.props.selectedFriend)
+        alert(this.props.username)
+        alert(message.author)
+        alert(message.receiver)
         if ((message.author === this.props.selectedFriend && message.receiver === this.props.username) ||
             (message.receiver === this.props.selectedFriend && message.author === this.props.username)) {
             let messages = this.state.messages;

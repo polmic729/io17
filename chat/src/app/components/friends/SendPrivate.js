@@ -29,7 +29,7 @@ class SendPrivate extends React.Component {
         if (this.state.textArea !== "") {
             const submitDate = new Date();
             const message = {
-                receiver: this.props.selected,
+                receiver: this.props.selectedFriend,
                 date: {
                     hours: formatDate(submitDate.getHours()),
                     minutes: formatDate(submitDate.getMinutes()),
