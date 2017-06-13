@@ -64,9 +64,7 @@ class PrivateMessages extends React.Component {
             </div>
         );
 
-        alert(this.props.selectedFriend)
         return (
-
             <div className="messagesContainer">
                 { messagesList }
 
