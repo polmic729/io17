@@ -38,7 +38,7 @@ class Rooms extends React.Component {
     }
 
     componentWillMount() {
-        this.props.socket.emit("getUserFriends", this.props.username);
+        this.props.socket.emit("getUserFriends", {username: this.props.username});
     }
 
     componentDidMount() {
@@ -63,7 +63,8 @@ class Rooms extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    socket: state.connections.socket
+    socket: state.connections.socket,
+    username: state.user.name
 });
 
 let mapDispatchToProps = (dispatch) => ({
