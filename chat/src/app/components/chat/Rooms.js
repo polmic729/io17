@@ -40,11 +40,11 @@ class Rooms extends React.Component {
     }
 
     onRoomsUpdate(event) {
-        if (event && event.room !== undefined) {
+        if (event && event.rooms !== undefined) {
             this.setState({
-                rooms: event.room
+                rooms: event.rooms
             });
-            window.sessionStorage.setItem("room", event.room);
+            window.sessionStorage.setItem("room", event.rooms);
         }
     }
 
