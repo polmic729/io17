@@ -10,10 +10,8 @@ class Rooms extends React.Component {
         super(props);
 
         let selectedRoom = window.sessionStorage.getItem("selectedRoom");
-        if (selectedRoom) {
-            selectedRoom = Number(selectedRoom);
-        } else {
-            selectedRoom = 0;
+        if (!selectedRoom) {
+            selectedRoom = "0";
         }
 
         this.state = {
@@ -25,13 +23,13 @@ class Rooms extends React.Component {
     }
 
     changeRoom(id) {
+        window.sessionStorage.setItem("selectedRoom", String(id));
         if (id === this.state.selectedRoom) {
             return;
         }
         this.setState({
             selectedRoom: id
         });
-        window.sessionStorage.setItem("selectedRoom", id);
         this.props.actions.setSelectedRoom(id);
         this.props.socket.emit("getRoomInfo", {
             roomId: id,
@@ -44,7 +42,6 @@ class Rooms extends React.Component {
             this.setState({
                 rooms: event.rooms
             });
-            window.sessionStorage.setItem("room", event.rooms);
         }
     }
 
@@ -68,7 +65,7 @@ class Rooms extends React.Component {
 
     render() {
         const roomsList = this.state.rooms.map((room) =>
-            <div className={ room[0] === this.state.selectedRoom ? "leftSelected" : "leftDefault"}
+            <div className={ String(room[0]) === String(this.state.selectedRoom) ? "leftSelected" : "leftDefault"}
                  onClick={() => this.changeRoom(room[0])} key={room[0]}> {room[1]}</div>
         );
 
