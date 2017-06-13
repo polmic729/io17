@@ -9,6 +9,7 @@ import FriendsList from "./FriendsList";
 import SettingsBar from "../shared/SettingsBar";
 import PrivateMessages from "./PrivateMessages";
 import SendPrivate from "./SendPrivate";
+import {setSelectedFriend} from "../../actions/friend";
 
 let config = require("../../../../config/index");
 
@@ -48,7 +49,7 @@ let mapStateToProps = (state) => ({
 });
 
 let mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({setSocket}, dispatch)
+    actions: bindActionCreators({setSocket, setSelectedFriend}, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

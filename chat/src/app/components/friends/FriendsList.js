@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {setSelectedFriend} from "../../actions/friend";
 
-class Rooms extends React.Component {
+class FriendsList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,19 +14,19 @@ class Rooms extends React.Component {
             friends: ["hubert", "mateusz", "kuba"]
         };
 
-        this.props.actions.setSelectedFriend("");
+        // this.props.actions.setSelectedFriend("");
         this.selectFriend = this.selectFriend.bind(this);
         this.onUserFriends = this.onUserFriends.bind(this);
     }
 
     selectFriend(name) {
+        this.props.actions.setSelectedFriend(name);
         if (name === this.state.selectedFriend) {
             return;
         }
         this.setState({
             selectedFriend: name
         });
-        this.props.actions.setSelectedFriend(name);
     }
 
     onUserFriends(event) {
@@ -72,4 +72,4 @@ let mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({ setSelectedFriend }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
+export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);

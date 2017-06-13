@@ -64,9 +64,12 @@ class PrivateMessages extends React.Component {
             </div>
         );
 
+        alert(this.props.selectedFriend)
         return (
+
             <div className="messagesContainer">
                 { messagesList }
+
                 <div style={{float: "left", clear: "both"}}
                      ref={(el) => {
                          this.messagesEnd = el;
