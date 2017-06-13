@@ -51,6 +51,7 @@ class SendPrivate extends React.Component {
     }
 
     render() {
+        alert(this.props.selectedFriend )
         return (
             <div id="messageInput">
                 { this.props.selectedFriend !== "" && this.props.selectedFriend !== undefined &&

@@ -38,6 +38,7 @@ class Rooms extends React.Component {
     }
 
     componentWillMount() {
+        this.props.actions.setSelectedFriend(this.state.selectedFriend);
         this.props.socket.emit("getUserFriends", {username: this.props.username});
     }
 

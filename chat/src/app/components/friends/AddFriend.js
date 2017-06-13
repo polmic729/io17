@@ -25,7 +25,7 @@ class AddFriend extends React.Component {
                 friend: this.state.friend
             };
             this.props.socket.emit("addFriend", message);
-            this.refs.textBox.value = "";
+            this.refs.textBoxFriend.value = "";
             this.setState({friend: ""});
         }
     }
@@ -42,7 +42,7 @@ class AddFriend extends React.Component {
                 <form onSubmit={this.handleAddFriend}>
                     <h3>dodaj ziomka</h3>
                     <div id="newFriendWrapper" className="sideInputWrapper">
-                        <textarea className="sideTextArea" ref="textBox"
+                        <textarea className="sideTextArea" ref="textBoxFriend"
                                   type="text" name="friendName" placeholder="nazwa zawodnika"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                         <div className="confirm" onClick={this.handleAddFriend} />

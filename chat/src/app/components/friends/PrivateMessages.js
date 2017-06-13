@@ -41,7 +41,7 @@ class PrivateMessages extends React.Component {
         if (this.state.selectedFriend !== this.props.selectedFriend) {
             this.setState({
                 messages: [],
-                selectedFriend: this.props.selected
+                selectedFriend: this.props.selectedFriend
             });
         }
         this.scrollToBottom();
