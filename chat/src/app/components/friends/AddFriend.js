@@ -14,7 +14,7 @@ class AddFriend extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({roomname: event.target.value});
+        this.setState({friend: event.target.value});
     }
 
     handleAddFriend(event) {
