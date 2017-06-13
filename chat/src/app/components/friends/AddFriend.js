@@ -9,7 +9,7 @@ class AddFriend extends React.Component {
             roomname: ""
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAddFriend = this.handleAddFriend.bind(this);
         this.handlePressKey = this.handlePressKey.bind(this);
     }
 
@@ -17,7 +17,7 @@ class AddFriend extends React.Component {
         this.setState({roomname: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleAddFriend(event) {
         event.preventDefault();
         if (this.state.name !== "") {
             const message = {
@@ -32,20 +32,20 @@ class AddFriend extends React.Component {
 
     handlePressKey(event) {
         if (event.key === "Enter") {
-            this.handleSubmit(event);
+            this.handleAddFriend(event);
         }
     }
 
     render() {
         return (
             <div id="newFriendInput" className="sideInputBar">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleAddFriend}>
                     <h3>dodaj ziomka</h3>
                     <div id="newFriendWrapper" className="sideInputWrapper">
                         <textarea className="sideTextArea" ref="textBox"
                                   type="text" name="friendName" placeholder="nazwa zawodnika"
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
-                        <div className="confirm" onClick={this.handleSubmit} />
+                        <div className="confirm" onClick={this.handleAddFriend} />
                     </div>
                 </form>
             </div>

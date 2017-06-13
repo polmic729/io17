@@ -73,7 +73,7 @@ class SendPrivate extends React.Component {
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
     username: state.user.name,
-    selectedFriend: state.room.selectedFriend
+    selectedFriend: state.friend.selectedFriend
 });
 
 export default connect(mapStateToProps, null)(SendPrivate);

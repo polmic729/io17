@@ -78,7 +78,7 @@ class PrivateMessages extends React.Component {
 
 let mapStateToProps = (state) => ({
     socket: state.connections.socket,
-    selectedFriend: state.room.selectedFriend
+    selectedFriend: state.friend.selectedFriend
 });
 
 export default connect(mapStateToProps, null)(PrivateMessages);

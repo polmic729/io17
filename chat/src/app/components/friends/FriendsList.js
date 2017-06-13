@@ -16,8 +16,7 @@ class Rooms extends React.Component {
 
         this.props.actions.setSelectedFriend("");
         this.selectFriend = this.selectFriend.bind(this);
-        this.handleAddFriend = this.handleAddFriend.bind(this);
-        this.onFriendsListUpdate = this.onFriendsListUpdate.bind(this);
+        this.onUserFriends = this.onUserFriends.bind(this);
     }
 
     selectFriend(name) {
@@ -30,11 +29,7 @@ class Rooms extends React.Component {
         this.props.actions.setSelectedFriend(name);
     }
 
-    handleAddFriend() {
-
-    }
-
-    onFriendsListUpdate(event) {
+    onUserFriends(event) {
         if (event && event.room !== undefined) {
             this.setState({
                 friends: event.friends
@@ -43,12 +38,11 @@ class Rooms extends React.Component {
     }
 
     componentWillMount() {
-        this.props.socket.emit("getFriendsList", this.props.username);
+        this.props.socket.emit("getUserFriends", this.props.username);
     }
 
     componentDidMount() {
-        this.props.socket.on("friendsListUpdate", this.onFriendsListUpdate);
-        this.props.socket.on("friendsRequest", this.onFriendRequest);
+        this.props.socket.on("userFriends", this.onUserFriends);
     }
 
     render() {
