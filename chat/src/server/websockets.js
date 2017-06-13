@@ -111,31 +111,37 @@ class WebSockets {
     }
 
     static addFriend(username, friendname) {
-        let friend = UserModel.byUsername(friendname).then(user => {
-            if (!user) {
-                return Promise.reject("Friend not found.");
-            }
-            return Promise.resolve(user);
-
-        });
-        let user = UserModel.byUsername(username).then(user => {
-            if (!user) {
-                return Promise.reject("User not found.");
-            }
-            return Promise.resolve(user);
-        });
-        UserModel.addFriend(user, friend, (user, error) => {
-            if (error !== null) {
-                console.log(error);
-            }
-        });
-        UserModel.addFriend(friend, user, (user, error) => {
-            if (error !== null) {
-                console.log(error);
-            }
-        });
+        return new Promise((resolve, reject) => {
+            let friend = UserModel.byUsername(friendname).then(user => {
+                if (!user) {
+                    return Promise.reject("Friend not found.");
+                }
+                return Promise.resolve(user);
+            }).catch((error) => {
+                reject(error);
+            });
+            let user = UserModel.byUsername(username).then(user => {
+                if (!user) {
+                    return Promise.reject("User not found.");
+                }
+                return Promise.resolve(user);
+            }).catch((error) => {
+                reject(error);
+            });
+            UserModel.addFriend(user, friend, (user, error) => {
+                if (error !== null) {
+                    console.log(error);
+                }
+            });
+            UserModel.addFriend(friend, user, (user, error) => {
+                if (error !== null) {
+                    console.log(error);
+                }
+            });
+            resolve();
+        })
     }
-
+    
     static createRoom(roomname, username) {
         return UserModel.byUsername(username).then(user =>
             RoomModel.create(roomname, user)
@@ -192,7 +198,11 @@ class WebSockets {
             socket.on("addFriend", function(message) {
                 let username = message.name;
                 let friend = message.friend;
-                WebSockets.addFriend(username, friend);
+                WebSockets.addFriend(username, friend).then(() => {
+                    WebSockets.getUserFriends(username)
+                }).then(message => {
+                    socket.emit("userFriends", message);
+                })
             });
             
         });
