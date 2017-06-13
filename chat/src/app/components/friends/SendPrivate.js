@@ -29,7 +29,7 @@ class SendPrivate extends React.Component {
         if (this.state.textArea !== "") {
             const submitDate = new Date();
             const message = {
-                roomId: this.props.selected,
+                receiver: this.props.selected,
                 date: {
                     hours: formatDate(submitDate.getHours()),
                     minutes: formatDate(submitDate.getMinutes()),
@@ -38,7 +38,7 @@ class SendPrivate extends React.Component {
                 author: this.props.username,
                 content: this.state.textArea
             };
-            this.props.socket.emit("chat-message", message);
+            this.props.socket.emit("private-message", message);
             this.refs.textBox.value = "";
             this.setState({textArea: ""});
         }
@@ -53,6 +53,7 @@ class SendPrivate extends React.Component {
     render() {
         return (
             <div id="messageInput">
+                { this.props.selectedFriend !== "" && this.props.selectedFriend !== undefined &&
                 <form onSubmit={this.handleSubmit}>
                     <div className="messageInputWrapper">
                         <div className="send" onClick={this.handleSubmit}>
@@ -62,6 +63,8 @@ class SendPrivate extends React.Component {
                                   onChange={this.handleChange} onKeyPress={this.handlePressKey}/>
                     </div>
                 </form>
+                }
+
             </div>
         );
     }

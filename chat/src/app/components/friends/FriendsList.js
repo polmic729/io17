@@ -13,9 +13,10 @@ class Rooms extends React.Component {
             selectedFriend: "",
             friends: ["hubert", "mateusz", "kuba"]
         };
+
+        this.props.actions.setSelectedFriend("");
         this.selectFriend = this.selectFriend.bind(this);
-        this.onFriendRequest = this.onFriendRequest.bind(this);
-        this.handleResponseToRequest = this.handleResponseToRequest.bind(this);
+        this.handleAddFriend = this.handleAddFriend.bind(this);
         this.onFriendsListUpdate = this.onFriendsListUpdate.bind(this);
     }
 
@@ -29,11 +30,7 @@ class Rooms extends React.Component {
         this.props.actions.setSelectedFriend(name);
     }
 
-    onFriendRequest() {
-
-    }
-
-    handleResponseToRequest() {
+    handleAddFriend() {
 
     }
 
@@ -46,7 +43,7 @@ class Rooms extends React.Component {
     }
 
     componentWillMount() {
-        this.props.socket.emit("getUserRooms", this.props.username);
+        this.props.socket.emit("getFriendsList", this.props.username);
     }
 
     componentDidMount() {

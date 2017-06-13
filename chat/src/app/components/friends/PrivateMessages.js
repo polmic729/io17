@@ -15,13 +15,14 @@ class PrivateMessages extends React.Component {
     }
 
     onNewMessage(message) {
-        if (message.roomId === this.props.selected) {
+        if ((message.author === this.props.selectedFriend && message.receiver === this.props.username) ||
+            (message.receiver === this.props.selectedFriend && message.author === this.props.username)) {
             let messages = this.state.messages;
 
             messages.push(message);
             this.setState({
                 messages: messages,
-                lastRoom: message.roomId
+                selectedFriend: message.friend
             });
         }
     }
@@ -33,14 +34,14 @@ class PrivateMessages extends React.Component {
 
     componentDidMount() {
         this.scrollToBottom();
-        this.props.socket.on("chat-message", this.onNewMessage);
+        this.props.socket.on("private-message", this.onNewMessage);
     }
 
     componentDidUpdate() {
-        if (this.state.lastRoom !== this.props.selected) {
+        if (this.state.selectedFriend !== this.props.selectedFriend) {
             this.setState({
                 messages: [],
-                lastRoom: this.props.selected
+                selectedFriend: this.props.selected
             });
         }
         this.scrollToBottom();

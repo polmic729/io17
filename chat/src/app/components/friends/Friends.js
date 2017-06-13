@@ -26,7 +26,7 @@ class Friends extends React.Component {
             <div id="container">
                 <ViewsBar />
                 <div id="leftBar" className="sideBar">
-                    <h2>znajomi</h2>
+                    <h2>Znajomi</h2>
                     <AddFriend />
                     <FriendsList />
                     <SettingsBar />
